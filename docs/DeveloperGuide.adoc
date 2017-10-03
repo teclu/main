@@ -933,7 +933,7 @@ Use case resumes at step 2.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  A user with little to no experience with a command line interface should be able to have easy access to the user guide, and be able to familiarise himself/herself with the commands.
 .  A user should only be able to use the supported commands; unsupported commands should not get executed.
-.  A user should be able to add, edit and remove a contact with ease. 
+.  A user should be able to add, edit and remove a contact with ease.
 .  A user should be able to group/tag their contacts if desired.
 .  A user is able to back up and restore all contacts in the event of the application breaking.
 .  The response to any user action should become visible within 5 seconds.
