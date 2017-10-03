@@ -833,6 +833,37 @@ Use case resumes at step 2.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Enable PIN/Password protection
+
+*MSS*
+
+1.  User requests to enable PIN/Password
+2.  AddressBook asks for value to be set as PIN/Password
+3.  User gives requested value
+4.  AddressBook asks user to confirm the value by retyping it
+5.  User retypes previous value
+6.  AddressBook sets PIN/Password and shows feedback message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The value given is invalid/does not fulfill requirements
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2
+
+* 5a. The value given does not match previous value
++
+[none]
+** 5a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
 {More to be added}
 
 [appendix]
