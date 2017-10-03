@@ -723,15 +723,72 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |normal user |add a new person |fill my addressbook with contacts
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |normal user |edit contact details |keep entries updated
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |normal user |delete a person |remove entries that I no longer need
+
+|`* * *` |normal user |find a person by name |locate details of persons without having to go through the entire list
+
+|`* * *` |normal user |find a person based on tags |find my contacts with the same tag group easily
+
+|`* * *` |normal user |undo command |correct my mistake
+
+|`* * *` |normal user |redo command |correct my undo easily
+
+|`* * *` |normal user |store multiple details for contact (e.g multiple phones) |store details thoroughly
+
+|`* * *` |normal user |set favorite contacts |look them up more quickly
+
+|`* * *` |normal user |find contact based on phone number |know who calls me when unknown number calls/text message me
+
+|`* * *` |user with a lousy computer |actually run the application |can actually use its functions
+
+|`* * *` |student/worker |assign groups/tags |categorise and sort my contacts as needed
+
+|`* * *` |forgetful user |find with partial matches |search for contacts that I only partially remember the name of
+
+|`* * *` |user with multiple addressbook |import contact details |copy contacts to another addressbook easily
+
+|`* * *` |careful/paranoid user |back up my contacts' details |restore them in case addressbook dies on me
+
+|`* * *` |careful/paranoid user |export my contacts' details |restore them in another computer if needed
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |expert user |use the product seamlessly |start using the product immediately and easily
+
+|`* *` |expert user |set command to my preference |easily remember the command
+
+|`* *` |elderly person |adjust the product's font-size |view my contacts' details with ease
+
+|`* *` |shared computer user |enable a PIN/password |no one else can view my contacts
+
+|`* *` |forgetful user |see my last command |know the last change that I made
+
+|`* *` |normal user |see recently accessed contact |easily find the person's details without searching
+
+|`* *` |normal user |input case-insensitive command |input command easily
+
+|`* *` |normal user |add a picture to contact |remember my contact better
+
+|`* *` |normal user |get suggestion for command correction |input correct command easily after I input wrongly
+
+|`* *` |normal user |save my contact's birthday |remember my contact's birthday
+
+|`* *` |normal user |get reminded of a contact's birthday |wish him/her happy birthday
+
+|`* *` |user multiple devices |set multiple instances of app to be in sync |use addressbook across multiple devices seamlessly
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |picky user |change font type |make my addressbook as fancy/simple as I like
+
+|`*` |picky user |add font colour to my contact's name |make the addressbook colourful
+
+|`*` |picky user |have an addressbook with sound effects |my addressbook is "cool"
+
 |=======================================================================
 
 {More to be added}
@@ -764,6 +821,103 @@ Use case ends.
 +
 [none]
 ** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Edit person's details
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to edit a specific person in the list's details to something else
+4.  AddressBook edits the details and shows the updated person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The given detail field or value is invalid
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Assign tag to a person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to to add a given tag to a specific person
+4.  AddressBook adds the tag to person's details
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The given tag is invalid
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Enable PIN/Password protection
+
+*MSS*
+
+1.  User requests to enable PIN/Password
+2.  AddressBook asks for value to be set as PIN/Password
+3.  User gives requested value
+4.  AddressBook asks user to confirm the value by retyping it
+5.  User retypes previous value
+6.  AddressBook sets PIN/Password and shows feedback message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The value given is invalid/does not fulfill requirements
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2
+
+* 5a. The value given does not match previous value
++
+[none]
+** 5a1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
 
