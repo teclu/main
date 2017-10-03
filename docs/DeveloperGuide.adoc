@@ -774,9 +774,18 @@ Use case resumes at step 2.
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should be available to use as long as the computer has sufficient power.
+.  Should be available to use with or without internet access.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-{More to be added}
+.  A user with little to no experience with a command line interface should be able to have easy access to the user guide, and be able to familiarise himself/herself with the commands.
+.  A user should only be able to use the supported commands; unsupported commands should not get executed.
+.  A user should be able to add, edit and remove a contact with ease. 
+.  A user should be able to group/tag their contacts if desired.
+.  A user is able to back up and restore all contacts in the event of the application breaking.
+.  The response to any user action should become visible within 5 seconds.
+.  The application should be offered as a free software available for download.
+.  The functionality of the application should be able to be increased or extended even after deployment.
+.  The source code should be open source.
 
 [appendix]
 == Glossary
