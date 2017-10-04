@@ -91,8 +91,7 @@ public class StorageManager extends ComponentManager implements Storage {
     
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) {
-        String filePath = "C:/backup";
-        logger.fine("Attempting to write to data file : " + filePath);
+        String filePath = addressBookStorage.getAddressBookFilePath() + "-backupBook.xml";
         try {
             saveAddressBook(addressBook, filePath);
         } catch (IOException e) {
