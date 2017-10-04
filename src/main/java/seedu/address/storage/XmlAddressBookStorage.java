@@ -63,7 +63,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-        saveAddressBook(addressBook, filePath + "-backupBook.xml");
+        saveAddressBook(addressBook, filePath + "-backup.xml");
     }
     /**
      * Similar to {@link #saveAddressBook(ReadOnlyAddressBook)}
