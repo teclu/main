@@ -88,5 +88,16 @@ public class StorageManager extends ComponentManager implements Storage {
             raise(new DataSavingExceptionEvent(e));
         }
     }
+    
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) {
+        String filePath = "C:/backup";
+        logger.fine("Attempting to write to data file : " + filePath);
+        try {
+            saveAddressBook(addressBook, filePath);
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
+    }
 
 }
