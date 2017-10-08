@@ -3,6 +3,8 @@ package guitests;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import guitests.guihandles.NodeHandle;
+import javafx.scene.Node;
 import org.junit.Test;
 
 import guitests.guihandles.HelpWindowHandle;
@@ -29,9 +31,9 @@ public class HelpWindowTest extends AddressBookGuiTest {
         getMainMenu().openHelpWindowUsingAccelerator();
         assertHelpWindowOpen();
 
-        getBrowserPanel().click();
+        getPersonPanel().click();
         getMainMenu().openHelpWindowUsingAccelerator();
-        assertHelpWindowNotOpen();
+        assertHelpWindowOpen();
 
         //use menu button
         getMainMenu().openHelpWindowUsingMenu();
