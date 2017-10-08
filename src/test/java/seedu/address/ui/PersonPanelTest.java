@@ -40,9 +40,9 @@ public class PersonPanelTest extends GuiUnitTest {
     private void assertPersonIsDisplayed(ReadOnlyPerson expectedPerson, PersonPanelHandle personPanelHandle) {
         guiRobot.pauseForHuman();
         assertEquals(expectedPerson.getName().toString(), personPanelHandle.getName());
-        assertEquals(expectedPerson.getPhone().toString(), personPanelHandle.getPhone());
-        assertEquals(expectedPerson.getEmail().toString(), personPanelHandle.getEmail());
-        assertEquals(expectedPerson.getAddress().toString(), personPanelHandle.getAddress());
+        assertEquals("Phone: " + expectedPerson.getPhone().toString(), personPanelHandle.getPhone());
+        assertEquals("Email: " + expectedPerson.getEmail().toString(), personPanelHandle.getEmail());
+        assertEquals("Address: " + expectedPerson.getAddress().toString(), personPanelHandle.getAddress());
 
         personPanelHandle.updateTags();
         assertTagsAreDisplayed(expectedPerson, personPanelHandle);
