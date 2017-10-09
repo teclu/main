@@ -13,8 +13,8 @@ public class Birthday {
 
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
-            "Birthday should contain 8 digit number, first 2 digit for day, second 2 digit for month," +
-                    " and last 4 digit for year";
+            "Birthday should contain 8 digit number, first 2 digit for day, second 2 digit for month,"
+                    + " and last 4 digit for year";
     public static final String BIRTHDAY_VALIDATION_REGEX = "\\d{8}";
     public final String value;
 
