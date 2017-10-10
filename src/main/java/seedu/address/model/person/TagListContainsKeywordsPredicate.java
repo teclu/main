@@ -22,9 +22,9 @@ public class TagListContainsKeywordsPredicate implements Predicate<ReadOnlyPerso
     }
 
     /**
-     * Tests if a particular tag matches any of the keywords.
+     * Tests if a particular tag matches any of the keywords. For use of the test method above
      */
-    public boolean testTag(Tag tag) {
+    private boolean testTag(Tag tag) {
         return keywords.stream()
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(tag.tagName, keyword));
     }
