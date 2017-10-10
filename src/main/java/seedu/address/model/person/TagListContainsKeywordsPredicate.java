@@ -5,7 +5,7 @@ import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.tag.Tag;
-    
+
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code UniqueTagList} has a {@code Tag} that matches any of the keywords given.
  */
@@ -16,5 +16,21 @@ public class TagListContainsKeywordsPredicate implements Predicate<ReadOnlyPerso
         this.keywords = keywords;
     }
 
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+       return person.getTags().stream().anyMatch(tag -> test(tag));
+    }
+
+    public boolean test(Tag tag) {
+        return keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(tag.tagName, keyword));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof TagListContainsKeywordsPredicate // instanceof handles nulls
+                && this.keywords.equals(((TagListContainsKeywordsPredicate) other).keywords)); // state check
+    }
 
 }
