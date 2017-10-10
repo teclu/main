@@ -34,7 +34,10 @@ public class FindCommandParser implements Parser<FindCommand> {
             keywordsNoProp = Arrays.copyOfRange(keywords, 1, keywords.length);
         }
 
-        return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+        if (toSearch.equals(PREFIX_TAG.getPrefix())) {
+            return new FindCommand(new TagListContainsKeywordsPredicate(Arrays.asList(keywordsNoProp)));
+        }
+        return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(keywordsNoProp)));
     }
 
 }
