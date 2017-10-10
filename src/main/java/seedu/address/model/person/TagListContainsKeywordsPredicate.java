@@ -18,10 +18,13 @@ public class TagListContainsKeywordsPredicate implements Predicate<ReadOnlyPerso
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-       return person.getTags().stream().anyMatch(tag -> test(tag));
+        return person.getTags().stream().anyMatch(tag -> testTag(tag));
     }
 
-    public boolean test(Tag tag) {
+    /**
+     * Tests if a particular tag matches any of the keywords.
+     */
+    public boolean testTag(Tag tag) {
         return keywords.stream()
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(tag.tagName, keyword));
     }
