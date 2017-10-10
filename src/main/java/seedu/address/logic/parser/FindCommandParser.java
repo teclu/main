@@ -32,16 +32,15 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
 
         String[] keywords = trimmedArgs.split("\\s+");
-        String[] keywordsNoProp = keywords;
         String toSearch = keywords[0];
         if (toSearch.equals(PREFIX_NAME.getPrefix()) || toSearch.equals(PREFIX_TAG.getPrefix())) {
-            keywordsNoProp = Arrays.copyOfRange(keywords, 1, keywords.length);
+            keywords = Arrays.copyOfRange(keywords, 1, keywords.length);
         }
 
         if (toSearch.equals(PREFIX_TAG.getPrefix())) {
-            return new FindCommand(new TagListContainsKeywordsPredicate(Arrays.asList(keywordsNoProp)));
+            return new FindCommand(new TagListContainsKeywordsPredicate(Arrays.asList(keywords)));
         }
-        return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(keywordsNoProp)));
+        return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
     }
 
 }
