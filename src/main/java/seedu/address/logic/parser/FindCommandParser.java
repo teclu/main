@@ -20,12 +20,19 @@ public class FindCommandParser implements Parser<FindCommand> {
      */
     public FindCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
+        if (trimmedArgs.isEmpty()
+                || trimmedArgs.equals(PREFIX_NAME.getPrefix())
+                || trimmedArgs.equals(PREFIX_TAG.getPrefix())) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        String[] nameKeywords = trimmedArgs.split("\\s+");
+        String[] keywords = trimmedArgs.split("\\s+");
+        String[] keywordsNoProp = keywords;
+        String toSearch = keywords[0];
+        if (toSearch.equals(PREFIX_NAME.getPrefix()) || toSearch.equals(PREFIX_TAG.getPrefix())) {
+            keywordsNoProp = Arrays.copyOfRange(keywords, 1, keywords.length);
+        }
 
         return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
     }
