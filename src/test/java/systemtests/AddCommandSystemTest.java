@@ -71,6 +71,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         ReadOnlyPerson toAdd = AMY;
         String command = "   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
                 + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   " + BIRTHDAY_DESC_AMY + "  " + TAG_DESC_FRIEND + " ";
+        System.out.print("here");
         assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding Amy to the list -> Amy deleted */
@@ -202,7 +203,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, Address.MESSAGE_ADDRESS_CONSTRAINTS);
 
         /* Case: invalid birthday -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + INVALID_ADDRESS_DESC
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + INVALID_BIRTHDAY_DESC;
         assertCommandFailure(command, Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS);
         
