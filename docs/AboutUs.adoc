@@ -19,7 +19,7 @@ image::k-l-a.jpg[width="150", align="left"]
 '''
 
 === Nadhira Salsabila
-image::nadhira15.jpg[width="150", align="left"]
+image::nadhira15.JPG[width="150", align="left"]
 {empty}[http://github.com/nadhira15[github]]
 
 *Role*: Task Scheduler/Tracker +
