@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= K.N.S. AddressBook - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,9 +12,17 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W11-B3`      Since: `Sep 2017`      Licence: `MIT`
 
-== Quick Start
+== Introduction
+
+K.N.S. AddressBook is a free desktop application that stores your contacts and their details. All interactions are done through an in-built Command Line Interface (CLI), which allows you do add, edit and remove contacts in a speedy manner once you have gotten used to it.
+
+K.N.S. AddressBook is available on Windows and Mac OS X operating systems.
+
+== Getting Started
+
+=== Installation
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -24,10 +32,12 @@ This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Double-click the file to start the app. The GUI should appear in a few seconds as such:
 +
 image::Ui.png[width="790"]
-+
+
+=== Using the CLI
+
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
@@ -39,7 +49,31 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
-== Features
+== Key Features
+
+=== Person Panel `In Development For v1.5`
+
+This is where the details of a selected contact will be displayed. As of now, only the name, address, phone number and tags are displayed here. Planned features for the Person Panel include:
+
+* `For v1.5`Set contact's picture
+* `For v1.5`Notes/Comments on the contact
+* `For v1.5`Birthday Countdown
+* `For v2.0`Birthday Reminder
+
+=== Colour Theme Switcher `In Development For v1.5`
+
+As of now, the dark theme is the default colour theme for the application. Planned features include:
+
+* `For v1.5` Command to change the theme, e.g. `theme light`
+* `For v1.5` 5 Preset Themes: Light, Dark (current default theme), Red, Blue and Green.
+* `For v1.5` Detailed instructions for advanced users to make their own themes.
+
+=== Saving the data
+
+Address book data are saved in the hard disk automatically after any command that changes the data. +
+There is no need to save manually.
+
+== Available CLI Commands
 
 ====
 *Command Format*
@@ -222,17 +256,7 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
-=== Saving the data
-
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
-
-== FAQ
-
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
-
-== Command Summary
+=== Command Summary
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
@@ -250,3 +274,13 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+
+== FAQ
+
+*Q*: How do I transfer my data to another Computer? +
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+
+== Glossary
+
+To be done by v1.5.
+
