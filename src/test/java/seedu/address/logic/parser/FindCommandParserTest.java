@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.TagListContainsKeywordsPredicate;
 
 public class FindCommandParserTest {
 
@@ -29,6 +30,12 @@ public class FindCommandParserTest {
 
         // multiple whitespaces between keywords
         assertParseSuccess(parser, " \n Alice \n \t Bob  \t", expectedFindCommand);
+
+        // use of prefix to indicate the property to match, currently either name or tag
+        FindCommand expectedFindCommandForTags =
+                new FindCommand(new TagListContainsKeywordsPredicate(Arrays.asList("Friends", "Family")));
+        assertParseSuccess(parser, "n/ Alice Bob", expectedFindCommand);
+        assertParseSuccess(parser, "t/ Friends Family", expectedFindCommandForTags);
     }
 
 }
