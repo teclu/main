@@ -55,10 +55,10 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 This is where the details of a selected contact will be displayed. As of now, only the name, address, phone number and tags are displayed here. Planned features for the Person Panel include:
 
-* `For v1.5`Set contact's picture
-* `For v1.5`Notes/Comments on the contact
-* `For v1.5`Birthday Countdown
-* `For v2.0`Birthday Reminder
+* `For v1.5` Set contact's picture
+* `For v1.5` Notes/Comments on the contact
+* `For v1.5` Birthday Countdown
+* `For v2.0` Birthday Reminder
 
 === Colour Theme Switcher `In Development For v1.5`
 
