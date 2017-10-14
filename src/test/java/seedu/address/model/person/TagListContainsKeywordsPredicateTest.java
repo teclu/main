@@ -59,4 +59,20 @@ public class TagListContainsKeywordsPredicateTest {
         predicate = new TagListContainsKeywordsPredicate(Arrays.asList("faMIly", "FAmiLy"));
         assertTrue(predicate.test(new PersonBuilder().withTags("Family").build()));
     }
+
+    @Test
+    public void test_tagListDoesNotContainKeywords_returnsFalse() {
+        // Zero keywords
+        TagListContainsKeywordsPredicate predicate = new TagListContainsKeywordsPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withTags("Friends").build()));
+
+        // Non-matching keyword
+        predicate = new TagListContainsKeywordsPredicate(Arrays.asList("Family"));
+        assertFalse(predicate.test(new PersonBuilder().withTags("Friends", "Teammates").build()));
+
+        // Keywords match name, phone, email and address, but does not match tags
+        predicate = new TagListContainsKeywordsPredicate(Arrays.asList("Ben", "123", "al@mail.com", "Main", "Street"));
+        assertFalse(predicate.test(new PersonBuilder().withName("Ben").withPhone("123")
+                .withEmail("al@mail.com").withAddress("Main Street").withTags("Friends").build()));
+    }
 }
