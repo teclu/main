@@ -20,8 +20,8 @@ public class BirthdayTest {
         assertFalse(Birthday.isValidBirthday("123456789123456789")); // more than 8 numbers
 
         // valid birthday
-        assertTrue(Birthday.isValidBirthday("01011991")); // exactly 8 numbers valid birthday
-        assertTrue(Birthday.isValidBirthday("14061996")); // exactly 8 numbers valid birthday
-        assertTrue(Birthday.isValidBirthday("31122001")); // exactly 8 numbers valid birthday
+        assertTrue(Birthday.isValidBirthday("01/01/1991")); // exactly 8 numbers valid birthday
+        assertTrue(Birthday.isValidBirthday("14/06/1996")); // exactly 8 numbers valid birthday
+        assertTrue(Birthday.isValidBirthday("31/12/2001")); // exactly 8 numbers valid birthday
     }
 }
