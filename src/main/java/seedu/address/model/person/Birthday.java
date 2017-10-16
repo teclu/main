@@ -13,9 +13,9 @@ public class Birthday {
 
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
-            "Birthday should contain 8 digit number, first 2 digit for day, second 2 digit for month,"
-                    + " and last 4 digit for year";
-    public static final String BIRTHDAY_VALIDATION_REGEX = "\\d{8}";
+            "Birthday should contain 8 digit number, first 2 digit for day (01-30), second 2 digit for month (01-12),"
+                    + " and last 4 digit for year, separated by slash (/)";
+    public static final String BIRTHDAY_VALIDATION_REGEX = "[0-3]+[\\d]+[\\/]+[0-1]+[\\d]+[\\/]+\\d{4}";
     public final String value;
 
     /**
