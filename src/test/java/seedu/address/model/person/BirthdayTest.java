@@ -8,8 +8,8 @@ import org.junit.Test;
 public class BirthdayTest {
 
     @Test
-    public void isValidPhone() {
-        // invalid phone numbers
+    public void isValidBirthday() {
+        // invalid birthday
         assertFalse(Birthday.isValidBirthday("")); // empty string
         assertFalse(Birthday.isValidBirthday(" ")); // spaces only
         assertFalse(Birthday.isValidBirthday("912345")); // less than 8 numbers
@@ -19,9 +19,9 @@ public class BirthdayTest {
         assertFalse(Birthday.isValidBirthday("9312 1534")); // spaces within digits
         assertFalse(Birthday.isValidBirthday("123456789123456789")); // more than 8 numbers
 
-        // valid phone numbers
+        // valid birthday
         assertTrue(Birthday.isValidBirthday("01011991")); // exactly 8 numbers valid birthday
-        assertTrue(Birthday.isValidBirthday("99999999")); // exactly 8 numbers invalid birthday
-        assertTrue(Birthday.isValidBirthday("12345678")); // exactly 8 numbers invalid birthday
+        assertTrue(Birthday.isValidBirthday("14061996")); // exactly 8 numbers valid birthday
+        assertTrue(Birthday.isValidBirthday("31122001")); // exactly 8 numbers valid birthday
     }
 }
