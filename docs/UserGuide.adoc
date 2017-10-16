@@ -126,25 +126,54 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+`In development for v2.0`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+* Ability to cumulatively add or remove tags
+
+=== Locating persons: `find`
+Finds persons whose names or tags, indicated by an optional prefix, contain any of the given keywords. Defaults to find by name. +
+Format: `find [PREFIX] KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
+==== By name
 
+To find by name, use the prefix `n/` or no prefix at all. +
+Examples :
+
+ * `find n/ John` +
+ Returns `john` and `John Doe`
+ * `find John` is equivalent with above example.
+ * `find Betsy Tim John` +
+ Returns any person having names `Betsy`, `Tim`, or `John`
+
+==== By tag
+To find by tag, use the prefix `t/`. +
+****
+* Will match person with any tag matching at least one of the keywords.
+****
 Examples:
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `find t/ family` +
+Returns any person with the tag `family`
+* `find t/ friends family colleague` +
+Returns any person with at least one of the tags `friends`, `family`, or `colleague`.
+
+==== By any field
+`In development for v2.0`
+
+==== By multiple fields and keywords
+`In development for v2.0`
+
+==== Strict searching (AND search)
+`In development for v2.0`
+
+==== Partial matching
+`In development for v2.0`
 
 === Deleting a person : `delete`
 
@@ -185,6 +214,14 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+
+=== Contacting a person `In development for v2.0`
+
+Directly calls or emails the person(s) identified by index number or otherwise.
+
+=== Setting favorites `In development for v2.0`
+
+Favorites will be listed before non-favorites and cannot be deleted by accident.
 
 === Listing entered commands : `history`
 

@@ -24,16 +24,14 @@ public class FindCommandParser implements Parser<FindCommand> {
      */
     public FindCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()
-                || trimmedArgs.equals(PREFIX_NAME.getPrefix())
-                || trimmedArgs.equals(PREFIX_TAG.getPrefix())) {
+        if (trimmedArgs.isEmpty() || isSearchablePrefix(trimmedArgs)) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
         String[] keywords = trimmedArgs.split("\\s+");
         String toSearch = keywords[0];
-        if (toSearch.equals(PREFIX_NAME.getPrefix()) || toSearch.equals(PREFIX_TAG.getPrefix())) {
+        if (isSearchablePrefix(toSearch)) {
             keywords = Arrays.copyOfRange(keywords, 1, keywords.length);
         }
 
@@ -41,6 +39,13 @@ public class FindCommandParser implements Parser<FindCommand> {
             return new FindCommand(new TagListContainsKeywordsPredicate(Arrays.asList(keywords)));
         }
         return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
+    }
+
+    /**
+     * Checks if the given string prefix is a searchable prefix (i.e n/ and t/ currently).
+     */
+    public boolean isSearchablePrefix(String prefixString) {
+        return prefixString.equals(PREFIX_NAME.getPrefix()) || prefixString.equals(PREFIX_TAG.getPrefix());
     }
 
 }
