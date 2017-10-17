@@ -398,7 +398,7 @@ The layout for PersonPanel is specified in PersonPanel.fxml. Visually, it can be
 image::PersonPanelLayout.png[width="760"]
 
 **Part 1 (primaryDetails):** This is subdivided into parts A and B. Part A contains the avatar picture of the contact. At the moment, there is a placeholder image. In the future, we will implement support for custom avatars. Part B contains the Name and Tags of the contact, which we found to be important in recognising a displayed contact quickly. Hence, they are in a larger font in order to stand out.
-	
+
 **Part 2 (secondaryDetails):** This displays the Address, Email, Contact Number and Birthday of the contact. As these details are less important than the Name and Tags, they are placed below and are in a smaller font. At the moment, this section appears simple but empty. We plan to implement more features, such as a "Notes about Contact" and "Birthday Countdown".
 
 ==== Design Considerations
