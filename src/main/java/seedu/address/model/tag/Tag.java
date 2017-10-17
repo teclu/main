@@ -17,11 +17,11 @@ public class Tag {
     public static final String MESSAGE_TAG_CONSTRAINTS = "Tags names should be alphanumeric";
     public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
 
+    private static final Random colourSelect = new Random();
+    private static final String[] tagColours = TagColours.getTagColours();
+
     public final String tagName;
     public final String tagColour;
-
-    private static String[] tagColours = TagColours.getTagColours();
-    private static Random colourSelect = new Random();
 
     /**
      * Validates given tag name.
