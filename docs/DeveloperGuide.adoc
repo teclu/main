@@ -358,6 +358,7 @@ The PersonPanel replaces the previous BrowserPanel, and is a crucial part of Mai
 
 By taking advantage of the java.util.logging package, PersonPanel is able to display all of the details of a contact (name, address, email, contact number, birthday, tags) selected in PersonCard. This implementation can be seen from the following 2 code snippets:
 
+[source,java]
 ----
 @Subscribe
 private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
@@ -368,6 +369,7 @@ private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedE
 
 **Code Snippet 1 (handlePersonPanelSelectionChangedEvent()):** Whenever a contact is selected, an event will be triggered. The method will respond to the event by obtaining a ReadOnlyPerson variable (which contains all the details of the contact), and pass it into loadPersonPage().
 
+[source,java]
 ----
 private void loadPersonPage(ReadOnlyPerson person) {
     name.setText(person.getName().fullName);
