@@ -20,8 +20,8 @@ public class Tag {
     public final String tagName;
     public final String tagColour;
 
-    private static Random colourSelect = new Random();
     private static String[] tagColours = TagColours.getTagColours();
+    private static Random colourSelect = new Random();
 
     /**
      * Validates given tag name.
