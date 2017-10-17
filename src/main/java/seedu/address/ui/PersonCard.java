@@ -54,6 +54,9 @@ public class PersonCard extends UiPart<Region> {
         });
     }
 
+    /**
+     * Initialise the tags with their background colours.
+     */
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
