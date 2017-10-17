@@ -349,6 +349,87 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::personpanel[]
+=== Person Panel
+
+The PersonPanel replaces the previous BrowserPanel, and is a crucial part of MainWindow.
+
+==== Java Implementation
+
+By taking advantage of the java.util.logging package, PersonPanel is able to display all of the details of a contact (name, address, email, contact number, birthday, tags) selected in PersonCard. This implementation can be seen from the following 2 code snippets:
+
+----
+@Subscribe
+private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    loadPersonPage(event.getNewSelection().person);
+}
+----
+
+**Code Snippet 1 (handlePersonPanelSelectionChangedEvent()):** Whenever a contact is selected, an event will be triggered. The method will respond to the event by obtaining a ReadOnlyPerson variable (which contains all the details of the contact), and pass it into loadPersonPage().
+
+----
+private void loadPersonPage(ReadOnlyPerson person) {
+    name.setText(person.getName().fullName);
+    phone.setText("Phone: " + person.getPhone().toString());
+    address.setText("Address: " + person.getAddress().toString());
+	email.setText("Email: " + person.getEmail().toString());
+	birthday.setText("Birthday: " + person.getBirthday().toString());
+	tags.getChildren().clear();
+	person.getTags().forEach(tag -> {
+		Label tagLabel = new Label(tag.tagName);
+		tagLabel.setStyle("-fx-background-color: " + tag.tagColour);
+		tags.getChildren().add(tagLabel);
+	});
+}
+----
+
+**Code Snippet 2 (loadPersonPage()):** The ReadOnlyPerson variable passed into loadPersonPage can then be used to extract the contact's details for display; the UI will be updated accordingly to reflect these changes.
+
+[NOTE]
+Upon opening the application, no contact details will be displayed since no contact has been selected yet.
+
+==== Layout Implementation
+
+The layout for PersonPanel is specified in PersonPanel.fxml. Visually, it can be broken down into 2 parts as shown:
+
+image::PersonPanelLayout.png[width="760"]
+
+**Part 1 (primaryDetails):** This is subdivided into parts A and B. Part A contains the avatar picture of the contact. At the moment, there is a placeholder image. In the future, we will implement support for custom avatars. Part B contains the Name and Tags of the contact, which we found to be important in recognising a displayed contact quickly. Hence, they are in a larger font in order to stand out.
+	
+**Part 2 (secondaryDetails):** This displays the Address, Email, Contact Number and Birthday of the contact. As these details are less important than the Name and Tags, they are placed below and are in a smaller font. At the moment, this section appears simple but empty. We plan to implement more features, such as a "Notes about Contact" and "Birthday Countdown".
+
+==== Design Considerations
+
+**Aspect:** Display of Contact's Details +
+**Alternative 1 (current choice):** Replace BrowserPanel with PersonPanel, which displays all of the contacts details. Remove all details but Name and Tags from PersonCard.  +
+**Pros:** We can build upon PersonPanel and add more features to it, that the BrowserPanel could not achieve.  +
+**Cons:** PersonPanel will not be able to display personal web pages (e.g. Contact's Social Media page). +
+**Alternative 2:** Keep BrowserPanel and use HTML files to display contact details instead. +
+**Pros:** No need to modify existing code; instead just figure out a way to edit and display HTML files that show the contact's details. +
+**Cons:** May take too long to implement since we are not familiar with how we can do so.
+
+---
+
+**Aspect:** Display of Tags In PersonPanel (and PersonCard). +
+**Alternative 1 (current choice):** Randomly colourise tags to make them distinct. +
+**Pros:** Quick to implement and makes it easier for user to differentiate between tags. +
+**Cons:** Tags are always changing colour for each new instance of the application; may seem confusing. +
+**Alternative 2:** Keep the previous blue colour for all tags. +
+**Pros:** Consistent and simple; no work is needed to be done. +
+**Cons:** Takes users a longer time to differentiate between tags.
+
+---
+
+**Aspect:** Addition of Icons for secondaryDetails +
+**Alternative 1 (current choice):** Place icons on the left of each contact detail. +
+**Pros:** Quick to implement and makes it easier for user to differentiate between each contact detail. Icons can be easily taken from Google's Material.io website. +
+**Cons:** N/A +
+**Alternative 2:** Use different colours for each contact detail. +
+**Pros:** Even more quick to implement since it only involves CSS changes. +
+**Cons:** Bad idea design-wise because it violates the Triadic Colour Scheme. It could make the application look less professional and unattractive.
+// end::personpanel[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
