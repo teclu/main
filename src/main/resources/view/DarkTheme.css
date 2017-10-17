@@ -358,7 +358,7 @@
 }
 
 #personPanel #name {
-    -fx-font-size: 50pt;
+    -fx-font-size: 40pt;
     -fx-text-fill: #FFFFFF;
 }
 
@@ -366,11 +366,27 @@
     -fx-font-size: 20pt;
 }
 
-#personPanel #address, #personPanel #email, #personPanel #phone {
-    -fx-font-size: 15pt;
+#personPanel #address, #personPanel #email, #personPanel #phone, #personPanel #birthday {
+    -fx-font-size: 14pt;
     -fx-text-fill: #FFFFFF;
 }
 
 #personPanel .split-pane-divider {
     -fx-background-color: derive(#1d1d1d, 50%);
+}
+
+#addressWhite {
+    -fx-image: url("../images/addressWhite.png");
+}
+
+#phoneWhite {
+    -fx-image: url("../images/phoneWhite.png");
+}
+
+#emailWhite {
+    -fx-image: url("../images/emailWhite.png");
+}
+
+#birthdayWhite {
+    -fx-image: url("../images/birthdayWhite.png");
 }

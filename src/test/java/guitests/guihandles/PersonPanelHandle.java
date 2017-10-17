@@ -16,12 +16,14 @@ public class PersonPanelHandle extends NodeHandle<Node> {
     private static final String PHONE_FIELD_ID = "#phone";
     private static final String ADDRESS_FIELD_ID = "#address";
     private static final String EMAIL_FIELD_ID = "#email";
+    private static final String BIRTHDAY_FIELD_ID = "#birthday";
     private static final String TAGS_FIELD_ID = "#tags";
 
     private Label name;
     private Label phone;
     private Label address;
     private Label email;
+    private Label birthday;
     private List<Label> tagLabels;
 
     public PersonPanelHandle(Node personPanelNode) {
@@ -31,6 +33,7 @@ public class PersonPanelHandle extends NodeHandle<Node> {
         this.phone = getChildNode(PHONE_FIELD_ID);
         this.address = getChildNode(ADDRESS_FIELD_ID);
         this.email = getChildNode(EMAIL_FIELD_ID);
+        this.birthday = getChildNode(BIRTHDAY_FIELD_ID);
 
         updateTags();
     }
@@ -50,6 +53,8 @@ public class PersonPanelHandle extends NodeHandle<Node> {
     public String getAddress() {
         return address.getText();
     }
+
+    public String getBirthday() { return birthday.getText(); }
 
     public List<String> getTags() {
         return tagLabels
