@@ -1,12 +1,9 @@
 package seedu.address.model.tag;
 
 import static java.util.Objects.requireNonNull;
-
-import seedu.address.commons.exceptions.IllegalValueException;
-
 import java.util.Random;
-
 import seedu.address.ui.TagColours;
+import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Tag in the address book.
@@ -20,9 +17,8 @@ public class Tag {
     public final String tagColour;
     public final String tagName;
 
-    private static String[] tagColours = TagColours.getTagColours();
-
     private static Random colourSelect = new Random();
+    private static String[] tagColours = TagColours.getTagColours();
 
     /**
      * Validates given tag name.
