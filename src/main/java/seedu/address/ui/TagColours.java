@@ -25,6 +25,6 @@ public class TagColours {
      */
     public static String[] getTagColours() {
         return new String[] { RED, DARK_RED, ORANGE, LIGHT_ORANGE, YELLOW,
-                GREEN, DARK_GREEN, BLUE, NAVY_BLUE, INDIGO, VIOLET, HOT_PINK, BLACK };
+                                GREEN, DARK_GREEN, BLUE, NAVY_BLUE, INDIGO, VIOLET, HOT_PINK, BLACK };
     }
 }
