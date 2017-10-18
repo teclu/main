@@ -609,7 +609,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |see recently accessed contact |easily find the person's details without searching
 
-|`* *`  user |input case-insensitive command |input command easily
+|`* *` |user |input case-insensitive command |input command easily
 
 |`* *` |user |add a picture to contact |remember my contact better
 
@@ -631,7 +631,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |=======================================================================
 
-{More to be added}
 
 [appendix]
 == Use Cases
