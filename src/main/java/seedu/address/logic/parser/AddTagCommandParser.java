@@ -21,7 +21,13 @@ public class AddTagCommandParser implements Parser<AddTagCommand>{
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddTagCommand parse(String args) throws ParseException {
-        requireNonNull(args);
+        try {
+            requireNonNull(args);
+        } catch (NullPointerException e) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagCommand.MESSAGE_USAGE));
+        }
+        
         String trimmedArgs = args.trim();
         Index index;
 
