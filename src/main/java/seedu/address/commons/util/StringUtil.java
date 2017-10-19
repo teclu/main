@@ -42,7 +42,7 @@ public class StringUtil {
     }
 
     /**
-     * Returns true if the sentence contains a word that starts with the (@code word)
+     * Returns true if the sentence contains a word that starts with the given word
      *  Ignores case, and a full word match is not required
      *   <br>examples:<pre>
      *       containsPartialWordIgnoreCase("ABc def", "abc") == true
