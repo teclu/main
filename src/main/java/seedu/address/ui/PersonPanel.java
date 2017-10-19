@@ -31,6 +31,8 @@ public class PersonPanel extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private Label birthday;
+    @FXML
     private FlowPane tags;
 
     public PersonPanel() {
@@ -46,8 +48,13 @@ public class PersonPanel extends UiPart<Region> {
         phone.setText("Phone: " + person.getPhone().toString());
         address.setText("Address: " + person.getAddress().toString());
         email.setText("Email: " + person.getEmail().toString());
+        birthday.setText("Birthday: " + person.getBirthday().toString());
         tags.getChildren().clear();
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.setStyle("-fx-background-color: " + tag.tagColour);
+            tags.getChildren().add(tagLabel);
+        });
     }
 
     @Subscribe
