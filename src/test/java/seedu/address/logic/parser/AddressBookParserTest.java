@@ -9,6 +9,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.junit.Rule;
@@ -32,6 +33,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -51,8 +53,12 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_addTag() throws Exception {
-        AddTagCommand command = (AddTagCommand) parser.parseCommand(AddTagCommand.COMMAND_WORD);
-        assertTrue(command instanceof AddTagCommand);
+        List<String> tagList = Arrays.asList("neighbours");
+        Set<Tag> tagToAdd = ParserUtil.parseTags(tagList);
+        AddTagCommand command = (AddTagCommand) parser.parseCommand(
+                AddTagCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " "
+                + tagList.stream().collect(Collectors.joining(" ")));
+        assertEquals(new AddTagCommand(INDEX_FIRST_PERSON, tagToAdd), command);
     }
 
     @Test

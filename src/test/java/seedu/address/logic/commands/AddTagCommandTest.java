@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.AddTagCommand.MESSAGE_NOT_IMPLEMENTED_YET;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
@@ -20,17 +19,10 @@ public class AddTagCommandTest {
     
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     
-    @Test
-    public void execute() throws Exception {
-        assertCommandFailure(prepareCommand(), model, MESSAGE_NOT_IMPLEMENTED_YET);
-    }
+    
     /*
      * Returns an {@code AddTagCommand}.
      */
     
-    private AddTagCommand prepareCommand() {
-        AddTagCommand addTagCommand = new AddTagCommand();
-        addTagCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return addTagCommand;
-    }
+    
 }
