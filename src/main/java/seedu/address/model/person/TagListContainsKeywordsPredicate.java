@@ -26,7 +26,7 @@ public class TagListContainsKeywordsPredicate implements Predicate<ReadOnlyPerso
      */
     private boolean testTag(Tag tag) {
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(tag.tagName, keyword));
+                .anyMatch(keyword -> StringUtil.containsWordStartingWithIgnoreCase(tag.tagName, keyword));
     }
 
     @Override
