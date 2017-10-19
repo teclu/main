@@ -137,6 +137,90 @@ public class StringUtilTest {
         assertTrue(StringUtil.containsWordIgnoreCase("AAA bBb ccc  bbb", "bbB"));
     }
 
+    //---------------- Tests for containsWordStartingWithIgnoreCase --------------------------------------
+
+    @Test
+    public void containsWordStartingWithIgnoreCase_nullWord_throwsNullPointerException() {
+        assertOtherExceptionThrown(NullPointerException.class, "typical sentence", null,
+                Optional.empty());
+    }
+
+    private void assertOtherExceptionThrown(Class<? extends Throwable> exceptionClass, String sentence,
+            String word, Optional<String> errorMessage) {
+        thrown.expect(exceptionClass);
+        errorMessage.ifPresent(message -> thrown.expectMessage(message));
+        StringUtil.containsWordStartingWithIgnoreCase(sentence, word);
+    }
+
+    @Test
+    public void containsWordStartingWithIgnoreCase_emptyWord_throwsIllegalArgumentException() {
+        assertOtherExceptionThrown(IllegalArgumentException.class, "typical sentence", "  ",
+                Optional.of("Word parameter cannot be empty"));
+    }
+
+    @Test
+    public void containsWordStartingWithIgnoreCase_multipleWords_throwsIllegalArgumentException() {
+        assertOtherExceptionThrown(IllegalArgumentException.class, "typical sentence", "aaa BBB",
+                Optional.of("Word parameter should be a single word"));
+    }
+
+    @Test
+    public void containsWordStartingWithIgnoreCase_nullSentence_throwsNullPointerException() {
+        assertOtherExceptionThrown(NullPointerException.class, null, "abc", Optional.empty());
+    }
+
+    /*
+     * Valid equivalence partitions for word:
+     *   - any word
+     *   - word containing symbols/numbers
+     *   - word with leading/trailing spaces
+     *
+     * Valid equivalence partitions for sentence:
+     *   - empty string
+     *   - one word
+     *   - multiple words
+     *   - sentence with extra spaces
+     *
+     * Possible scenarios returning true:
+     *   - matches first word in sentence
+     *   - last word in sentence
+     *   - middle word in sentence
+     *   - matches multiple words
+     *   - a sentence word starts with the query word
+     *   - multiple sentence words starts with the query word
+     *
+     * Possible scenarios returning false:
+     *   - query word matches part of a sentence word other than the start
+     *   - sentence word matches part of the query word other than the start
+     *
+     * The test method below tries to verify all above with a reasonably low number of test cases.
+     */
+
+    @Test
+    public void containsWordStartingWithIgnoreCase_validInputs_correctResult() {
+
+        // Empty sentence
+        assertFalse(StringUtil.containsWordStartingWithIgnoreCase("", "abc")); // Boundary case
+        assertFalse(StringUtil.containsWordStartingWithIgnoreCase("    ", "123"));
+
+        // Matches a partial word where the word doesn't start with the query word only.
+        assertFalse(StringUtil.containsWordStartingWithIgnoreCase("aaa abb ccc", "bb")); // Sentence word bigger than query word
+        assertFalse(StringUtil.containsWordStartingWithIgnoreCase("aaa abb ccc", "bbbb")); // Query word bigger than sentence word
+
+        // Matches word in the sentence, different upper/lower case letters
+        assertTrue(StringUtil.containsWordStartingWithIgnoreCase("aaa bBb ccc", "Bbb")); // First word (boundary case)
+        assertTrue(StringUtil.containsWordStartingWithIgnoreCase("aaa bBb ccc@1", "CCc@1")); // Last word (boundary case)
+        assertTrue(StringUtil.containsWordStartingWithIgnoreCase("  AAA   bBb   ccc  ", "aaa")); // Sentence has extra spaces
+        assertTrue(StringUtil.containsWordStartingWithIgnoreCase("Aaa", "aaa")); // Only one word in sentence (boundary case)
+        assertTrue(StringUtil.containsWordStartingWithIgnoreCase("aaa bbb ccc", "  ccc  ")); // Leading/trailing spaces
+
+        // Matches multiple words in sentence
+        assertTrue(StringUtil.containsWordStartingWithIgnoreCase("AAA bBb ccc  bbb", "bbB"));
+
+        // A sentence word(s) starts with the query word
+        assertTrue(StringUtil.containsWordStartingWithIgnoreCase("AAa bbb cCc bBb", "aa"));
+        assertTrue(StringUtil.containsWordStartingWithIgnoreCase("AAa bbb cCc bBb", "bb")); //multiple partial matches
+    }
     //---------------- Tests for getDetails --------------------------------------
 
     /*
