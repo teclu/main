@@ -27,7 +27,7 @@ public class AddTagCommandParser implements Parser<AddTagCommand>{
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagCommand.MESSAGE_USAGE));
         }
-        
+
         String trimmedArgs = args.trim();
         Index index;
 
@@ -57,13 +57,13 @@ public class AddTagCommandParser implements Parser<AddTagCommand>{
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
-        
+
         return new AddTagCommand(index, tagToAdd);
     }
-    
+
     public Set<Tag> parseTagToAdd(List<String> tagToAdd) throws IllegalValueException {
         assert tagToAdd != null;
         return ParserUtil.parseTags(tagToAdd);
     }
-    
+
 }

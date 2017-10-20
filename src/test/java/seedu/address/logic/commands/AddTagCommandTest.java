@@ -33,7 +33,7 @@ import seedu.address.testutil.PersonBuilder;
  */
 
 public class AddTagCommandTest {
-    
+
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     public static final String VALID_TAG = "colleagues";
 
@@ -61,7 +61,7 @@ public class AddTagCommandTest {
         Person editedPerson = new PersonBuilder(personInFilteredList).withTags(VALID_TAG).build();
         Set<Tag> tag = ParserUtil.parseTags(Arrays.asList(VALID_TAG));
         AddTagCommand addTagCommand = prepareCommand(INDEX_FIRST_PERSON, tag);
-        
+
         String expectedMessage = String.format(AddTagCommand.MESSAGE_ADD_TAG_SUCCESS, editedPerson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
@@ -132,7 +132,4 @@ public class AddTagCommandTest {
         addTagCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return addTagCommand;
     }
-
-    
-    
 }

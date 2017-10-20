@@ -92,10 +92,10 @@ public class AddTagCommand extends UndoableCommand {
         Email email = personToEdit.getEmail();
         Address address = personToEdit.getAddress();
         Birthday birthday = personToEdit.getBirthday();
-        
+
         Set<Tag> initialTags = personToEdit.getTags();
         Set<Tag> updatedTags = new HashSet<>();
-        
+
         try {
             updatedTags = getUpdatedTags(initialTags, addedTag);
         } catch (DuplicateTagException e) {
@@ -116,19 +116,19 @@ public class AddTagCommand extends UndoableCommand {
         if (!(other instanceof AddTagCommand)) {
             return false;
         }
-        
+
         // state check
         AddTagCommand e = (AddTagCommand) other;
         return index.equals(e.index)
                 && addedTag.equals(e.addedTag);
     }
-    
+
     public static HashSet<Tag> getUpdatedTags(Set<Tag> initialTag, Set<Tag> addedTag) throws DuplicateTagException{
         HashSet<Tag> updatedTags = new HashSet<>(initialTag);
         for (Tag toAdd : addedTag) {
             requireNonNull(toAdd);
             if (initialTag.contains(toAdd)) {
-                throw new DuplicateTagException(toAdd.tagName);
+                throw new DuplicateTagException();
             }
             updatedTags.add(toAdd);
         }
@@ -139,10 +139,10 @@ public class AddTagCommand extends UndoableCommand {
      * Signals that an operation would have violated the 'no duplicates' property of the list.
      */
     public static class DuplicateTagException extends DuplicateDataException {
-        protected DuplicateTagException(String tagName) {
-            super(MESSAGE_DUPLICATE_TAG + tagName);
+        protected DuplicateTagException() {
+            super(MESSAGE_DUPLICATE_TAG);
         }
-        
+
         public String getMessage() {
             return super.getMessage();
         }
