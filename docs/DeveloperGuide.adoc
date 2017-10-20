@@ -446,10 +446,10 @@ AddTagCommand is implemented in this way:
 [source,java]
 ----
 public class AddTagCommand extends UndoableCommand {
-	@Override
+    @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-		// ... list logic ...
-	}
+        // ... list logic ...
+    }
 }
 ----
 
