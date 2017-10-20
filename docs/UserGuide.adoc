@@ -237,10 +237,6 @@ Favourite contacts will appear on the top of the contact list.
 
 Directly calls or emails the person(s) identified by index number or otherwise.
 
-=== Setting favorites `In development for v2.0`
-
-Favorites will be listed before non-favorites and cannot be deleted by accident.
-
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
