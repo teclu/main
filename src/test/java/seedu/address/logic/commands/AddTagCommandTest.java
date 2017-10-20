@@ -34,8 +34,9 @@ import seedu.address.testutil.PersonBuilder;
 
 public class AddTagCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     public static final String VALID_TAG = "colleagues";
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void execute_unfilteredList_success() throws Exception {
