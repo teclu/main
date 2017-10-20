@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= K.N.S. AddressBook - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,13 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-W11-B3/main/
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W11-B3`      Since: `Sep 2017`      Licence: `MIT`
+
+== Introduction
+
+K.N.S. AddressBook is a desktop application that is built on Java. This developer guide provides you the information of how we have further adapted from the original source code (https://github.com/nus-cs2103-AY1718S1/addressbook-level4/[AddressBook-Level4 project]) provided by the https://github.com/se-edu[SE-EDU initiative].
 
 == Setting up
 
@@ -345,6 +349,135 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::personpanel[]
+=== Person Panel
+
+The PersonPanel replaces the previous BrowserPanel, and is a crucial part of MainWindow.
+
+==== Java Implementation
+
+By taking advantage of the java.util.logging package, PersonPanel is able to display all of the details of a contact (name, address, email, contact number, birthday, tags) selected in PersonCard. This implementation can be seen from the following 2 code snippets:
+
+[source,java]
+----
+@Subscribe
+private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    loadPersonPage(event.getNewSelection().person);
+}
+----
+
+**Code Snippet 1 (handlePersonPanelSelectionChangedEvent()):** Whenever a contact is selected, an event will be triggered. The method will respond to the event by obtaining a ReadOnlyPerson variable (which contains all the details of the contact), and pass it into loadPersonPage().
+
+[source,java]
+----
+private void loadPersonPage(ReadOnlyPerson person) {
+    name.setText(person.getName().fullName);
+    phone.setText("Phone: " + person.getPhone().toString());
+    address.setText("Address: " + person.getAddress().toString());
+	email.setText("Email: " + person.getEmail().toString());
+	birthday.setText("Birthday: " + person.getBirthday().toString());
+	tags.getChildren().clear();
+	person.getTags().forEach(tag -> {
+		Label tagLabel = new Label(tag.tagName);
+		tagLabel.setStyle("-fx-background-color: " + tag.tagColour);
+		tags.getChildren().add(tagLabel);
+	});
+}
+----
+
+**Code Snippet 2 (loadPersonPage()):** The ReadOnlyPerson variable passed into loadPersonPage can then be used to extract the contact's details for display; the UI will be updated accordingly to reflect these changes.
+
+[NOTE]
+Upon opening the application, no contact details will be displayed since no contact has been selected yet.
+
+==== Layout Implementation
+
+The layout for PersonPanel is specified in PersonPanel.fxml. Visually, it can be broken down into 2 parts as shown:
+
+image::PersonPanelLayout.png[width="760"]
+
+**Part 1 (primaryDetails):** This is subdivided into parts A and B. Part A contains the avatar picture of the contact. At the moment, there is a placeholder image. In the future, we will implement support for custom avatars. Part B contains the Name and Tags of the contact, which we found to be important in recognising a displayed contact quickly. Hence, they are in a larger font in order to stand out.
+
+**Part 2 (secondaryDetails):** This displays the Address, Email, Contact Number and Birthday of the contact. As these details are less important than the Name and Tags, they are placed below and are in a smaller font. At the moment, this section appears simple but empty. We plan to implement more features, such as a "Notes about Contact" and "Birthday Countdown".
+
+==== Design Considerations
+
+**Aspect:** Display of Contact's Details +
+**Alternative 1 (current choice):** Replace BrowserPanel with PersonPanel, which displays all of the contacts details. Remove all details but Name and Tags from PersonCard.  +
+**Pros:** We can build upon PersonPanel and add more features to it, that the BrowserPanel could not achieve.  +
+**Cons:** PersonPanel will not be able to display personal web pages (e.g. Contact's Social Media page). +
+**Alternative 2:** Keep BrowserPanel and use HTML files to display contact details instead. +
+**Pros:** No need to modify existing code; instead just figure out a way to edit and display HTML files that show the contact's details. +
+**Cons:** May take too long to implement since we are not familiar with how we can do so.
+
+---
+
+**Aspect:** Display of Tags In PersonPanel (and PersonCard). +
+**Alternative 1 (current choice):** Randomly colourise tags to make them distinct. +
+**Pros:** Quick to implement and makes it easier for user to differentiate between tags. +
+**Cons:** Tags are always changing colour for each new instance of the application; may seem confusing. +
+**Alternative 2:** Keep the previous blue colour for all tags. +
+**Pros:** Consistent and simple; no work is needed to be done. +
+**Cons:** Takes users a longer time to differentiate between tags.
+
+---
+
+**Aspect:** Addition of Icons for secondaryDetails +
+**Alternative 1 (current choice):** Place icons on the left of each contact detail. +
+**Pros:** Quick to implement and makes it easier for user to differentiate between each contact detail. Icons can be easily taken from Google's Material.io website. +
+**Cons:** N/A +
+**Alternative 2:** Use different colours for each contact detail. +
+**Pros:** Even more quick to implement since it only involves CSS changes. +
+**Cons:** Bad idea design-wise because it violates the Triadic Colour Scheme. It could make the application look less professional and unattractive.
+// end::personpanel[]
+
+// tag::addtagcommand[]
+=== Add Tag
+
+The add tag command is facilitated by the AddTagCommand, which is useful for adding a tag to a person inside the address book.
+
+==== Java Implementation
+
+AddTagCommand is a command. As AddTagCommand modifies the state of the address book (adding a tag to a contact in the address book), AddTagCommand inherits UndoableCommands. Therefore, users can undo/redo their previously entered AddTagCommand.
+
+AddTagCommand is implemented in this way:
+
+[source,java]
+----
+public class AddTagCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        // ... list logic ...
+    }
+}
+----
+
+AddTagCommand can be used by calling the method with an index and a string of tag name that will be added, shown by this code snippet:
+
+[source,java]
+----
+public AddTagCommand(Index index, Set<Tag> addedTag) {
+    requireNonNull(index);
+    requireNonNull(addedTag);
+
+    this.index = index;
+    this.addedTag = addedTag;
+}
+----
+
+==== Design Considerations
+
+**Aspect:** Implementation of AddTagCommand +
+**Alternative 1 (current choice):** Implementing a new command AddTagCommand instead of using the existing Edit command.  +
+**Pros:** Users can add a single tag only by typing the new tag that they want to assign to a contact.  +
+**Cons:** Currently AddTagCommand could only add a single new tag every time it is executed (future enhancement will enable AddTagCommand to add more than 1 tag when executed). +
+**Alternative 2:** Use existing Edit command to add a single tag to a person in the address book. +
+**Pros:** Less command to remember. +
+**Cons:** Users need to type all existing tags added by the new tag when they are using Edit command. There is a possibility of some error that can be avoided when using AddTagCommand, such as mistyping the existing tags or not adding a complete set of existing tags.
+
+// end::addtagcommand[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -469,251 +602,6 @@ a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
 [appendix]
-== Suggested Programming Tasks to Get Started
-
-Suggested path for new programmers:
-
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
-
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
-
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-[TIP]
-Do take a look at the link:#logic-component[Design: Logic Component] section before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** See this https://github.com/se-edu/addressbook-level4/pull/590/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-[TIP]
-Do take a look at the link:#model-component[Design: Model Component] section before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] API needs to be updated.
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
-** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Ui` component
-
-[TIP]
-Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#initTags(ReadOnlyPerson)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/592/files[PR] for the full solution.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(event)`] to react to this event appropriately.
-** See this https://github.com/se-edu/addressbook-level4/pull/593/files[PR] for the full solution.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-[TIP]
-Do take a look at the link:#storage-component[Design: Storage Component] section before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
-****
-
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `ReadOnlyPerson` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Main:**
-
-. Add three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()`. Be sure to implement these newly created methods in link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`], which implements the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] interface.
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-. Be sure to modify the logic of the constructor and `toModelType()`, which handles the conversion to/from  link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Tests:**
-
-. Fix `validAddressBook.xml` such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#bindListeners()`] to add the binding for `remark`.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the remark label.
-. In link:{repoURL}/src/test/java/seedu/address/ui/PersonCardTest.java[`PersonCardTest`], call `personWithTags.setRemark(ALICE.getRemark())` to test that changes in the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`] 's remark correctly updates the corresponding link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`].
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
-
-[appendix]
 == User Stories
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
@@ -743,15 +631,13 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |normal user |find contact based on phone number |know who calls me when unknown number calls/text message me
 
-|`* * *` |user with a lousy computer |actually run the application |can actually use its functions
-
 |`* * *` |student/worker |assign groups/tags |categorise and sort my contacts as needed
 
 |`* * *` |forgetful user |find with partial matches |search for contacts that I only partially remember the name of
 
 |`* * *` |user with multiple addressbook |import contact details |copy contacts to another addressbook easily
 
-|`* * *` |careful/paranoid user |back up my contacts' details |restore them in case addressbook dies on me
+|`* * *` |careful/paranoid user |back up my contacts' details |Restore the contacts in case the original storage file is deleted or corrupted
 
 |`* * *` |careful/paranoid user |export my contacts' details |restore them in another computer if needed
 
@@ -759,7 +645,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |expert user |use the product seamlessly |start using the product immediately and easily
 
-|`* *` |expert user |set command to my preference |easily remember the command
+|`* *` |expert user |set aliases for commands |easily remember the command
 
 |`* *` |elderly person |adjust the product's font-size |view my contacts' details with ease
 
@@ -767,17 +653,17 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |forgetful user |see my last command |know the last change that I made
 
-|`* *` |normal user |see recently accessed contact |easily find the person's details without searching
+|`* *` |user |see recently accessed contact |easily find the person's details without searching
 
-|`* *` |normal user |input case-insensitive command |input command easily
+|`* *` |user |input case-insensitive command |input command easily
 
-|`* *` |normal user |add a picture to contact |remember my contact better
+|`* *` |user |add a picture to contact |remember my contact better
 
-|`* *` |normal user |get suggestion for command correction |input correct command easily after I input wrongly
+|`* *` |user |get suggestion for command correction |input correct command easily after I input wrongly
 
-|`* *` |normal user |save my contact's birthday |remember my contact's birthday
+|`* *` |user |save my contact's birthday |remember my contact's birthday
 
-|`* *` |normal user |get reminded of a contact's birthday |wish him/her happy birthday
+|`* *` |user |get reminded of a contact's birthday |wish him/her happy birthday
 
 |`* *` |user multiple devices |set multiple instances of app to be in sync |use addressbook across multiple devices seamlessly
 
@@ -791,7 +677,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |=======================================================================
 
-{More to be added}
 
 [appendix]
 == Use Cases
@@ -932,11 +817,9 @@ Use case resumes at step 2.
 .  Should be available to use with or without internet access.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 .  A user with little to no experience with a command line interface should be able to have easy access to the user guide, and be able to familiarise himself/herself with the commands.
-.  A user should only be able to use the supported commands; unsupported commands should not get executed.
-.  A user should be able to add, edit and remove a contact with ease. 
-.  A user should be able to group/tag their contacts if desired.
+.  A user should only be able to use the supported commands; unsupported commands should be handled gracefully.
 .  A user is able to back up and restore all contacts in the event of the application breaking.
-.  The response to any user action should become visible within 5 seconds.
+.  The response to any user action should become visible within 5 seconds at maximum contacts capacity.
 .  The application should be offered as a free software available for download.
 .  The functionality of the application should be able to be increased or extended even after deployment.
 .  The source code should be open source.
@@ -944,33 +827,37 @@ Use case resumes at step 2.
 [appendix]
 == Glossary
 
+[[command-line-interface]]
+Command Line Interface
+
+....
+A Command Line Interface (CLI) is a user interface to a computer's operating system or an application in which the user responds to a visual prompt by typing in a command on a specified line, receives a response back from the system, and then enters another command, and so forth.
+....
+
+[[java]]
+Java
+
+....
+Java is a general purpose, high-level programming language developed by Sun Microsystems.
+....
+
 [[mainstream-os]]
 Mainstream OS
 
 ....
-Windows, Linux, Unix, OS-X
+Windows, Linux, Unix, OS-X.
+....
+
+[[open-source]]
+Open Source
+
+....
+Software for which the original source code is made freely available and may be redistributed and modified.
 ....
 
 [[private-contact-detail]]
 Private contact detail
 
 ....
-A contact detail that is not meant to be shared with others
+A contact detail that is not meant to be shared with others.
 ....
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...

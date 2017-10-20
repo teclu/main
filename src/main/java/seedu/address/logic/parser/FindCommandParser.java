@@ -1,12 +1,16 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Arrays;
 
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.TagListContainsKeywordsPredicate;
+
 
 /**
  * Parses input arguments and creates a new FindCommand object
@@ -20,14 +24,28 @@ public class FindCommandParser implements Parser<FindCommand> {
      */
     public FindCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
+        if (trimmedArgs.isEmpty() || isSearchablePrefix(trimmedArgs)) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        String[] nameKeywords = trimmedArgs.split("\\s+");
+        String[] keywords = trimmedArgs.split("\\s+");
+        String toSearch = keywords[0];
+        if (isSearchablePrefix(toSearch)) {
+            keywords = Arrays.copyOfRange(keywords, 1, keywords.length);
+        }
 
-        return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+        if (toSearch.equals(PREFIX_TAG.getPrefix())) {
+            return new FindCommand(new TagListContainsKeywordsPredicate(Arrays.asList(keywords)));
+        }
+        return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
+    }
+
+    /**
+     * Checks if the given string prefix is a searchable prefix (i.e n/ and t/ currently).
+     */
+    public boolean isSearchablePrefix(String prefixString) {
+        return prefixString.equals(PREFIX_NAME.getPrefix()) || prefixString.equals(PREFIX_TAG.getPrefix());
     }
 
 }

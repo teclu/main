@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddTagCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
@@ -49,24 +50,34 @@ public class AddressBookParser {
         switch (commandWord) {
 
         case AddCommand.COMMAND_WORD:
+        case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
 
+        case AddTagCommand.COMMAND_WORD:
+            return new AddTagCommandParser().parse(arguments);
+
         case EditCommand.COMMAND_WORD:
+        case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
 
         case SelectCommand.COMMAND_WORD:
+        case SelectCommand.COMMAND_ALIAS:
             return new SelectCommandParser().parse(arguments);
 
         case DeleteCommand.COMMAND_WORD:
+        case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
+        case ClearCommand.COMMAND_ALIAS:
             return new ClearCommand();
 
         case FindCommand.COMMAND_WORD:
+        case FindCommand.COMMAND_ALIAS:
             return new FindCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
+        case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
 
         case HistoryCommand.COMMAND_WORD:
@@ -79,9 +90,11 @@ public class AddressBookParser {
             return new HelpCommand();
 
         case UndoCommand.COMMAND_WORD:
+        case UndoCommand.COMMAND_ALIAS:
             return new UndoCommand();
 
         case RedoCommand.COMMAND_WORD:
+        case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
 
         default:

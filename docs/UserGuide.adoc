@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= K.N.S. AddressBook - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,9 +12,17 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W11-B3`      Since: `Sep 2017`      Licence: `MIT`
 
-== Quick Start
+== Introduction
+
+K.N.S. AddressBook is a free desktop application that stores your contacts and their details. All interactions are done through an in-built Command Line Interface (CLI), which allows you do add, edit and remove contacts in a speedy manner once you have gotten used to it.
+
+K.N.S. AddressBook is available on Windows and Mac OS X operating systems.
+
+== Getting Started
+
+=== Installation
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -24,10 +32,12 @@ This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Double-click the file to start the app. The GUI should appear in a few seconds as such:
 +
 image::Ui.png[width="790"]
-+
+
+=== Using the CLI
+
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
@@ -39,7 +49,31 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
-== Features
+== Key Features
+
+=== Person Panel `In Development For v1.5`
+
+This is where the details of a selected contact will be displayed. As of now, only the name, address, phone number and tags are displayed here. Planned features for the Person Panel include:
+
+* `For v1.5` Set contact's picture
+* `For v1.5` Notes/Comments on the contact
+* `For v1.5` Birthday Countdown
+* `For v2.0` Birthday Reminder
+
+=== Colour Theme Switcher `In Development For v1.5`
+
+As of now, the dark theme is the default colour theme for the application. Planned features include:
+
+* `For v1.5` Command to change the theme, e.g. `theme light`
+* `For v1.5` 5 Preset Themes: Light, Dark (current default theme), Red, Blue and Green.
+* `For v1.5` Detailed instructions for advanced users to make their own themes.
+
+=== Saving the data
+
+Address book data are saved in the hard disk automatically after any command that changes the data. +
+There is no need to save manually.
+
+== Available CLI Commands
 
 ====
 *Command Format*
@@ -54,28 +88,28 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
-=== Adding a person: `add`
+=== Adding a person: `add` or `a`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]...` or `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/01/01/1991`
+* `a n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/02/02/1992 t/criminal`
 
-=== Listing all persons : `list`
+=== Listing all persons : `list` or `l`
 
 Shows a list of all persons in the address book. +
-Format: `list`
+Format: `list` or `l`
 
-=== Editing a person : `edit`
+=== Editing a person : `edit` or `e`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...` or `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -89,33 +123,62 @@ Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
+* `e 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+`In development for v2.0`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+* Ability to cumulatively add or remove tags
+
+=== Locating persons: `find` or `f`
+Finds persons whose names or tags, indicated by an optional prefix, contain any of the given keywords. Defaults to find by name. +
+Format: `find [PREFIX] KEYWORD [MORE_KEYWORDS]` or `f [PREFIX] KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
+==== By name
 
+To find by name, use the prefix `n/` or no prefix at all. +
+Examples :
+
+ * `find n/ John` +
+ Returns `john` and `John Doe`
+ * `f John` is equivalent with above example.
+ * `find Betsy Tim John` +
+ Returns any person having names `Betsy`, `Tim`, or `John`
+
+==== By tag
+To find by tag, use the prefix `t/`. +
+****
+* Will match person with any tag matching at least one of the keywords.
+****
 Examples:
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `find t/ family` +
+Returns any person with the tag `family`
+* `f t/ friends family colleague` +
+Returns any person with at least one of the tags `friends`, `family`, or `colleague`.
 
-=== Deleting a person : `delete`
+==== By any field
+`In development for v2.0`
+
+==== By multiple fields and keywords
+`In development for v2.0`
+
+==== Strict searching (AND search)
+`In development for v2.0`
+
+==== Partial matching
+`In development for v2.0`
+
+=== Deleting a person : `delete` or `d`
 
 Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Format: `delete INDEX` or `d INDEX`
 
 ****
 * Deletes the person at the specified `INDEX`.
@@ -129,13 +192,13 @@ Examples:
 `delete 2` +
 Deletes the 2nd person in the address book.
 * `find Betsy` +
-`delete 1` +
+`d 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Selecting a person : `select` or `s`
 
 Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Format: `select INDEX` or `s INDEX`
 
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
@@ -149,8 +212,24 @@ Examples:
 `select 2` +
 Selects the 2nd person in the address book.
 * `find Betsy` +
-`select 1` +
+`s 1` +
 Selects the 1st person in the results of the `find` command.
+
+=== Sort the address book `In development for v1.5`
+
+Contact list can be sorted in alphabetical order.
+
+=== Set favourite contacts `In development for v1.5`
+
+Favourite contacts will appear on the top of the contact list.
+
+=== Contacting a person `In development for v2.0`
+
+Directly calls or emails the person(s) identified by index number or otherwise.
+
+=== Setting favorites `In development for v2.0`
+
+Favorites will be listed before non-favorites and cannot be deleted by accident.
 
 === Listing entered commands : `history`
 
@@ -163,10 +242,10 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+=== Undoing previous command : `undo` or `u`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Format: `undo` or `u`
 
 [NOTE]
 ====
@@ -181,18 +260,18 @@ Examples:
 
 * `select 1` +
 `list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
+`u` +
+The `u` command fails as there are no undoable commands executed previously.
 
 * `delete 1` +
 `clear` +
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+=== Redoing the previously undone command : `redo` or `r`
 
 Reverses the most recent `undo` command. +
-Format: `redo`
+Format: `redo` or `r`
 
 Examples:
 
@@ -208,38 +287,28 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `clear` +
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
+`r` (reapplies the `delete 1` command) +
+`r` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+=== Clearing all entries : `clear` or `c`
 
 Clears all entries from the address book. +
-Format: `clear`
+Format: `clear` or `c`
 
 === Exiting the program : `exit`
 
 Exits the program. +
 Format: `exit`
 
-=== Saving the data
+=== Command Summary
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
-
-== FAQ
-
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
-
-== Command Summary
-
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/16/08/1995 t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
@@ -250,3 +319,13 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+
+== FAQ
+
+*Q*: How do I transfer my data to another Computer? +
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+
+== Glossary
+
+To be done by v1.5.
+

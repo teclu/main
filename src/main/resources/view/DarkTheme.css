@@ -305,11 +305,6 @@
     -fx-padding: 8 1 8 1;
 }
 
-#cardPane {
-    -fx-background-color: transparent;
-    -fx-border-width: 0;
-}
-
 #commandTypeLabel {
     -fx-font-size: 11px;
     -fx-text-fill: #F70D1A;
@@ -326,7 +321,7 @@
     -fx-text-fill: white;
 }
 
-#filterField, #personListPanel, #personWebpage {
+#filterField, #personListPanel {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
 }
 
@@ -348,3 +343,51 @@
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+
+#cardPane {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+#cardPane #name, #cardPane #id {
+    -fx-font-size: 14pt;
+}
+
+#cardPane #tags .label {
+    -fx-font-size: 11pt;
+}
+
+#personPanel #name {
+    -fx-font-size: 40pt;
+    -fx-text-fill: #FFFFFF;
+}
+
+#personPanel #tags .label {
+    -fx-font-size: 20pt;
+}
+
+#personPanel #address, #personPanel #email, #personPanel #phone, #personPanel #birthday {
+    -fx-font-size: 14pt;
+    -fx-text-fill: #FFFFFF;
+}
+
+#personPanel .split-pane-divider {
+    -fx-background-color: derive(#1d1d1d, 50%);
+}
+
+#addressWhite {
+    -fx-image: url("../images/addressWhite.png");
+}
+
+#phoneWhite {
+    -fx-image: url("../images/phoneWhite.png");
+}
+
+#emailWhite {
+    -fx-image: url("../images/emailWhite.png");
+}
+
+#birthdayWhite {
+    -fx-image: url("../images/birthdayWhite.png");
+}
+
