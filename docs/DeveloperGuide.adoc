@@ -432,6 +432,52 @@ image::PersonPanelLayout.png[width="760"]
 **Cons:** Bad idea design-wise because it violates the Triadic Colour Scheme. It could make the application look less professional and unattractive.
 // end::personpanel[]
 
+// tag::addtagcommand[]
+=== Add Tag
+
+The add tag command is facilitated by the AddTagCommand, which is useful for adding a tag to a person inside the address book.
+
+==== Java Implementation
+
+AddTagCommand is a command. As AddTagCommand modifies the state of the address book (adding a tag to a contact in the address book), AddTagCommand inherits UndoableCommands. Therefore, users can undo/redo their previously entered AddTagCommand.
+
+AddTagCommand is implemented in this way:
+
+[source,java]
+----
+public class AddTagCommand extends UndoableCommand {
+	@Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+		// ... list logic ...
+	}
+}
+----
+
+AddTagCommand can be used by calling the method with an index and a string of tag name that will be added, shown by this code snippet:
+
+[source,java]
+----
+public AddTagCommand(Index index, Set<Tag> addedTag) {
+    requireNonNull(index);
+    requireNonNull(addedTag);
+
+    this.index = index;
+    this.addedTag = addedTag;
+}
+----
+
+==== Design Considerations
+
+**Aspect:** Implementation of AddTagCommand +
+**Alternative 1 (current choice):** Implementing a new command AddTagCommand instead of using the existing Edit command.  +
+**Pros:** Users can add a single tag only by typing the new tag that they want to assign to a contact.  +
+**Cons:** Currently AddTagCommand could only add a single new tag every time it is executed (future enhancement will enable AddTagCommand to add more than 1 tag when executed). +
+**Alternative 2:** Use existing Edit command to add a single tag to a person in the address book. +
+**Pros:** Less command to remember. +
+**Cons:** Users need to type all existing tags added by the new tag when they are using Edit command. There is a possibility of some error that can be avoided when using AddTagCommand, such as mistyping the existing tags or not adding a complete set of existing tags.
+
+// end::addtagcommand[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
