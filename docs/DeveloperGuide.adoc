@@ -398,7 +398,7 @@ The layout for PersonPanel is specified in PersonPanel.fxml. Visually, it can be
 image::PersonPanelLayout.png[width="760"]
 
 **Part 1 (primaryDetails):** This is subdivided into parts A and B. Part A contains the avatar picture of the contact. At the moment, there is a placeholder image. In the future, we will implement support for custom avatars. Part B contains the Name and Tags of the contact, which we found to be important in recognising a displayed contact quickly. Hence, they are in a larger font in order to stand out.
-	
+
 **Part 2 (secondaryDetails):** This displays the Address, Email, Contact Number and Birthday of the contact. As these details are less important than the Name and Tags, they are placed below and are in a smaller font. At the moment, this section appears simple but empty. We plan to implement more features, such as a "Notes about Contact" and "Birthday Countdown".
 
 ==== Design Considerations
@@ -504,6 +504,55 @@ We then replace the use of the previous method in the Predicate classes in model
 **Alternative 2:** Matches can be from anywhere in the word +
 **Pros:** More intuitive way of searching, simpler to understand. +
 **Cons:** Search results become less relevant for short keywords. +
+
+=======
+
+
+// tag::addtagcommand[]
+=== Add Tag
+
+The add tag command is facilitated by the AddTagCommand, which is useful for adding a tag to a person inside the address book.
+
+==== Java Implementation
+
+AddTagCommand is a command. As AddTagCommand modifies the state of the address book (adding a tag to a contact in the address book), AddTagCommand inherits UndoableCommands. Therefore, users can undo/redo their previously entered AddTagCommand.
+
+AddTagCommand is implemented in this way:
+
+[source,java]
+----
+public class AddTagCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        // ... list logic ...
+    }
+}
+----
+
+AddTagCommand can be used by calling the method with an index and a string of tag name that will be added, shown by this code snippet:
+
+[source,java]
+----
+public AddTagCommand(Index index, Set<Tag> addedTag) {
+    requireNonNull(index);
+    requireNonNull(addedTag);
+
+    this.index = index;
+    this.addedTag = addedTag;
+}
+----
+
+==== Design Considerations
+
+**Aspect:** Implementation of AddTagCommand +
+**Alternative 1 (current choice):** Implementing a new command AddTagCommand instead of using the existing Edit command.  +
+**Pros:** Users can add a single tag only by typing the new tag that they want to assign to a contact.  +
+**Cons:** Currently AddTagCommand could only add a single new tag every time it is executed (future enhancement will enable AddTagCommand to add more than 1 tag when executed). +
+**Alternative 2:** Use existing Edit command to add a single tag to a person in the address book. +
+**Pros:** Less command to remember. +
+**Cons:** Users need to type all existing tags added by the new tag when they are using Edit command. There is a possibility of some error that can be avoided when using AddTagCommand, such as mistyping the existing tags or not adding a complete set of existing tags.
+
+// end::addtagcommand[]
 
 
 === Logging
@@ -683,7 +732,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |see recently accessed contact |easily find the person's details without searching
 
-|`* *`  user |input case-insensitive command |input command easily
+|`* *` |user |input case-insensitive command |input command easily
 
 |`* *` |user |add a picture to contact |remember my contact better
 
@@ -705,7 +754,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |=======================================================================
 
-{More to be added}
 
 [appendix]
 == Use Cases

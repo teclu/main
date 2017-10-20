@@ -54,7 +54,9 @@ public class PersonPanelHandle extends NodeHandle<Node> {
         return address.getText();
     }
 
-    public String getBirthday() { return birthday.getText(); }
+    public String getBirthday() {
+        return birthday.getText();
+    }
 
     public List<String> getTags() {
         return tagLabels
