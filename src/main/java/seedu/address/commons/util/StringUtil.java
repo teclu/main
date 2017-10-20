@@ -42,6 +42,36 @@ public class StringUtil {
     }
 
     /**
+     * Returns true if the sentence contains a word that starts with the given word
+     *  Ignores case, and a full word match is not required
+     *   <br>examples:<pre>
+     *       containsPartialWordIgnoreCase("ABc def", "abc") == true
+     *       containsPartialWordIgnoreCase("ABc def", "DEF") == true
+     *       containsPartialWordIgnoreCase("ABc def", "AB") == true //partial match
+     *       </pre>
+     * @param sentence cannot be null
+     * @param word cannot be null, cannot be empty, must be a single word
+     */
+    public static boolean containsWordStartingWithIgnoreCase(String sentence, String word) {
+        requireNonNull(sentence);
+        requireNonNull(word);
+
+        String preppedWord = word.trim();
+        checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
+        checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
+
+        String preppedSentence = sentence;
+        String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
+
+        for (String wordInSentence: wordsInPreppedSentence) {
+            if (wordInSentence.regionMatches(true, 0, preppedWord, 0, preppedWord.length())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Returns a detailed message of the t, including the stack trace.
      */
     public static String getDetails(Throwable t) {
