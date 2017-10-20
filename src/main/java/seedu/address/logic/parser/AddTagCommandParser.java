@@ -2,7 +2,6 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.ParserUtil.parseTags;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +13,7 @@ import seedu.address.logic.commands.AddTagCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
 
-public class AddTagCommandParser implements Parser<AddTagCommand>{
+public class AddTagCommandParser implements Parser<AddTagCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the AddTagCommand
      * and returns an AddTagCommand object for execution.
@@ -31,7 +30,7 @@ public class AddTagCommandParser implements Parser<AddTagCommand>{
         String trimmedArgs = args.trim();
         Index index;
 
-        if(trimmedArgs.isEmpty()) {
+        if (trimmedArgs.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagCommand.MESSAGE_USAGE));
         }
 
@@ -61,6 +60,11 @@ public class AddTagCommandParser implements Parser<AddTagCommand>{
         return new AddTagCommand(index, tagToAdd);
     }
 
+    /**
+     * Parses the given {@code Tag} in the context of the AddTagCommand
+     * and returns a set of tag object for execution.
+     * @throws IllegalValueException if the user input does not conform the expected format
+     */
     public Set<Tag> parseTagToAdd(List<String> tagToAdd) throws IllegalValueException {
         assert tagToAdd != null;
         return ParserUtil.parseTags(tagToAdd);

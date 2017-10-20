@@ -10,7 +10,6 @@ import java.util.Set;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.DuplicateDataException;
-import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
@@ -22,7 +21,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
 
 /**
  * Adds a tag to a person in the address book.
@@ -84,7 +82,7 @@ public class AddTagCommand extends UndoableCommand {
      * edited with {@code editPersonDescriptor}.
      */
     private static Person createEditedPerson(ReadOnlyPerson personToEdit,
-                                             Set<Tag> addedTag) throws CommandException{
+                                             Set<Tag> addedTag) throws CommandException {
         assert personToEdit != null;
 
         Name name = personToEdit.getName();
@@ -123,7 +121,7 @@ public class AddTagCommand extends UndoableCommand {
                 && addedTag.equals(e.addedTag);
     }
 
-    public static HashSet<Tag> getUpdatedTags(Set<Tag> initialTag, Set<Tag> addedTag) throws DuplicateTagException{
+    public static HashSet<Tag> getUpdatedTags(Set<Tag> initialTag, Set<Tag> addedTag) throws DuplicateTagException {
         HashSet<Tag> updatedTags = new HashSet<>(initialTag);
         for (Tag toAdd : addedTag) {
             requireNonNull(toAdd);
