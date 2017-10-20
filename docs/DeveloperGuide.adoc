@@ -432,6 +432,80 @@ image::PersonPanelLayout.png[width="760"]
 **Cons:** Bad idea design-wise because it violates the Triadic Colour Scheme. It could make the application look less professional and unattractive.
 // end::personpanel[]
 
+//tag::partialfind[]
+=== Partial Find
+The partial matching of the Find command is implemented by creating a method in the `StringUtil` class with the help of the `regionMatches` method from the java `String` class.
+It replaces the method for matching in all predicate classes that is used by the command.
+
+[NOTE]
+
+The Find command now only exclusively use partial matching and has lost the full matching functionality
+
+
+Previously, the method used for matching was implemented as such :
+[source, java]
+----
+public static boolean containsWordIgnoreCase(String sentence, String word) {
+        // ...check and prepare arguments..
+        for (String wordInSentence: wordsInPreppedSentence) {
+            if (wordInSentence.equalsIgnoreCase(preppedWord)) {
+                return true;
+            }
+        }
+        return false;
+    }
+----
+
+By using the `equalsIgnoreCase` method, the query word has to exactly match, ignoring case, the sentence word for the method to return `true`. +
+
+
+
+Now, we introduce a  slightly modified version to allow for partial matching as such :
+[source, java]
+----
+ public static boolean containsWordStartingWithIgnoreCase(String sentence, String word) {
+        //..check and prepare arguments..
+        for (String wordInSentence: wordsInPreppedSentence) {
+            if (wordInSentence.regionMatches(true, 0, preppedWord, 0, preppedWord.length())) {
+                return true;
+            }
+        }
+        return false;
+    }
+----
+
+By using `regionMatches` from 0 (start of each word) to the length of the query word, we allow the sentence word to still match with the query word, even if the sentence word is longer. +
+More precisely, the method will now return `true` as long as the sentence word and query word matches within the specified region (start to query word's length).
+[NOTE]
+
+This type of partial matching only matches from the start of each word. It won't accept matches that start from the middle of the word. (e.g. `find mel` will match `Melissa` but not `Amelia`)
+
+
+We then replace the use of the previous method in the Predicate classes in model (e.g. `NameContainsKeywordsPredicate`) with the new method so that the Find command actually uses partial matching.
+
+
+==== Design Considerations
+
+**Aspect:** Exclusive use of partial matching +
+**Alternative 1 (current choice):** Find command exclusively uses partial matching. +
+**Pros:** Simple implementation, doesn't affect complexity from user's perspective and easier for users to utilize Find command. +
+**Cons:** Users lose the ability to do full matching when it would be useful (e.g. A lot of people with similiar names). +
+**Alternative 2:** Give the option to toggle/use either partial matching or full matching +
+**Pros:** More flexible and powerful. +
+**Cons:** Requires more complicated syntax which can be confusing to new users, most use cases are already covered by partial matching.
+
+
+---
+
+**Aspect:** Type of partial matching +
+**Alternative 1 (current choice):** Matches are required to be from the start of each word. +
+**Pros:** Restricts the scope of search which increases relevancy but still giving enough flexibility for users. +
+**Cons:** Can be unintuitive, less powerful. +
+**Alternative 2:** Matches can be from anywhere in the word +
+**Pros:** More intuitive way of searching, simpler to understand. +
+**Cons:** Search results become less relevant for short keywords. +
+
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
