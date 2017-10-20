@@ -137,7 +137,8 @@ Format: `find [PREFIX] KEYWORD [MORE_KEYWORDS]`
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only full words will be matched e.g. `Han` will not match `Hans`
+* Partial words will be matched e.g. `Han` can match `Hans` +
+  See link:#partial-matching[Partial Matching] section for more details.
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 ==== By name
@@ -149,7 +150,7 @@ Examples :
  Returns `john` and `John Doe`
  * `find John` is equivalent with above example.
  * `find Betsy Tim John` +
- Returns any person having names `Betsy`, `Tim`, or `John`
+ Returns any person having names `Betsy`, `Tim`, or `John` or that starts with them (e.g. `Timothy`)
 
 ==== By tag
 To find by tag, use the prefix `t/`. +
@@ -163,6 +164,17 @@ Returns any person with the tag `family`
 * `find t/ friends family colleague` +
 Returns any person with at least one of the tags `friends`, `family`, or `colleague`.
 
+==== Partial matching
+`Since v1.2` +
+The Find command accepts partial matches by default, but only if it's from the beginning of each word. +
+And it will not match if the keyword is longer than the entry. +
+Examples :
+
+* `find mel` +
+Matches `Melissa` but not `Amelia`
+* `find leon` +
+Matches `Leonard` but not `Leo`
+
 ==== By any field
 `In development for v2.0`
 
@@ -170,9 +182,6 @@ Returns any person with at least one of the tags `friends`, `family`, or `collea
 `In development for v2.0`
 
 ==== Strict searching (AND search)
-`In development for v2.0`
-
-==== Partial matching
 `In development for v2.0`
 
 === Deleting a person : `delete`
