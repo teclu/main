@@ -504,9 +504,7 @@ We then replace the use of the previous method in the Predicate classes in model
 **Alternative 2:** Matches can be from anywhere in the word +
 **Pros:** More intuitive way of searching, simpler to understand. +
 **Cons:** Search results become less relevant for short keywords. +
-
-=======
-
+// end::partialfind[]
 
 // tag::addtagcommand[]
 === Add Tag
