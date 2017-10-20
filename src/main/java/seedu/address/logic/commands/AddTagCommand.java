@@ -38,7 +38,7 @@ public class AddTagCommand extends UndoableCommand {
             + "neighbours";
 
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Tag: %2$s";
-    public static final String MESSAGE_ADD_TAG_SUCCESS = "Tag added! " + MESSAGE_ARGUMENTS;
+    public static final String MESSAGE_ADD_TAG_SUCCESS = "Tag added!";
     public static final String MESSAGE_DUPLICATE_TAG = "This tag already exists for this person.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person is already in the address book.";
 
