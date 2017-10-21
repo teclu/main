@@ -14,7 +14,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 public class Avatar {
     public static final String MESSAGE_AVATAR_CONSTRAINTS = "Avatar should be a valid online URL or local path.";
-    public static final String defaultPath = "src/main/java/seedu/address/model/person/avatar/avatarPlaceholders/";
+    public static final String DEFAULT_PATH = "src/main/java/seedu/address/model/person/avatar/avatarPlaceholders/";
     public final String value;
     private URL url;
     private BufferedImage image;
@@ -24,13 +24,13 @@ public class Avatar {
      */
     public Avatar() throws IllegalValueException {
         try {
-            File defaultAvatar = new File(defaultPath + "1.png");
+            File defaultAvatar = new File(DEFAULT_PATH + "1.png");
             this.url = defaultAvatar.toURI().toURL();
             this.image = ImageIO.read(this.url);
         } catch (Exception e) {
             throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
         }
-        this.value = defaultPath + "1.png";
+        this.value = DEFAULT_PATH + "1.png";
     }
 
     /**
@@ -41,10 +41,10 @@ public class Avatar {
     public Avatar(String url) throws IllegalValueException {
         try {
             if (url.isEmpty()) {
-                File defaultAvatar = new File(defaultPath + "1.png");
+                File defaultAvatar = new File(DEFAULT_PATH + "1.png");
                 this.url = defaultAvatar.toURI().toURL();
                 this.image = ImageIO.read(this.url);
-                this.value = defaultPath + "1.png";
+                this.value = DEFAULT_PATH + "1.png";
             } else {
                 File defaultAvatar = new File(url);
                 if (url.contains("https://") || url.contains("http://")) {
