@@ -22,17 +22,17 @@ import static java.util.Objects.requireNonNull;
 
 public class Avatar extends Applet {
     public static final String MESSAGE_AVATAR_CONSTRAINTS = "Avatar should be a valid online URL or local path.";
-    public static final String defaultPath = "src/main/java/seedu/address/model/person/avatar/avatarPlaceholders/";
-    public String value;
-    public URL url;
-    public Image image;
+    public static final String DEFAULT_PATH = "src/main/java/seedu/address/model/person/avatar/avatarPlaceholders/";
+    public final String value;
+    private URL url;
+    private Image image;
 
     /**
      * Sets a default placeholder avatar for new contacts being added.
      */
     public Avatar() {
         try {
-            this.url = new File(defaultPath + "1.png").toURI().toURL();
+            this.url = new File(DEFAULT_PATH + "1.png").toURI().toURL();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -51,9 +51,9 @@ public class Avatar extends Applet {
      */
     public Avatar(String url) throws IllegalValueException {
         requireNonNull(url);
-        String trimmedURL = url.trim();
+        String trimmedUrl = url.trim();
         try {
-            this.url = new URL(trimmedURL);
+            this.url = new URL(trimmedUrl);
         } catch (MalformedURLException e) {
             throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
         }
@@ -62,7 +62,7 @@ public class Avatar extends Applet {
         } catch (IOException e) {
             throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
         }
-        this.value = trimmedURL.toString();
+        this.value = trimmedUrl.toString();
     }
 
     /**
@@ -77,6 +77,14 @@ public class Avatar extends Applet {
             return false;
         }
         return true;
+    }
+
+    public URL getUrl() {
+        return url;
+    }
+
+    public Image getImage() {
+        return image;
     }
 
     @Override

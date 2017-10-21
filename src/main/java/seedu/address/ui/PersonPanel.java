@@ -1,7 +1,5 @@
 package seedu.address.ui;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -13,8 +11,8 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.PersonPanelNoSelectionEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -71,7 +69,7 @@ public class PersonPanel extends UiPart<Region> {
         address.setText("Address: " + selectedPerson.getAddress().toString());
         email.setText("Email: " + selectedPerson.getEmail().toString());
         birthday.setText("Birthday: " + selectedPerson.getBirthday().toString());
-        avatar.setImage(selectedPerson.getAvatar().image);
+        avatar.setImage(selectedPerson.getAvatar().getImage());
         selectedPerson.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
             tagLabel.setStyle("-fx-background-color: " + tag.tagColour);
@@ -97,8 +95,6 @@ public class PersonPanel extends UiPart<Region> {
 
     @FXML
     private void avatarPrompt() {
-        // Work In Progress! :)
-        // To be done: Do a GUI for uploading a picture on the computer, maybe?
         if (isBlankPage) {
             System.out.println("Don't do anything!");
         } else {
