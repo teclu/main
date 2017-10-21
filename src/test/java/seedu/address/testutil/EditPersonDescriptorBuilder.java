@@ -33,7 +33,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
         descriptor.setBirthday(person.getBirthday());
-        //descriptor.setAvatar(person.getAvatar());
+        descriptor.setAvatar(person.getAvatar());
         descriptor.setTags(person.getTags());
     }
 
@@ -101,11 +101,6 @@ public class EditPersonDescriptorBuilder {
      * Sets the {@code Avatar} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withAvatar(String avatar) {
-        try {
-            ParserUtil.parseAvatar(Optional.of(avatar)).ifPresent(descriptor::setAvatar);
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("avatar is expected to be valid.");
-        }
         return this;
     }
 

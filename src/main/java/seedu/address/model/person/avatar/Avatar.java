@@ -1,63 +1,36 @@
 package seedu.address.model.person.avatar;
 
-import static java.util.Objects.requireNonNull;
-
-import java.applet.Applet;
+import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import javax.imageio.ImageIO;
 
-import javafx.embed.swing.SwingFXUtils;
-
-import javafx.scene.image.Image;
-
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.commons.util.OsCheckUtil;
 
 /**
  * Represents a Person's avatar in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidAvatar(String)}
+ * Guarantees: N/A
  */
 
-public class Avatar extends Applet {
+public class Avatar {
     public static final String MESSAGE_AVATAR_CONSTRAINTS = "Avatar should be a valid online URL or local path.";
-    public static final String OPERATING_SYSTEM = new OsCheckUtil().getOsName();
+    public static final String defaultPath = "src/main/java/seedu/address/model/person/avatar/avatarPlaceholders/";
     public final String value;
     private URL url;
-    private Image image;
+    private BufferedImage image;
 
     /**
      * Sets a default placeholder avatar for new contacts being added.
      */
     public Avatar() throws IllegalValueException {
-        String defaultPath = "src/main/java/seedu/address/model/person/avatar/avatarPlaceholders/";
-
-        if (OPERATING_SYSTEM.equals("unix") || OPERATING_SYSTEM.equals("mac")) {
-            File homeDirectory = new File(System.getProperty("user.home"));
-            File fileToRead = new File(homeDirectory, defaultPath);
-            try {
-                defaultPath = fileToRead.toURI().toURL().toString();
-            } catch (MalformedURLException e) {
-                throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
-            }
-        }
-
         try {
-            this.url = new File(defaultPath + "1.png").toURI().toURL();
-        } catch (MalformedURLException e) {
+            File defaultAvatar = new File(defaultPath + "1.png");
+            this.url = defaultAvatar.toURI().toURL();
+            this.image = ImageIO.read(this.url);
+        } catch (Exception e) {
             throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
         }
-
-        try {
-            this.image = SwingFXUtils.toFXImage(ImageIO.read(this.url), null);
-        } catch (IOException e) {
-            throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
-        }
-
-        this.value = this.url.toString();
+        this.value = defaultPath + "1.png";
     }
 
     /**
@@ -66,40 +39,32 @@ public class Avatar extends Applet {
      * @throws IllegalValueException if given URL string is invalid.
      */
     public Avatar(String url) throws IllegalValueException {
-        requireNonNull(url);
-        String trimmedUrl = url.trim();
         try {
-            this.url = new URL(trimmedUrl);
-        } catch (MalformedURLException e) {
+            if (url.isEmpty()) {
+                File defaultAvatar = new File(defaultPath + "1.png");
+                this.url = defaultAvatar.toURI().toURL();
+                this.image = ImageIO.read(this.url);
+                this.value = defaultPath + "1.png";
+            } else {
+                File defaultAvatar = new File(url);
+                if (url.contains("https://") || url.contains("http://")) {
+                    this.url = new URL(url);
+                } else {
+                    this.url = defaultAvatar.toURI().toURL();
+                }
+                this.image = ImageIO.read(this.url);
+                this.value = url;
+            }
+        } catch (Exception e) {
             throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
         }
-        try {
-            this.image = SwingFXUtils.toFXImage(ImageIO.read(this.url), null);
-        } catch (IOException e) {
-            throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
-        }
-        this.value = trimmedUrl.toString();
-    }
-
-    /**
-     * Returns true if a given URL string is valid. (Incomplete)
-     */
-    public static boolean isValidAvatar(String test) {
-        try {
-            URL urlCheck = new URL(test);
-            HttpURLConnection connection = (HttpURLConnection) urlCheck.openConnection();
-            connection.setRequestMethod("HEAD");
-        } catch (Exception ex) {
-            return false;
-        }
-        return true;
     }
 
     public URL getUrl() {
         return url;
     }
 
-    public Image getImage() {
+    public BufferedImage getImage() {
         return image;
     }
 

@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -69,7 +70,7 @@ public class PersonPanel extends UiPart<Region> {
         address.setText("Address: " + selectedPerson.getAddress().toString());
         email.setText("Email: " + selectedPerson.getEmail().toString());
         birthday.setText("Birthday: " + selectedPerson.getBirthday().toString());
-        avatar.setImage(selectedPerson.getAvatar().getImage());
+        avatar.setImage(SwingFXUtils.toFXImage(selectedPerson.getAvatar().getImage(), null));
         selectedPerson.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
             tagLabel.setStyle("-fx-background-color: " + tag.tagColour);

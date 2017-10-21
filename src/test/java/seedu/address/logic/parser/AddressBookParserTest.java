@@ -81,9 +81,6 @@ public class AddressBookParserTest {
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(person));
 
-        System.out.println("Test: " + PersonUtil.getPersonDetails(person));
-        System.out.println(descriptor.isAnyFieldEdited());
-
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
 

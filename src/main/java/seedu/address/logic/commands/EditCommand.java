@@ -49,7 +49,7 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_BIRTHDAY + "BIRTHDAY] "
             + "[" + PREFIX_TAG + "TAG] "
-            + "[" + PREFIX_AVATAR + "URL]\n"
+            + "[" + PREFIX_AVATAR + "AVATAR_URL]\n"
             + "Examples: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com, "

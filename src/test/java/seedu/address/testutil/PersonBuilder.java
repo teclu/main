@@ -24,6 +24,8 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_BIRTHDAY = "01/01/1991";
+    public static final String DEFAULT_AVATAR =
+            "https://www.shareicon.net/data/128x128/2016/05/24/770009_man_512x512.png";
     public static final String DEFAULT_TAGS = "friends";
 
     private Person person;
@@ -119,6 +121,18 @@ public class PersonBuilder {
             this.person.setBirthday(new Birthday(birthday));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("birthday is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Avatar} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withAvatar() {
+        try {
+            this.person.setAvatar(new Avatar());
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("avatar is expected to be valid.");
         }
         return this;
     }
