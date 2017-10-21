@@ -91,7 +91,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> birthday} into an {@code Optional<Birthday>} if {@code birthday} is present.
+     * Parses a {@code Optional<String> avatar} into an {@code Optional<Avatar>} if {@code avatar} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Avatar> parseAvatar(Optional<String> avatar) throws IllegalValueException {

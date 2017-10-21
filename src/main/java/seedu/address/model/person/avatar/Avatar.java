@@ -31,16 +31,16 @@ public class Avatar extends Applet {
     /**
      * Sets a default placeholder avatar for new contacts being added.
      */
-    public Avatar() {
+    public Avatar() throws IllegalValueException {
         try {
             this.url = new File(DEFAULT_PATH + "1.png").toURI().toURL();
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
         }
         try {
             this.image = SwingFXUtils.toFXImage(ImageIO.read(this.url), null);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
         }
         this.value = this.url.toString();
     }
