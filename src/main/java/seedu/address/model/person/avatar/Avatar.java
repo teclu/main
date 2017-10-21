@@ -23,7 +23,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 public class Avatar extends Applet {
     public static final String MESSAGE_AVATAR_CONSTRAINTS = "Avatar should be a valid online URL or local path.";
-    public static final String DEFAULT_PATH = "src/main/java/seedu/address/model/person/avatar/avatarPlaceholders/";
+    public static final String DEFAULT_PATH =
+            "src\\main\\java\\seedu\\address\\model\\person\\avatar\\avatarPlaceholders\\";
     public final String value;
     private URL url;
     private Image image;
