@@ -7,7 +7,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.model.tag.Tag;
 
 /**
- * Tests that a {@code ReadOnlyPerson}'s {@code UniqueTagList} has a {@code Tag} that matches any of the keywords given.
+ * Tests that a Person's Tag List contains at least one tag whose string matches any of the keywords given.
  */
 public class TagListContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
@@ -22,11 +22,11 @@ public class TagListContainsKeywordsPredicate implements Predicate<ReadOnlyPerso
     }
 
     /**
-     * Tests if a particular tag matches any of the keywords. For use of the test method above
+     * Returns true if a particular tag's string matches any of the keywords. For use of the test method above
      */
     private boolean testTag(Tag tag) {
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(tag.tagName, keyword));
+                .anyMatch(keyword -> StringUtil.containsWordStartingWithIgnoreCase(tag.tagName, keyword));
     }
 
     @Override
