@@ -45,9 +45,10 @@ public class StringUtil {
      * Returns true if the sentence contains a word that starts with the given word
      *  Ignores case, and a full word match is not required
      *   <br>examples:<pre>
-     *       containsPartialWordIgnoreCase("ABc def", "abc") == true
-     *       containsPartialWordIgnoreCase("ABc def", "DEF") == true
-     *       containsPartialWordIgnoreCase("ABc def", "AB") == true //partial match
+     *       containsWordStartingWithIgnoreCase("ABc def", "abc") == true
+     *       containsWordStartingWithIgnoreCase("ABc def", "DEF") == true
+     *       containsWordStartingWithIgnoreCase("ABc def", "AB") == true //partial match
+     *       containsWordStartingWithIgnoreCase("ABc def", "BC") == false //partial match not at the start
      *       </pre>
      * @param sentence cannot be null
      * @param word cannot be null, cannot be empty, must be a single word
