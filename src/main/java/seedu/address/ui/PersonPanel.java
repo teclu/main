@@ -93,6 +93,10 @@ public class PersonPanel extends UiPart<Region> {
         loadBlankPersonPage();
     }
 
+    /**
+     * Clicking the Avatar will trigger this method.
+     * Note: Implementation is not complete; may or may not use this.
+     */
     @FXML
     private void avatarPrompt() {
         if (isBlankPage) {

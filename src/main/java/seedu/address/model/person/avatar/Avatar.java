@@ -1,10 +1,6 @@
 package seedu.address.model.person.avatar;
 
-import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.image.Image;
-import seedu.address.commons.exceptions.IllegalValueException;
-
-import javax.imageio.ImageIO;
+import static java.util.Objects.requireNonNull;
 
 import java.applet.Applet;
 import java.io.File;
@@ -12,8 +8,13 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import javax.imageio.ImageIO;
 
-import static java.util.Objects.requireNonNull;
+import javafx.embed.swing.SwingFXUtils;
+
+import javafx.scene.image.Image;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Person's avatar in the address book.
