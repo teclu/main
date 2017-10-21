@@ -35,7 +35,7 @@ public class Avatar extends Applet {
     public Avatar() throws IllegalValueException {
         String defaultPath = "src/main/java/seedu/address/model/person/avatar/avatarPlaceholders/";
 
-        if (OPERATING_SYSTEM == "unix" || OPERATING_SYSTEM == "mac") {
+        if (OPERATING_SYSTEM.equals("unix") || OPERATING_SYSTEM.equals("mac")) {
             File homeDirectory = new File(System.getProperty("user.home"));
             File fileToRead = new File(homeDirectory, defaultPath);
             try {
@@ -50,11 +50,13 @@ public class Avatar extends Applet {
         } catch (MalformedURLException e) {
             throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
         }
+
         try {
             this.image = SwingFXUtils.toFXImage(ImageIO.read(this.url), null);
         } catch (IOException e) {
             throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
         }
+
         this.value = this.url.toString();
     }
 
