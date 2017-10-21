@@ -15,6 +15,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.util.OsCheckUtil;
 
 /**
  * Represents a Person's avatar in the address book.
@@ -23,8 +24,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 public class Avatar extends Applet {
     public static final String MESSAGE_AVATAR_CONSTRAINTS = "Avatar should be a valid online URL or local path.";
-    public static final String DEFAULT_PATH =
-            "src\\main\\java\\seedu\\address\\model\\person\\avatar\\avatarPlaceholders\\";
+    public static final String OPERATING_SYSTEM = new OsCheckUtil().getOsName();
     public final String value;
     private URL url;
     private Image image;
@@ -33,8 +33,14 @@ public class Avatar extends Applet {
      * Sets a default placeholder avatar for new contacts being added.
      */
     public Avatar() throws IllegalValueException {
+        String defaultPath = "src/main/java/seedu/address/model/person/avatar/avatarPlaceholders/";
+
+        if (OPERATING_SYSTEM == "unix" || OPERATING_SYSTEM == "mac") {
+            defaultPath = "~/" + defaultPath;
+        }
+
         try {
-            this.url = new File(DEFAULT_PATH + "1.png").toURI().toURL();
+            this.url = new File(defaultPath + "1.png").toURI().toURL();
         } catch (MalformedURLException e) {
             throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
         }
@@ -68,7 +74,7 @@ public class Avatar extends Applet {
     }
 
     /**
-     * Returns true if a given URL string is valid.
+     * Returns true if a given URL string is valid. (Incomplete)
      */
     public static boolean isValidAvatar(String test) {
         try {
