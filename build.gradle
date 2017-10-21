@@ -141,6 +141,7 @@ class AddressBookTest extends Test {
 
     void setHeadless() {
         systemProperty 'java.awt.robot', 'true'
+        systemProperty 'java.awt.headless', 'true'
         systemProperty 'testfx.robot', 'glass'
         systemProperty 'testfx.headless', 'true'
         systemProperty 'prism.order', 'sw'
