@@ -36,7 +36,13 @@ public class Avatar extends Applet {
         String defaultPath = "src/main/java/seedu/address/model/person/avatar/avatarPlaceholders/";
 
         if (OPERATING_SYSTEM == "unix" || OPERATING_SYSTEM == "mac") {
-            defaultPath = "./" + defaultPath;
+            File homeDirectory = new File(System.getProperty("user.home"));
+            File fileToRead = new File(homeDirectory, defaultPath);
+            try {
+                defaultPath = fileToRead.toURI().toURL().toString();
+            } catch (MalformedURLException e) {
+                throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
+            }
         }
 
         try {
