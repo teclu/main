@@ -1,16 +1,20 @@
 package seedu.address.ui;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.PersonPanelNoSelectionEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -19,6 +23,8 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonPanel extends UiPart<Region> {
     private static final String FXML = "PersonPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+    private ReadOnlyPerson selectedPerson;
+    private boolean isBlankPage = true;
 
     @FXML
     private VBox panel;
@@ -34,23 +40,39 @@ public class PersonPanel extends UiPart<Region> {
     private Label birthday;
     @FXML
     private FlowPane tags;
+    @FXML
+    private ImageView avatar;
 
     public PersonPanel() {
         super(FXML);
         registerAsAnEventHandler(this);
+        loadBlankPersonPage();
     }
 
     /**
-     * Loads the person's contact details.
+     * Loads a blank page when no contact is selected.
      */
-    private void loadPersonPage(ReadOnlyPerson person) {
-        name.setText(person.getName().fullName);
-        phone.setText("Phone: " + person.getPhone().toString());
-        address.setText("Address: " + person.getAddress().toString());
-        email.setText("Email: " + person.getEmail().toString());
-        birthday.setText("Birthday: " + person.getBirthday().toString());
+    private void loadBlankPersonPage() {
+        name.setText("No contact selected");
+        phone.setText("Phone: -");
+        address.setText("Address: -");
+        email.setText("Email: -");
+        birthday.setText("Birthday: -");
+        avatar.setImage(null);
         tags.getChildren().clear();
-        person.getTags().forEach(tag -> {
+    }
+
+    /**
+     * Loads the selected person's contact details.
+     */
+    private void loadPersonPage() {
+        name.setText(selectedPerson.getName().fullName);
+        phone.setText("Phone: " + selectedPerson.getPhone().toString());
+        address.setText("Address: " + selectedPerson.getAddress().toString());
+        email.setText("Email: " + selectedPerson.getEmail().toString());
+        birthday.setText("Birthday: " + selectedPerson.getBirthday().toString());
+        avatar.setImage(selectedPerson.getAvatar().image);
+        selectedPerson.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
             tagLabel.setStyle("-fx-background-color: " + tag.tagColour);
             tags.getChildren().add(tagLabel);
@@ -59,7 +81,28 @@ public class PersonPanel extends UiPart<Region> {
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        loadBlankPersonPage();
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
+        selectedPerson = event.getNewSelection().person;
+        isBlankPage = false;
+        loadPersonPage();
+    }
+
+    @Subscribe
+    private void handlePersonPanelNoSelectionEvent(PersonPanelNoSelectionEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        isBlankPage = true;
+        loadBlankPersonPage();
+    }
+
+    @FXML
+    private void avatarPrompt() {
+        // Work In Progress! :)
+        // To be done: Do a GUI for uploading a picture on the computer, maybe?
+        if (isBlankPage) {
+            System.out.println("Don't do anything!");
+        } else {
+            System.out.println("avatarPrompt success!");
+        }
     }
 }

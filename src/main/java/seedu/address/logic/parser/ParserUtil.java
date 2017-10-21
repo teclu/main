@@ -15,6 +15,7 @@ import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.avatar.Avatar;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -87,6 +88,15 @@ public class ParserUtil {
     public static Optional<Birthday> parseBirthday(Optional<String> birthday) throws IllegalValueException {
         requireNonNull(birthday);
         return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> birthday} into an {@code Optional<Birthday>} if {@code birthday} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Avatar> parseAvatar(Optional<String> avatar) throws IllegalValueException {
+        requireNonNull(avatar);
+        return avatar.isPresent() ? Optional.of(new Avatar(avatar.get())) : Optional.empty();
     }
 
     /**
