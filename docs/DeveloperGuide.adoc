@@ -460,7 +460,7 @@ By using the `equalsIgnoreCase` method, the query word has to exactly match, ign
 
 
 
-Now, we introduce a  slightly modified version to allow for partial matching as such :
+Now, we introduce a slightly modified version to allow for partial matching as such :
 [source, java]
 ----
  public static boolean containsWordStartingWithIgnoreCase(String sentence, String word) {
