@@ -36,7 +36,7 @@ public class Avatar extends Applet {
         String defaultPath = "src/main/java/seedu/address/model/person/avatar/avatarPlaceholders/";
 
         if (OPERATING_SYSTEM == "unix" || OPERATING_SYSTEM == "mac") {
-            defaultPath = "~/" + defaultPath;
+            defaultPath = "./" + defaultPath;
         }
 
         try {
