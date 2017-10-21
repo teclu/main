@@ -5,8 +5,8 @@ import java.util.function.Predicate;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
- * Keyword matching is case sensitive.
+ * Finds and lists all persons in address book whose name or tags contains any of the argument keywords.
+ * Keyword matching is case insensitive.
  */
 public class FindCommand extends Command {
 
