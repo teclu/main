@@ -31,8 +31,8 @@ This user guide will help you get started on using our application, and show you
 This is where the details of a selected contact will be displayed. As of now, only the name, address, phone number and
 tags are displayed here. Planned features for the Person Panel include:
 
-* `For v1.5` Set contact's picture
-* `For v1.5` Notes/Comments on the contact
+* `For v1.3` Set a contact's avatar
+* `For v1.4` Notes/Comments on the contact
 * `For v1.5` Birthday Countdown
 * `For v2.0` Birthday Reminder
 
@@ -40,8 +40,8 @@ tags are displayed here. Planned features for the Person Panel include:
 
 As of now, the dark theme is the default colour theme for the application. Planned features include:
 
-* `For v1.5` Command to change the theme, e.g. `theme light`
-* `For v1.5` 5 Preset Themes: Light, Dark (current default theme), Red, Blue and Green.
+* `For v1.4` Command to change the theme, e.g. `theme light`
+* `For v1.4` 5 Preset Themes: Light, Dark (current default theme), Red, Blue and Green.
 * `For v1.5` Detailed instructions for advanced users to make their own themes.
 
 === Saving the data
@@ -354,9 +354,13 @@ e.g.`select 2`
 *A*: Install the application in the other computer and overwrite the empty data file it creates with the file that
 contains the data of your previous Address Book folder.
 
+*Q*: How often will this application get updated? +
+*A*: Every wednesday, there will be a new release that you can download so that you can keep the application up-to-date.
+However, do take note that updates will cease permanently on the 15 November 2017.
+
 *Q*: How do I update the application? +
-*A*: Every week, there will be a new release that you can download so that you can keep the application up-to-date. Just
-download the new .jar file and replace the previous one in the home directory.
+*A*: Download the latest .jar file and replace the previous one that is placed in the root directory. That's all you
+need to do!
 
 *Q*: I'm having problems with the application that are not addressed in this user guide. Where can I find help?
 *A*: If you have a GitHub account, you can raise a new issue
@@ -364,4 +368,9 @@ link:https://github.com/CS2103AUG2017-W11-B3/main/issues[here] about your proble
 
 == Glossary
 
-To be done by v1.5.
+- **Avatar**: It is a custom display picture that users can set for their contacts.
+- **Command Line Interface (CLI)**: It is an interface which users respond to a visual prompt by typing in a command
+on a specified line, receive a response back from the system, and then enter another command. This goes on back and
+forth.
+- **Java**: It is a general-purpose computer programming language that is used in many products today. To learn more,
+click link:https://go.java/index.html?intcmp=gojava-banner-java-com[here].
