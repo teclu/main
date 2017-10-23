@@ -54,18 +54,19 @@ There is no need for you to save manually.
 
 === Installation
 
-.  Do ensure that you have Java version `1.8.0_60` or later installed on your computer.
+.  If you have not done so, https://java.com/en/download/[download] and install Java version `1.8.0_60` (_or later_) on your computer.
 +
 [NOTE]
-Having any Java 8 version is not enough. +
-This application will not work with earlier versions of Java 8.
+This application will not work with earlier versions of Java 8 (_anything before `1.8.0_60`_).
 +
 .  Download the latest `addressbook.jar` release link:{repoURL}/releases[here].
-.  Copy the file into any folder that you want to use as the home folder for your application.
+.  Copy the .jar file into any folder that you want to use as the home folder for your application.
 .  Double-click the file to start the application. The Graphical User Interface (GUI) should appear in a few seconds as
 such:
 +
 image::FirstTimeLaunch.png[width="790"]
+
+And that's all, you're good to go!
 
 === Warming Up
 
@@ -348,7 +349,7 @@ e.g.`select 2`
 * *Undo* : `undo`
 * *Redo* : `redo`
 
-== FAQ
+== F.A.Q.
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the application in the other computer and overwrite the empty data file it creates with the file that
@@ -366,11 +367,14 @@ need to do!
 *A*: If you have a GitHub account, you can raise a new issue
 link:https://github.com/CS2103AUG2017-W11-B3/main/issues[here] about your problem.
 
+*Q*: Is there a developer guide that I can refer to? +
+*A*: Yes! Click <<DeveloperGuide#, here>> to access it.
+
 == Glossary
 
-- **Avatar**: It is a custom display picture that users can set for their contacts.
-- **Command Line Interface (CLI)**: It is an interface which users respond to a visual prompt by typing in a command
+- *Avatar*: It is a custom display picture that users can set for their contacts.
+- *Command Line Interface (CLI)*: It is an interface which users respond to a visual prompt by typing in a command
 on a specified line, receive a response back from the system, and then enter another command. This goes on back and
 forth.
-- **Java**: It is a general-purpose computer programming language that is used in many products today. To learn more,
+- *Java*: It is a general-purpose computer programming language that is used in many products today. To learn more,
 click link:https://go.java/index.html?intcmp=gojava-banner-java-com[here].
