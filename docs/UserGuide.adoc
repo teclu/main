@@ -10,50 +10,26 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-W11-B3/main/
 
 By: `Team W11-B3`      Since: `Sep 2017`      Licence: `MIT`
 
 == Introduction
 
-K.N.S. AddressBook is a free desktop application that stores your contacts and their details. All interactions are done through an in-built Command Line Interface (CLI), which allows you do add, edit and remove contacts in a speedy manner once you have gotten used to it.
+K.N.S. AddressBook v1.3.0 is a free Java desktop application available on Windows and Mac OS X operating systems. It is
+designed for telemarketers who are bound to their desks, making many calls to clients with the office's telephone.
 
-K.N.S. AddressBook is available on Windows and Mac OS X operating systems.
+Most of the interactions with the application are done through an in-built Command Line Interface (CLI), which allows
+you do add, edit and remove contacts quickly with only the use of a keyboard.
 
-== Getting Started
-
-=== Installation
-
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
-+
-[NOTE]
-Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
-+
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds as such:
-+
-image::Ui.png[width="790"]
-
-=== Using the CLI
-
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
-
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
-
-.  Refer to the link:#features[Features] section below for details of each command.
+This user guide will help you get started on using our application, and show you how you can make use of it.
 
 == Key Features
 
 === Person Panel `In Development For v1.5`
 
-This is where the details of a selected contact will be displayed. As of now, only the name, address, phone number and tags are displayed here. Planned features for the Person Panel include:
+This is where the details of a selected contact will be displayed. As of now, only the name, address, phone number and
+tags are displayed here. Planned features for the Person Panel include:
 
 * `For v1.5` Set contact's picture
 * `For v1.5` Notes/Comments on the contact
@@ -70,18 +46,64 @@ As of now, the dark theme is the default colour theme for the application. Plann
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+The Address Book's data is saved in the hard disk automatically after any executable command that changes the data. +
+There is no need for you to save manually.
+
+
+== Getting Started
+
+=== Installation
+
+.  Do ensure that you have Java version `1.8.0_60` or later installed on your computer.
++
+[NOTE]
+Having any Java 8 version is not enough. +
+This application will not work with earlier versions of Java 8.
++
+.  Download the latest `addressbook.jar` release link:{repoURL}/releases[here].
+.  Copy the file into any folder that you want to use as the home folder for your application.
+.  Double-click the file to start the application. The Graphical User Interface (GUI) should appear in a few seconds as
+such:
++
+image::FirstTimeLaunch.png[width="790"]
+
+=== Warming Up
+
+. There are 6 example contacts that are already pre-loaded in the Address Book. Clicking on any individual contact card
+will select it, showing you the contact's details in the PersonPanel like so:
++
+image::FirstTimeSelection.png[width="790"]
++
+. Let's start off by getting rid of all these example contacts. Type the command *`clear`* in the command box at the
+top, and press kbd:[Enter]. You should now see an empty Address Book as such:
++
+image::FirstTimeClear.png[width="790"]
++
+.  Now, you can add in your first contact! For example, type `add n/John Doe p/98765432 e/johnd@example.com a/JohnStreet
+, Block 123, #01-01 b/01/01/1991 t/example` in the command box and press kbd:[Enter]. Click on the new contact; you
+should see the following:
++
+image::FirstTimeAdd.png[width="790"]
++
+.  Uh oh! Looks like we did not type the correct name of the contact. To edit the name of the contact, type `edit n/
+John **Dow**` in the command box and press kbd:[Enter]. You should now see the name change in the PersonPanel.
+. It's time for John to be gone from your Address Book. Type `delete 1` and press kbd:[Enter] in order to remove him.
++
+Congratulations! You have now mastered the basic commands found in the application. In order to have a better
+understanding of all the available commands, you can check them out link:#Available-CLI-Commands[here].
 
 == Available CLI Commands
-
+[TIP]
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which
+can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}`
+(i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is
+also acceptable.
 ====
 
 === Viewing help : `help`
@@ -329,7 +351,16 @@ e.g.`select 2`
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the application in the other computer and overwrite the empty data file it creates with the file that
+contains the data of your previous Address Book folder.
+
+*Q*: How do I update the application? +
+*A*: Every week, there will be a new release that you can download so that you can keep the application up-to-date. Just
+download the new .jar file and replace the previous one in the home directory.
+
+*Q*: I'm having problems with the application that are not addressed in this user guide. Where can I find help?
+*A*: If you have a GitHub account, you can raise a new issue
+link:https://github.com/CS2103AUG2017-W11-B3/main/issues[here] about your problem.
 
 == Glossary
 
