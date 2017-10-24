@@ -10,53 +10,29 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-W11-B3/main/
 
 By: `Team W11-B3`      Since: `Sep 2017`      Licence: `MIT`
 
 == Introduction
 
-K.N.S. AddressBook is a free desktop application that stores your contacts and their details. All interactions are done through an in-built Command Line Interface (CLI), which allows you do add, edit and remove contacts in a speedy manner once you have gotten used to it.
+K.N.S. AddressBook v1.3.0 is a free Java desktop application available on Windows and Mac OS X operating systems. It is
+designed for telemarketers who are bound to their desks, making many calls to clients with the office's telephone, while on the same time opening their PC/laptop to find their clients' contact number.
 
-K.N.S. AddressBook is available on Windows and Mac OS X operating systems.
+Most of the interactions with the application are done through an in-built Command Line Interface (CLI), which allows
+you do add, edit and remove contacts quickly with only the use of a keyboard.
 
-== Getting Started
-
-=== Installation
-
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
-+
-[NOTE]
-Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
-+
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds as such:
-+
-image::Ui.png[width="790"]
-
-=== Using the CLI
-
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
-
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
-
-.  Refer to the link:#features[Features] section below for details of each command.
+This user guide will help you get started on using our application, and show you how you can make use of it.
 
 == Key Features
 
 === Person Panel `In Development For v1.5`
 
-This is where the details of a selected contact will be displayed. As of now, only the name, address, phone number and tags are displayed here. Planned features for the Person Panel include:
+This is where the details of a selected contact will be displayed. As of now, only the name, address, phone number and
+tags are displayed here. Planned features for the Person Panel include:
 
-* `For v1.5` Set contact's picture
-* `For v1.5` Notes/Comments on the contact
+* `For v1.3` Set a contact's avatar
+* `For v1.4` Notes/Comments on the contact
 * `For v1.5` Birthday Countdown
 * `For v2.0` Birthday Reminder
 
@@ -64,24 +40,71 @@ This is where the details of a selected contact will be displayed. As of now, on
 
 As of now, the dark theme is the default colour theme for the application. Planned features include:
 
-* `For v1.5` Command to change the theme, e.g. `theme light`
-* `For v1.5` 5 Preset Themes: Light, Dark (current default theme), Red, Blue and Green.
+* `For v1.4` Command to change the theme, e.g. `theme light`
+* `For v1.4` 5 Preset Themes: Light, Dark (current default theme), Red, Blue and Green.
 * `For v1.5` Detailed instructions for advanced users to make their own themes.
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+The Address Book's data is saved in the hard disk automatically after any executable command that changes the data. +
+There is no need for you to save manually.
+
+
+== Getting Started
+
+=== Installation
+
+.  If you have not done so, https://java.com/en/download/[download] and install Java version `1.8.0_60` (_or later_) on your computer.
++
+[NOTE]
+This application will not work with earlier versions of Java 8 (_anything before `1.8.0_60`_).
++
+.  Download the latest `addressbook.jar` release link:{repoURL}/releases[here].
+.  Copy the .jar file into any folder that you want to use as the home folder for your application.
+.  Double-click the file to start the application. The Graphical User Interface (GUI) should appear in a few seconds as
+such:
++
+image::FirstTimeLaunch.png[width="790"]
+
+And that's all, you're good to go!
+
+=== Warming Up
+
+. There are 6 example contacts that are already pre-loaded in the Address Book. Clicking on any individual contact card
+will select it, showing you the contact's details in the PersonPanel like so:
++
+image::FirstTimeSelection.png[width="790"]
++
+. Let's start off by getting rid of all these example contacts. Type the command *`clear`* in the command box at the
+top, and press kbd:[Enter]. You should now see an empty Address Book as such:
++
+image::FirstTimeClear.png[width="790"]
++
+.  Now, you can add in your first contact! For example, type `add n/John Doe p/98765432 e/johnd@example.com a/JohnStreet
+, Block 123, #01-01 b/01/01/1991 t/example` in the command box and press kbd:[Enter]. Click on the new contact; you
+should see the following:
++
+image::FirstTimeAdd.png[width="790"]
++
+.  Uh oh! Looks like we did not type the correct name of the contact. To edit the name of the contact, type `edit n/
+John **Dow**` in the command box and press kbd:[Enter]. You should now see the name change in the PersonPanel.
+. It's time for John to be gone from your Address Book. Type `delete 1` and press kbd:[Enter] in order to remove him.
++
+Congratulations! You have now mastered the basic commands found in the application. In order to have a better
+understanding of all the available commands, you can check them out link:#Available-CLI-Commands[here].
 
 == Available CLI Commands
-
+[TIP]
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which
+can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}`
+(i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is
+also acceptable.
 ====
 
 === Viewing help : `help`
@@ -91,15 +114,16 @@ Format: `help`
 === Adding a person: `add` or `a`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]...` or `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY v/AVATAR [t/TAG]...` or `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY v/AVATAR [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A person can have any number of tags (including 0).
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/01/01/1991`
-* `a n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/02/02/1992 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John Street, Block 123, #01-01 b/01/01/1991`
+* `a n/Betsy Crowe t/client e/betsycrowe@example.com a/Newgate Prison p/1234567 b/02/02/1992 t/criminal`
+* `a n/Charlie Chopin t/boss e/charliec@example.com a/Madysun Triangle Park p/98765432 b/02/03/2000 v/C:\Users\Charlie\Pictures\cc.png'
 
 === Listing all persons : `list` or `l`
 
@@ -109,7 +133,7 @@ Format: `list` or `l`
 === Editing a person : `edit` or `e`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...` or `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...` or `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [v/AVATAR] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -123,12 +147,49 @@ Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `e 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `e 2 n/Betsy Crower v/http://example.com/profile.png t/` +
+Edits the name of the 2nd person to be `Betsy Crower`, change the avatar and clears all existing tags.
 
-`In development for v2.0`
+=== Adding a tag : `addtag`
 
-* Ability to cumulatively add or remove tags
+`Since v1.2`
+Adding a tag of an existing person in the address book. +
+Format: `addtag INDEX TAG`
+
+****
+* Adding a tag for the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* When adding the tag, the existing tags of the person will NOT be removed i.e. adding the tag is cumulative.
+* The new tag added must be different from existing tags i.e. no duplicate tags will be allowed
+****
+
+Examples:
+
+* `addtag 1 owesMoney` +
+Adding a `owesMoney` tag for the 1st person on the list. If previously the 1st person has `friends` tag, now the 1st person has both `friends` and `owesMoney` tag.
+* `addtag 3 friends` +
+Adding a `friends` tag for the 3rd person on the list.
+
+`In development for v1.5` Adding more than 1 tag with a single addtag command
+
+=== Deleting a tag : `deletetag`
+
+Deleting a tag of an existing person in the address book. +
+Format: `detetag INDEX TAG`
+
+****
+* Deleting a tag for the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* When deleting the tag, only specified tag will be removed.
+* The tag that will be deleted must exist in the person's tag list.
+****
+
+Examples:
+
+* `deletetag 1 owesMoney` +
+Deleting the `owesMoney` tag from the 1st person on the list.
+* `deletetag 3 friends` +
+Deleting a `friends` tag from the 3rd person on the list.
+
+`In development for v1.5` Deleting more than 1 tag with a single deletetag command
 
 === Locating persons: `find` or `f`
 Finds persons whose names or tags, indicated by an optional prefix, contain any of the given keywords. Defaults to find by name. +
@@ -137,7 +198,8 @@ Format: `find [PREFIX] KEYWORD [MORE_KEYWORDS]` or `f [PREFIX] KEYWORD [MORE_KEY
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only full words will be matched e.g. `Han` will not match `Hans`
+* Partial words will be matched e.g. `Han` can match `Hans` +
+  See link:#partial-matching[Partial Matching] section for more details.
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 ==== By name
@@ -149,7 +211,7 @@ Examples :
  Returns `john` and `John Doe`
  * `f John` is equivalent with above example.
  * `find Betsy Tim John` +
- Returns any person having names `Betsy`, `Tim`, or `John`
+ Returns any person having names `Betsy`, `Tim`, or `John` or that starts with them (e.g. `Timothy`)
 
 ==== By tag
 To find by tag, use the prefix `t/`. +
@@ -163,6 +225,17 @@ Returns any person with the tag `family`
 * `f t/ friends family colleague` +
 Returns any person with at least one of the tags `friends`, `family`, or `colleague`.
 
+==== Partial matching
+`Since v1.2` +
+The Find command accepts partial matches by default, but only if it's from the beginning of each word. +
+And it will not match if the keyword is longer than the entry. +
+Examples :
+
+* `find mel` +
+Matches `Melissa` but not `Amelia`
+* `find leon` +
+Matches `Leonard` but not `Leo`
+
 ==== By any field
 `In development for v2.0`
 
@@ -172,8 +245,6 @@ Returns any person with at least one of the tags `friends`, `family`, or `collea
 ==== Strict searching (AND search)
 `In development for v2.0`
 
-==== Partial matching
-`In development for v2.0`
 
 === Deleting a person : `delete` or `d`
 
@@ -226,10 +297,6 @@ Favourite contacts will appear on the top of the contact list.
 === Contacting a person `In development for v2.0`
 
 Directly calls or emails the person(s) identified by index number or otherwise.
-
-=== Setting favorites `In development for v2.0`
-
-Favorites will be listed before non-favorites and cannot be deleted by accident.
 
 === Listing entered commands : `history`
 
@@ -310,6 +377,10 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Add Tag* : `addtag INDEX TAG` +
+e.g. `addtag 2 friends`
+* *Delete Tag* : `deletetag INDEX TAG` +
+e.g. `deletetag 2 friends`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
@@ -320,12 +391,35 @@ e.g.`select 2`
 * *Undo* : `undo`
 * *Redo* : `redo`
 
-== FAQ
+== F.A.Q.
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the application in the other computer and overwrite the empty data file it creates with the file that
+contains the data of your previous Address Book folder.
+
+*Q*: How often will this application get updated? +
+*A*: Every Wednesday, there will be a new release that you can download so that you can keep the application up-to-date.
+However, do take note that updates will cease permanently on the 15 November 2017.
+
+*Q*: How do I update the application? +
+*A*: Download the latest .jar file and replace the previous one that is placed in the root directory. That's all you
+need to do!
+
+*Q*: I'm having problems with the application that are not addressed in this user guide. Where can I find help? +
+*A*: If you have a GitHub account, you can raise a new issue
+link:https://github.com/CS2103AUG2017-W11-B3/main/issues[here] about your problem.
+
+*Q*: Can I contribute in this project? +
+*A*: Yes, you can! We welcome pull requests. You can submit your pull request to link:https://github.com/CS2103AUG2017-W11-B3/main/pulls[our github repository].
+
+*Q*: Is there a developer guide that I can refer to? +
+*A*: Yes! Click <<DeveloperGuide#, here>> to access it.
 
 == Glossary
 
-To be done by v1.5.
-
+- *Avatar*: It is a custom display picture that users can set for their contacts.
+- *Command Line Interface (CLI)*: It is an interface which users respond to a visual prompt by typing in a command
+on a specified line, receive a response back from the system, and then enter another command. This goes on back and
+forth.
+- *Java*: It is a general-purpose computer programming language that is used in many products today. To learn more,
+click link:https://go.java/index.html?intcmp=gojava-banner-java-com[here].
