@@ -38,7 +38,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         if (toSearch.equals(PREFIX_TAG.getPrefix())) {
             return new FindCommand(new TagListContainsKeywordsPredicate(Arrays.asList(keywords)));
         }
-        return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(keywords)), keywords[0]);
+        return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
     }
 
     /**
