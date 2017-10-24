@@ -40,6 +40,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        sortedFilteredPersons = new SortedList<>(filteredPersons);
     }
 
     public ModelManager() {
@@ -92,7 +93,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-        return FXCollections.unmodifiableObservableList(filteredPersons);
+        return FXCollections.unmodifiableObservableList(sortedFilteredPersons);
     }
 
     @Override
