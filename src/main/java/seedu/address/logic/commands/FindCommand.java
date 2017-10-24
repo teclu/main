@@ -38,6 +38,7 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
+        model.updateSortedFilteredPersonList(sortOrderComparator);
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 
