@@ -463,10 +463,10 @@ By using the `equalsIgnoreCase` method, the query word has to exactly match, ign
 Now, we introduce a slightly modified version to allow for partial matching as such :
 [source, java]
 ----
- public static boolean containsWordStartingWithIgnoreCase(String sentence, String word) {
+ public static boolean containsPartialIgnoreCase(String sentence, String word) {
         //..check and prepare arguments..
         for (String wordInSentence: wordsInPreppedSentence) {
-            if (wordInSentence.regionMatches(true, 0, preppedWord, 0, preppedWord.length())) {
+            if (wordInSentence.toLowerCase().contains(preppedWord.toLowerCase())) {
                 return true;
             }
         }
@@ -474,11 +474,7 @@ Now, we introduce a slightly modified version to allow for partial matching as s
     }
 ----
 
-By using `regionMatches` from 0 (start of each word) to the length of the query word, we allow the sentence word to still match with the query word, even if the sentence word is longer. +
-More precisely, the method will now return `true` as long as the sentence word and query word matches within the specified region (start to query word's length).
-[NOTE]
-
-This type of partial matching only matches from the start of each word. It won't accept matches that start from the middle of the word. (e.g. `find mel` will match `Melissa` but not `Amelia`)
+By using the `contains` method, we now allow the query word to be a substring of the sentence word.
 
 
 We then replace the use of the previous method in the Predicate classes in model (e.g. `NameContainsKeywordsPredicate`) with the new method so that the Find command actually uses partial matching.
@@ -498,12 +494,13 @@ We then replace the use of the previous method in the Predicate classes in model
 ---
 
 **Aspect:** Type of partial matching +
-**Alternative 1 (current choice):** Matches are required to be from the start of each word. +
-**Pros:** Restricts the scope of search which increases relevancy but still giving enough flexibility for users. +
-**Cons:** Can be unintuitive, less powerful. +
-**Alternative 2:** Matches can be from anywhere in the word +
+**Alternative 1 (current choice):** Matches can be from anywhere in the word +
 **Pros:** More intuitive way of searching, simpler to understand. +
 **Cons:** Search results become less relevant for short keywords. +
+**Alternative 2:** Matches are required to be from the start of each word. +
+**Pros:** Restricts the scope of search which increases relevancy but still giving enough flexibility for users. +
+**Cons:** Can be unintuitive, less powerful. +
+
 // end::partialfind[]
 
 // tag::addtagcommand[]
