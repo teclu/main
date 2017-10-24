@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.Image?>
@@ -11,16 +12,18 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<SplitPane fx:id="personPanel" dividerPositions="0.29" orientation="VERTICAL" prefHeight="310.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
+<SplitPane fx:id="personPanel" dividerPositions="0.35" orientation="VERTICAL" prefHeight="310.0" prefWidth="900.0"
+           xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
     <items>
         <AnchorPane fx:id="primaryDetails">
             <children>
             <HBox prefHeight="150.0" prefWidth="898.0">
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/avatarPlaceholder.png" />
-                     </image>
+                  <ImageView fx:id="avatar" fitHeight="150.0" fitWidth="150.0" onMouseClicked="#avatarPrompt"
+                             pickOnBounds="true" preserveRatio="true">
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                     </cursor>
                   </ImageView>
                   <Region prefHeight="150.0" prefWidth="20.0" />
                       <VBox prefHeight="150.0" prefWidth="729.0">
