@@ -34,7 +34,7 @@ import seedu.address.testutil.PersonBuilder;
 
 public class AddTagCommandTest {
 
-    public static final String VALID_TAG = "colleagues";
+    public static final String VALID_TAG = "neighbours";
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -42,7 +42,7 @@ public class AddTagCommandTest {
     public void execute_unfilteredList_success() throws Exception {
         Index indexLastPerson = Index.fromOneBased(model.getFilteredPersonList().size());
         ReadOnlyPerson lastPerson = model.getFilteredPersonList().get(indexLastPerson.getZeroBased());
-        Person editedPerson = new PersonBuilder(lastPerson).withTags("colleagues").build();
+        Person editedPerson = new PersonBuilder(lastPerson).withTags("neighbours").build();
         Set<Tag> tag = ParserUtil.parseTags(Arrays.asList(VALID_TAG));
         AddTagCommand addTagCommand = prepareCommand(indexLastPerson, tag);
 

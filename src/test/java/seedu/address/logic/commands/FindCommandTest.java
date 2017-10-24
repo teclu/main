@@ -77,11 +77,11 @@ public class FindCommandTest {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         FindCommand command = prepareCommand("Kurz Elle Kunz");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
-        String secondExpectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 7);
+        String secondExpectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 6);
         FindCommand secondCommand = prepareCommandForTags("friends");
         assertCommandSuccess(secondCommand,
                 secondExpectedMessage,
-                Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+                Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA));
     }
 
     /**
