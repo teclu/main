@@ -17,7 +17,7 @@ By: `Team W11-B3`      Since: `Sep 2017`      Licence: `MIT`
 == Introduction
 
 K.N.S. AddressBook v1.3.0 is a free Java desktop application available on Windows and Mac OS X operating systems. It is
-designed for telemarketers who are bound to their desks, making many calls to clients with the office's telephone.
+designed for telemarketers who are bound to their desks, making many calls to clients with the office's telephone, while on the same time opening their PC/laptop to find their clients' contact number.
 
 Most of the interactions with the application are done through an in-built Command Line Interface (CLI), which allows
 you do add, edit and remove contacts quickly with only the use of a keyboard.
