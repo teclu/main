@@ -51,7 +51,12 @@ public class AddCommandParser implements Parser<AddCommand> {
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             Birthday birthday = ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY)).get();
-            Avatar avatar = ParserUtil.parseAvatar(argMultimap.getValue(PREFIX_AVATAR)).get();
+            Avatar avatar;
+            try {
+                avatar = ParserUtil.parseAvatar(argMultimap.getValue(PREFIX_AVATAR)).get();
+            } catch (Exception e) { // No avatar link provided; set the default placeholder
+                avatar = new Avatar();
+            }
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
             ReadOnlyPerson person = new Person(name, phone, email, address, birthday, avatar, tagList);

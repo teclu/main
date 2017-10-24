@@ -14,7 +14,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 public class Avatar {
     public static final String MESSAGE_AVATAR_CONSTRAINTS = "Avatar should be a valid online URL or local path.";
-    public static final String DEFAULT_PATH = "src/main/java/seedu/address/model/person/avatar/avatarPlaceholders/";
+    public static final String DEFAULT_PATH =
+            "https://www.shareicon.net/data/128x128/2016/05/24/770009_man_512x512.png";
+    public static final String DEFAULT_PATH_2 = "src/main/java/seedu/address/model/person/avatar/avatarPlaceholders/";
     public final String value;
     private URL url;
     private BufferedImage image;
@@ -23,14 +25,7 @@ public class Avatar {
      * Sets a default placeholder avatar for new contacts being added.
      */
     public Avatar() throws IllegalValueException {
-        try {
-            File defaultAvatar = new File(DEFAULT_PATH + "1.png");
-            this.url = defaultAvatar.toURI().toURL();
-            this.image = ImageIO.read(this.url);
-        } catch (Exception e) {
-            throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
-        }
-        this.value = DEFAULT_PATH + "1.png";
+        this(DEFAULT_PATH);
     }
 
     /**
@@ -41,10 +36,10 @@ public class Avatar {
     public Avatar(String url) throws IllegalValueException {
         try {
             if (url.isEmpty()) {
-                File defaultAvatar = new File(DEFAULT_PATH + "1.png");
+                File defaultAvatar = new File(DEFAULT_PATH);
                 this.url = defaultAvatar.toURI().toURL();
                 this.image = ImageIO.read(this.url);
-                this.value = DEFAULT_PATH + "1.png";
+                this.value = DEFAULT_PATH;
             } else {
                 File defaultAvatar = new File(url);
                 if (url.contains("https://") || url.contains("http://")) {
