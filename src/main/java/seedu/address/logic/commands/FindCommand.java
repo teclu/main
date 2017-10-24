@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 import seedu.address.model.person.ReadOnlyPerson;
@@ -21,8 +22,17 @@ public class FindCommand extends Command {
 
     private final Predicate<ReadOnlyPerson> predicate;
 
+    private final Comparator<ReadOnlyPerson> sortOrderComparator;
+
     public FindCommand(Predicate<ReadOnlyPerson> predicate) {
         this.predicate = predicate;
+        this.sortOrderComparator = null;
+    }
+
+    public FindCommand(Predicate<ReadOnlyPerson> predicate, String keyword) {
+        this.predicate = predicate;
+        this.sortOrderComparator = Comparator.comparingInt(person -> person.getName().fullName.toLowerCase()
+                .indexOf(keyword));
     }
 
     @Override
