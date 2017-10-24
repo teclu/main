@@ -34,7 +34,7 @@ import seedu.address.testutil.PersonBuilder;
 
 public class DeleteTagCommandTest {
 
-    public static final String VALID_TAG = "colleagues";
+    public static final String VALID_TAG = "friends";
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -42,7 +42,7 @@ public class DeleteTagCommandTest {
     public void execute_unfilteredList_success() throws Exception {
         Index indexFirstPerson = INDEX_FIRST_PERSON;
         ReadOnlyPerson firstPerson = model.getFilteredPersonList().get(indexFirstPerson.getZeroBased());
-        Person editedPerson = new PersonBuilder(firstPerson).withTags("colleagues").build();
+        Person editedPerson = new PersonBuilder(firstPerson).withTags("friends").build();
         Set<Tag> tag = ParserUtil.parseTags(Arrays.asList(VALID_TAG));
         DeleteTagCommand deleteTagCommand = prepareCommand(indexFirstPerson, tag);
 
