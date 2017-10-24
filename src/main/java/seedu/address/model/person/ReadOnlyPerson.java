@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
+import seedu.address.model.person.avatar.Avatar;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -22,6 +23,8 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<Birthday> birthdayProperty();
     Birthday getBirthday();
+    ObjectProperty<Avatar> avatarProperty();
+    Avatar getAvatar();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 
@@ -35,7 +38,8 @@ public interface ReadOnlyPerson {
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress())
-                && other.getBirthday().equals(this.getBirthday()));
+                && other.getBirthday().equals(this.getBirthday())
+                && other.getAvatar().equals(this.getAvatar()));
     }
 
     /**

@@ -2,14 +2,10 @@ package systemtests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_PREFIX;
-import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -170,6 +166,7 @@ public abstract class AddressBookSystemTest {
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
         String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
+        /*
         URL expectedUrl;
         try {
             expectedUrl = new URL(GOOGLE_SEARCH_URL_PREFIX + selectedCardName.replaceAll(" ", "+")
@@ -177,7 +174,7 @@ public abstract class AddressBookSystemTest {
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }
-
+        */
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }
 
