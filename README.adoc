@@ -15,13 +15,13 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
-* What's different from https://github.com/se-edu/addressbook-level3[level 3]:
-** A more sophisticated GUI that includes a list  panel and an in-built Browser.
-** More test cases, including automated GUI testing.
-** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
+K.N.S. AddressBook v1.3.0 is a free Java desktop application available on Windows and Mac OS X operating systems. It is
+designed for telemarketers who are bound to their desks, making many calls to clients with the office's telephone.
+
+Oftentimes, telemarketers have one hand on the phone, and their other hand can't possibly use both the keyboard and mouse at the same time! Thus, most of the interactions with the application are done through an in-built Command Line Interface (CLI), which allows
+you do add, edit and remove contacts quickly with only the use of a keyboard.
+
+Even if you aren't a telemarketer, you're always welcome to try out our application!
 
 == Site Map
 
