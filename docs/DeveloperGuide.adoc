@@ -28,12 +28,14 @@ you understand what features we have implemented, and how we have done so.
 Before you get stared, do ensure that you have the following installed on your computer:
 
 * *Java SE Development Kit (JDK) `1.8.0_60`* or later
+You can download Java SE Development Kit link:http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html[here].
 +
 [NOTE]
 This application will not work with earlier versions of Java 8 (_anything before `1.8.0_60`_).
 +
 
 * *IntelliJ* Integrated Development Environment (IDE)
+You can download IntelliJ IDE link:https://www.jetbrains.com/idea/download/#section=windows[here].
 +
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed; do not disable them! If you have disabled them, go to
@@ -98,14 +100,14 @@ is Unix-based and AppVeyor is Windows-based_).
 ==== Before coding
 
 
-Before you start coding, do read the link:#architecture[Architecture] section so that you can get a clearer sense of
+Before you start coding, do read the link:#architecture[Architecture] section below so that you can get a clearer sense of
 the overall design of the application. This will help you understand how the application works, and how your changes
 can affect the entire system.
 
 ==== Updating documentation to match your fork
 
 Lastly, if you plan to develop this as a separate product (_i.e. instead of contributing to the
-`CS2103AUG2017-W11-B3/main`_), you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and
+`CS2103AUG2017-W11-B3/main`)_, you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and
 `UserGuide.adoc` with your fork's URL, and make changes to the documentation where necessary.
 
 == Design
