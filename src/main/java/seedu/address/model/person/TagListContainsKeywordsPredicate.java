@@ -1,7 +1,9 @@
 package seedu.address.model.person;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+
+import java.util.Comparator;
 import java.util.List;
-import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.tag.Tag;
@@ -9,11 +11,12 @@ import seedu.address.model.tag.Tag;
 /**
  * Tests that a Person's Tag List contains at least one tag whose string matches any of the keywords given.
  */
-public class TagListContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+public class TagListContainsKeywordsPredicate extends FieldContainsKeywordsPredicate {
     private final List<String> keywords;
 
     public TagListContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
+        this.fieldToSearch = PREFIX_TAG.getPrefix();
     }
 
     @Override
@@ -36,4 +39,8 @@ public class TagListContainsKeywordsPredicate implements Predicate<ReadOnlyPerso
                 && this.keywords.equals(((TagListContainsKeywordsPredicate) other).keywords)); // state check
     }
 
+    @Override
+    public Comparator<ReadOnlyPerson> sortOrderComparator() {
+        return (person1, person2) -> (0); //no sorting for tag
+    }
 }
