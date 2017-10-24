@@ -59,6 +59,10 @@ public class TagListContainsKeywordsPredicateTest {
         // Mixed-case keywords
         predicate = new TagListContainsKeywordsPredicate(Arrays.asList("faMIly", "FAmiLy"));
         assertTrue(predicate.test(new PersonBuilder().withTags("Family").build()));
+
+        // Partial Match (one of the words starts with one of the keywords)
+        predicate = new TagListContainsKeywordsPredicate(Arrays.asList("Frien", "Fam"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("Friend", "Family").build()));
     }
 
     @Test
