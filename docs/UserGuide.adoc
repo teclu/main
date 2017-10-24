@@ -140,6 +140,7 @@ Format: `find [PREFIX] KEYWORD [MORE_KEYWORDS]` or `f [PREFIX] KEYWORD [MORE_KEY
 * Partial words will be matched e.g. `Han` can match `Hans` +
   See link:#partial-matching[Partial Matching] section for more details.
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* When finding by name, the result will auto sort according to the position of the match. e.g. `find Bo` will list `Bo Alex` before `Holbo` and `Holbo` before `Alexander Bo`
 ****
 ==== By name
 
@@ -166,14 +167,23 @@ Returns any person with at least one of the tags `friends`, `family`, or `collea
 
 ==== Partial matching
 `Since v1.2` +
-The Find command accepts partial matches by default, but only if it's from the beginning of each word. +
-And it will not match if the keyword is longer than the entry. +
+The Find command accepts partial matches by default. +
+Keywords *will match* entries if they are contained within those entries.
+[NOTE]
+However, vice-versa does not apply!
+i.e. Entries *will not match* keywords if the entries are contained within the keywords.
+
+
 Examples :
 
 * `find mel` +
-Matches `Melissa` but not `Amelia`
+Matches `Melissa` and `Amelia`
+* `find amelia` +
+Matches `Amelia` but not `Melissa` or `Mel`
 * `find leon` +
 Matches `Leonard` but not `Leo`
+* `find t/ frien` +
+Matches any person with a tag that contains `frien`, e.g. `Friends` or `BestFriends`
 
 ==== By any field
 `In development for v2.0`
