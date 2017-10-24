@@ -34,7 +34,7 @@ import seedu.address.testutil.PersonBuilder;
 
 public class DeleteTagCommandTest {
 
-    public static final String VALID_TAG = "friends";
+    public static final String VALID_TAG = "colleagues";
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
