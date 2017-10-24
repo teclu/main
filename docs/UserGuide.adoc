@@ -164,7 +164,7 @@ Format: `addtag INDEX TAG`
 Examples:
 
 * `addtag 1 owesMoney` +
-Adding a `owesMoney` tag for the 1st person on the list. If previously the 1st person has `friends` tag, now the 1st person has both `friends` and `owesMoney` tag. 
+Adding a `owesMoney` tag for the 1st person on the list. If previously the 1st person has `friends` tag, now the 1st person has both `friends` and `owesMoney` tag.
 * `addtag 3 friends` +
 Adding a `friends` tag for the 3rd person on the list.
 
