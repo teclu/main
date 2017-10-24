@@ -531,7 +531,7 @@ It replaces the method for matching in all predicate classes that is used by the
 
 [NOTE]
 
-The Find command now only exclusively use partial matching and has lost the full matching functionality
+The Find command now only use partial matching and has lost the full matching functionality
 
 
 Previously, the method used for matching was implemented as such :
