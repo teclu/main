@@ -115,22 +115,22 @@ public class AddCommandParserTest {
         expectedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withEmail(Email.DEFAULT_VALUE).withAddress(VALID_ADDRESS_BOB).withBirthday(VALID_BIRTHDAY_BOB)
                 .withAvatar(VALID_AVATAR_BOB).withTags(VALID_TAG_FRIEND).build();
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
-                + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + AVATAR_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + ADDRESS_DESC_BOB
+                + BIRTHDAY_DESC_BOB + AVATAR_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
 
         // no address
         expectedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(Address.DEFAULT_VALUE).withBirthday(VALID_BIRTHDAY_BOB)
                 .withAvatar(VALID_AVATAR_BOB).withTags(VALID_TAG_FRIEND).build();
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + BIRTHDAY_DESC_BOB + AVATAR_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                + BIRTHDAY_DESC_BOB + AVATAR_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
 
         // no birthday
         expectedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withBirthday(Birthday.DEFAULT_VALUE)
                 .withAvatar(VALID_AVATAR_BOB).withTags(VALID_TAG_FRIEND).build();
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + AVATAR_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                + ADDRESS_DESC_BOB + AVATAR_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
 
     }
 
