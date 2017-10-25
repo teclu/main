@@ -9,7 +9,6 @@ import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
@@ -24,37 +23,37 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
- * Adds a tag to a person in the address book.
+ * Deletes a person's tag in the address book.
  */
-public class AddTagCommand extends UndoableCommand {
+public class DeleteTagCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "addtag";
+    public static final String COMMAND_WORD = "deletetag";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a tag to a person in the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes a person's tag in the address book. "
             + "Parameters: INDEX (must be a positive integer) "
             + "[TAG] \n"
             + "Example: " + COMMAND_WORD + " 1 "
             + "neighbours";
 
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Tag: %2$s";
-    public static final String MESSAGE_ADD_TAG_SUCCESS = "Tag added!";
-    public static final String MESSAGE_DUPLICATE_TAG = "This tag already exists for this person.";
+    public static final String MESSAGE_DELETE_TAG_SUCCESS = "Tag deleted!";
+    public static final String MESSAGE_NOT_EXIST_TAG = "This tag does not exist for this person.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person is already in the address book.";
 
     private final Index index;
-    private final Set<Tag> addedTag;
+    private final Set<Tag> deletedTag;
 
     /**
-     * @param index of the person in the filtered person list to add tag
-     * @param addedTag tag of the person
+     * @param index of the person in the filtered person list to delete tag
+     * @param deletedTag tag of the person
      */
 
-    public AddTagCommand(Index index, Set<Tag> addedTag) {
+    public DeleteTagCommand(Index index, Set<Tag> deletedTag) {
         requireNonNull(index);
-        requireNonNull(addedTag);
+        requireNonNull(deletedTag);
 
         this.index = index;
-        this.addedTag = addedTag;
+        this.deletedTag = deletedTag;
     }
 
     @Override
@@ -66,7 +65,7 @@ public class AddTagCommand extends UndoableCommand {
         }
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = createEditedPerson(personToEdit, addedTag);
+        Person editedPerson = createEditedPerson(personToEdit, deletedTag);
 
         try {
             model.updatePerson(personToEdit, editedPerson);
@@ -76,14 +75,14 @@ public class AddTagCommand extends UndoableCommand {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_ADD_TAG_SUCCESS, editedPerson));
+        return new CommandResult(String.format(MESSAGE_DELETE_TAG_SUCCESS, editedPerson));
     }
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
      */
     private static Person createEditedPerson(ReadOnlyPerson personToEdit,
-                                             Set<Tag> addedTag) throws CommandException {
+                                             Set<Tag> deletedTag) throws CommandException {
         assert personToEdit != null;
 
         Name name = personToEdit.getName();
@@ -91,18 +90,18 @@ public class AddTagCommand extends UndoableCommand {
         Email email = personToEdit.getEmail();
         Address address = personToEdit.getAddress();
         Birthday birthday = personToEdit.getBirthday();
-        Avatar avatar = personToEdit.getAvatar();
+        Avatar ava = personToEdit.getAvatar();
 
         Set<Tag> initialTags = personToEdit.getTags();
         Set<Tag> updatedTags = new HashSet<>();
 
         try {
-            updatedTags = getUpdatedTags(initialTags, addedTag);
-        } catch (DuplicateTagException e) {
+            updatedTags = getUpdatedTags(initialTags, deletedTag);
+        } catch (CommandException e) {
             throw new CommandException(e.getMessage());
         }
 
-        return new Person(name, phone, email, address, birthday, avatar, updatedTags);
+        return new Person(name, phone, email, address, birthday, ava, updatedTags);
     }
 
     @Override
@@ -113,38 +112,25 @@ public class AddTagCommand extends UndoableCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof AddTagCommand)) {
+        if (!(other instanceof DeleteTagCommand)) {
             return false;
         }
 
         // state check
-        AddTagCommand e = (AddTagCommand) other;
+        DeleteTagCommand e = (DeleteTagCommand) other;
         return index.equals(e.index)
-                && addedTag.equals(e.addedTag);
+                && deletedTag.equals(e.deletedTag);
     }
 
-    public static HashSet<Tag> getUpdatedTags(Set<Tag> initialTag, Set<Tag> addedTag) throws DuplicateTagException {
+    public static HashSet<Tag> getUpdatedTags(Set<Tag> initialTag, Set<Tag> deletedTag) throws CommandException {
         HashSet<Tag> updatedTags = new HashSet<>(initialTag);
-        for (Tag toAdd : addedTag) {
-            requireNonNull(toAdd);
-            if (initialTag.contains(toAdd)) {
-                throw new DuplicateTagException();
+        for (Tag toDelete : deletedTag) {
+            requireNonNull(toDelete);
+            if (!initialTag.contains(toDelete)) {
+                throw new CommandException(MESSAGE_NOT_EXIST_TAG);
             }
-            updatedTags.add(toAdd);
+            updatedTags.remove(toDelete);
         }
         return updatedTags;
-    }
-
-    /**
-     * Signals that an operation would have violated the 'no duplicates' property of the list.
-     */
-    public static class DuplicateTagException extends DuplicateDataException {
-        protected DuplicateTagException() {
-            super(MESSAGE_DUPLICATE_TAG);
-        }
-
-        public String getMessage() {
-            return super.getMessage();
-        }
     }
 }

@@ -16,30 +16,39 @@ By: `Team W11-B3`      Since: `Sep 2017`      Licence: `MIT`
 
 == Introduction
 
-K.N.S. AddressBook is a desktop application that is built on Java. This developer guide provides you the information of how we have further adapted from the original source code (https://github.com/nus-cs2103-AY1718S1/addressbook-level4/[AddressBook-Level4 project]) provided by the https://github.com/se-edu[SE-EDU initiative].
+Hello there! If you came here by choice, then chances are that you are interested in how we have further adapted from
+the original source code (https://github.com/nus-cs2103-AY1718S1/addressbook-level4/[AddressBook-Level4 project])
+provided by the https://github.com/se-edu[SE-EDU initiative]. This developer guide provides information that will help
+you understand what features we have implemented, and how we have done so.
 
-== Setting up
+== Setting Up
 
 === Prerequisites
 
-. *JDK `1.8.0_60`* or later
+Before you get stared, do ensure that you have the following installed on your computer:
+
+* *Java SE Development Kit (JDK) `1.8.0_60`* or later
+You can download Java SE Development Kit link:http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html[here].
 +
 [NOTE]
-Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+This application will not work with earlier versions of Java 8 (_anything before `1.8.0_60`_).
 +
 
-. *IntelliJ* IDE
+* *IntelliJ* Integrated Development Environment (IDE)
+You can download IntelliJ IDE link:https://www.jetbrains.com/idea/download/#section=windows[here].
 +
 [NOTE]
-IntelliJ by default has Gradle and JavaFx plugins installed. +
-Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
+IntelliJ by default has Gradle and JavaFx plugins installed; do not disable them! If you have disabled them, go to
+`File` > `Settings` > `Plugins` to re-enable them.
 
+Once you have installed everything required, you can continue on with the next part.
 
 === Setting up the project in your computer
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
+. Fork https://github.com/CS2103AUG2017-W11-B3/main[this] repository to your GitHub account, and clone the fork to your
+computer.
+. Open IntelliJ (_if you are not in the welcome screen, click `File` > `Close Project` to close the existing project
+dialog first_)
 . Set up the correct JDK version for Gradle
 .. Click `Configure` > `Project Defaults` > `Project Structure`
 .. Click `New...` and find the directory of the JDK
@@ -47,74 +56,92 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 . Locate the `build.gradle` file and select it. Click `OK`
 . Click `Open as Project`
 . Click `OK` to accept the default settings
-. Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
-This will generate all resources required by the application and tests.
+. Open a console and run the command
+.. `gradlew processResources` (_on Windows_)
+.. `./gradlew processResources` (_on Mac OS X/Linux_)
++
+This will generate all resources required by the application and tests. You should see a `BUILD SUCCESSFUL` message.
 
 === Verifying the setup
 
-. Run the `seedu.address.MainApp` and try a few commands
+. Run the `seedu.address.MainApp` and try a entering few commands in the application.
 . link:#testing[Run the tests] to ensure they all pass.
 
 === Configurations to do before writing code
 
 ==== Configuring the coding style
 
-This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
+This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding
+standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To
+rectify this,
 
-. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
+. Go to `File` > `Settings...` (_Windows/Linux_), or `IntelliJ IDEA` > `Preferences...` (_Mac OS X_)
 . Select `Editor` > `Code Style` > `Java`
 . Click on the `Imports` tab to set the order
 
-* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
-* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent
+IntelliJ from contracting the import statements.
+* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`,
+`import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
 
-Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
+Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check
+style-compliance as you write code.
+
+==== Setting up Continuous Integration (CI)
+
+Set up Travis to perform CI for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+
+Optionally, you can set up AppVeyor as a second CI (_see <<UsingAppVeyor#, UsingAppVeyor.adoc>>_).
+
+[TIP]
+Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (_Travis
+is Unix-based and AppVeyor is Windows-based_).
+
+==== Before coding
+
+
+Before you start coding, do read the link:#architecture[Architecture] section below so that you can get a clearer sense of
+the overall design of the application. This will help you understand how the application works, and how your changes
+can affect the entire system.
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
-
-==== Setting up CI
-
-Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
-
-Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
-
-[NOTE]
-Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
-
-==== Getting started with coding
-
-When you are ready to start coding,
-
-1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
-2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
+Lastly, if you plan to develop this as a separate product (_i.e. instead of contributing to the
+`CS2103AUG2017-W11-B3/main`)_, you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and
+`UserGuide.adoc` with your fork's URL, and make changes to the documentation where necessary.
 
 == Design
 
 === Architecture
 
+The *_Architecture Diagram_* below explains the high-level design of the application:
+
 image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture Diagram_
+_Figure 3.1.1 : Architecture Diagram_
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
+==== `Main` Component
 
-[TIP]
-The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
+`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible
+for,
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+* *At application launch*: Initializes the components in the correct sequence, and connects them up with each other.
+* *At shut down*: Shuts down the components and invokes cleanup method where necessary.
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+==== `Commons` Component
 
-link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
+link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those
+classes play important roles at the architecture level:
 
-* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
-* `LogsCenter` : Used by many classes to write log messages to the App's log file.
+* `EventsCenter` : This class (_written using
+https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]_) is used by components to
+communicate with other components using events (_i.e. a form of Event Driven design_)
+* `LogsCenter` : Used by most classes to write log messages to the application's log file.
+
+==== The Other 4 Components
 
 The rest of the App consists of four components.
 
-* link:#ui-component[*`UI`*] : The UI of the App.
+* link:#ui-component[*`UI`*] : The user interface (_UI_) of the application.
 * link:#logic-component[*`Logic`*] : The command executor.
 * link:#model-component[*`Model`*] : Holds the data of the App in-memory.
 * link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
@@ -124,42 +151,45 @@ Each of the four components
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+=== Events-Driven nature of the design
 
-image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
+==== Components Interaction
 
-[discrete]
-==== Events-Driven nature of the design
-
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command
+`delete 1`:
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 3.2.1.1 : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+`Model` simply raises a `AddressBookChangedEvent` when the Address Book data is changed, instead of asking the `Storage`
+to save the updates to the hard disk.
 
-The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved
+to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 3.2.1.2 : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
-Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
+Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be
+coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between
+components.
 
-The sections below give more details of each component.
-
-=== UI component
+=== UI Component
 
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+_Figure 3.3.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`,
+`StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are
+in the `src/main/resources/view` folder. For example, the layout of the
+link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in
+link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
 The `UI` component,
 
@@ -170,28 +200,30 @@ The `UI` component,
 === Logic component
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the Logic Component_
+_Figure 3.4.1 : Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+_Figure 3.4.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand`
+and `Command` in Figure 3.4.1_
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
-.  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
-.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+*  `Logic` uses the `AddressBookParser` class to parse the user command.
+*  This results in a `Command` object which is executed by the `LogicManager`.
+*  The command execution can affect the `Model` (_e.g. adding a person_) and/or raise events.
+*  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `UI`.
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")`
+API call:
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 3.4.0c : Interactions Inside the Logic Component for the `delete 1` Command_
 
-=== Model component
+=== Model Component
 
 image::ModelClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
+_Figure 3.5.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -199,13 +231,14 @@ The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
-* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list
+so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
-=== Storage component
+=== Storage Component
 
 image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
+_Figure 3.6.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -214,24 +247,37 @@ The `Storage` component,
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
 
-=== Common classes
+=== Common Classes
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
+
+[TIP]
+The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams]
+folder. To update a diagram, just modify the objects inside `.pptx` file to your liking, and then `Save as picture`.
 
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
 
 // tag::undoredo[]
-=== Undo/Redo mechanism
+=== Undo/Redo Mechanism
 
-The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing
+and redoing of commands that modifies the state of the address book (_e.g. `add`, `edit`_). Such commands will inherit
+from `UndoableCommand`.
 
-`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
+`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead.
+The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
+_Figure 4.1.1 : Inheritance diagram for Undo/Redo command_
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+`UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone,
+such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such
+as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those
+extra tasks while the child classes implements the details of how to execute the specific command. Note that this
+technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child
+classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -266,87 +312,116 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state
+of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the
+`undoStack`. The current state is saved together with the command as shown:
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
+_Figure 4.1.2_
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
+As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may
+execute `add n/David ...` to add a new person like so:
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+_Figure 4.1.3_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
 The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the
+address book to the state before the `add` command executed as shown:
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+_Figure 4.1.4_
 
 [NOTE]
-If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
+If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when
+popping the `undoStack`.
+
+=== Sequence Diagram
 
 The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
+_Figure 4.2.1_
 
-The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+The redo does the exact opposite: pops from `redoStack`, push to `undoStack`, and restores the address book to the state
+after the command is executed.
 
 [NOTE]
-If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
+If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when
+popping the `redoStack`.
 
-The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
+The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This
+time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command
+(this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+_Figure 4.2.2_
 
-Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
+Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command`
+rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+_Figure 4.2.3_
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
+_Figure 4.2.4_
 
-==== Design Considerations
+=== Design Considerations
 
-**Aspect:** Implementation of `UndoableCommand` +
-**Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()` +
-**Pros:** We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist. +
+**Aspect:** Implementation of `UndoableCommand`. +
+**Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`. +
+**Pros:** We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal
+with `Command` do not have to know that `executeUndoableCommand()` exist. +
 **Cons:** Hard for new developers to understand the template pattern. +
-**Alternative 2:** Just override `execute()` +
+**Alternative 2:** Just override `execute()`. +
 **Pros:** Does not involve the template pattern, easier for new developers to understand. +
-**Cons:** Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
+**Cons:** Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to
+undo/redo.
 
 ---
 
-**Aspect:** How undo & redo executes +
+**Aspect:** How undo & redo executes. +
 **Alternative 1 (current choice):** Saves the entire address book. +
 **Pros:** Easy to implement. +
 **Cons:** May have performance issues in terms of memory usage. +
 **Alternative 2:** Individual command knows how to undo/redo by itself. +
-**Pros:** Will use less memory (e.g. for `delete`, just save the person being deleted). +
+**Pros:** Will use less memory (_e.g. for `delete`, just save the person being deleted_). +
 **Cons:** We must ensure that the implementation of each individual command are correct.
 
 ---
 
-**Aspect:** Type of commands that can be undone/redone +
+**Aspect:** Type of commands that can be undone/redone. +
 **Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`). +
-**Pros:** We only revert changes that are hard to change back (the view can easily be re-modified as no data are lost). +
-**Cons:** User might think that undo also applies when the list is modified (undoing filtering for example), only to realize that it does not do that, after executing `undo`. +
+**Pros:** We only revert changes that are hard to change back (_the view can easily be re-modified as no data is
+lost_). +
+**Cons:** User might think that undo also applies when the list is modified (_undoing filtering for example_), only to
+realize that it does not do that, after executing `undo`. +
 **Alternative 2:** Include all commands. +
 **Pros:** Might be more intuitive for the user. +
-**Cons:** User have no way of skipping such commands if he or she just want to reset the state of the address book and not the view. +
-**Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
+**Cons:** User have no way of skipping such commands if he or she just want to reset the state of the address book and
+not the view. +
+**Additional Info:** See our discussion
+https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
 ---
 
-**Aspect:** Data structure to support the undo/redo commands +
-**Alternative 1 (current choice):** Use separate stack for undo and redo +
-**Pros:** Easy to understand for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project. +
-**Cons:** Logic is duplicated twice. For example, when a new command is executed, we must remember to update both `HistoryManager` and `UndoRedoStack`. +
+**Aspect:** Data structure to support the undo/redo commands. +
+**Alternative 1 (current choice):** Use separate stack for undo and redo. +
+**Pros:** Easy to understand for new Computer Science student undergraduates to understand, who are likely to be the new
+incoming developers of our project. +
+**Cons:** Logic is duplicated twice. For example, when a new command is executed, we must remember to update both
+`HistoryManager` and `UndoRedoStack`. +
 **Alternative 2:** Use `HistoryManager` for undo/redo +
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
-**Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
+**Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands.
+Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different
+things. +
 // end::undoredo[]
 
 // tag::personpanel[]
@@ -356,7 +431,9 @@ The PersonPanel replaces the previous BrowserPanel, and is a crucial part of Mai
 
 ==== Java Implementation
 
-By taking advantage of the java.util.logging package, PersonPanel is able to display all of the details of a contact (name, address, email, contact number, birthday, tags) selected in PersonCard. This implementation can be seen from the following 2 code snippets:
+By taking advantage of the java.util.logging package, PersonPanel is able to display all of the details of a contact
+(_name, address, email, contact number, birthday, tags_) selected in PersonCard. This implementation can be seen from
+the following 2 code snippets:
 
 [source,java]
 ----
@@ -367,7 +444,9 @@ private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedE
 }
 ----
 
-**Code Snippet 1 (handlePersonPanelSelectionChangedEvent()):** Whenever a contact is selected, an event will be triggered. The method will respond to the event by obtaining a ReadOnlyPerson variable (which contains all the details of the contact), and pass it into loadPersonPage().
+**Code Snippet 1 (handlePersonPanelSelectionChangedEvent()):** Whenever a contact is selected, an event will be
+triggered. The method will respond to the event by obtaining a ReadOnlyPerson variable (_which contains all the details
+of the contact_), and pass it into loadPersonPage().
 
 [source,java]
 ----
@@ -386,7 +465,8 @@ private void loadPersonPage(ReadOnlyPerson person) {
 }
 ----
 
-**Code Snippet 2 (loadPersonPage()):** The ReadOnlyPerson variable passed into loadPersonPage can then be used to extract the contact's details for display; the UI will be updated accordingly to reflect these changes.
+**Code Snippet 2 (loadPersonPage()):** The ReadOnlyPerson variable passed into loadPersonPage can then be used to
+extract the contact's details for display; the UI will be updated accordingly to reflect these changes.
 
 [NOTE]
 Upon opening the application, no contact details will be displayed since no contact has been selected yet.
@@ -396,24 +476,33 @@ Upon opening the application, no contact details will be displayed since no cont
 The layout for PersonPanel is specified in PersonPanel.fxml. Visually, it can be broken down into 2 parts as shown:
 
 image::PersonPanelLayout.png[width="760"]
+_Figure 4.4.2.1: Visual breakdown of PersonPanel_
 
-**Part 1 (primaryDetails):** This is subdivided into parts A and B. Part A contains the avatar picture of the contact. At the moment, there is a placeholder image. In the future, we will implement support for custom avatars. Part B contains the Name and Tags of the contact, which we found to be important in recognising a displayed contact quickly. Hence, they are in a larger font in order to stand out.
+**Part 1 (primaryDetails):** This is subdivided into parts A and B. Part A contains the avatar picture of the contact.
+At the moment, there is a placeholder image. In the future, we will implement support for custom avatars.
+Part B contains the Name and Tags of the contact, which we found to be important in recognising a displayed contact
+quickly. Hence, they are in a larger font in order to stand out.
 
-**Part 2 (secondaryDetails):** This displays the Address, Email, Contact Number and Birthday of the contact. As these details are less important than the Name and Tags, they are placed below and are in a smaller font. At the moment, this section appears simple but empty. We plan to implement more features, such as a "Notes about Contact" and "Birthday Countdown".
+**Part 2 (secondaryDetails):** This displays the Address, Email, Contact Number and Birthday of the contact. As these
+details are less important than the Name and Tags, they are placed below and are in a smaller font. At the moment, this
+section appears simple but empty. We plan to implement more features, such as a "Notes about Contact" and
+"Birthday Countdown".
 
 ==== Design Considerations
 
-**Aspect:** Display of Contact's Details +
-**Alternative 1 (current choice):** Replace BrowserPanel with PersonPanel, which displays all of the contacts details. Remove all details but Name and Tags from PersonCard.  +
+**Aspect:** Display of Contact's Details. +
+**Alternative 1 (current choice):** Replace BrowserPanel with PersonPanel, which displays all of the contacts details.
+Remove all details but Name and Tags from PersonCard.  +
 **Pros:** We can build upon PersonPanel and add more features to it, that the BrowserPanel could not achieve.  +
-**Cons:** PersonPanel will not be able to display personal web pages (e.g. Contact's Social Media page). +
+**Cons:** PersonPanel will not be able to display personal web pages (_e.g. Contact's Social Media page_). +
 **Alternative 2:** Keep BrowserPanel and use HTML files to display contact details instead. +
-**Pros:** No need to modify existing code; instead just figure out a way to edit and display HTML files that show the contact's details. +
+**Pros:** No need to modify existing code; instead just figure out a way to edit and display HTML files that show the
+contact's details. +
 **Cons:** May take too long to implement since we are not familiar with how we can do so.
 
 ---
 
-**Aspect:** Display of Tags In PersonPanel (and PersonCard). +
+**Aspect:** Display of Tags In PersonPanel (_and PersonCard_). +
 **Alternative 1 (current choice):** Randomly colourise tags to make them distinct. +
 **Pros:** Quick to implement and makes it easier for user to differentiate between tags. +
 **Cons:** Tags are always changing colour for each new instance of the application; may seem confusing. +
@@ -423,23 +512,26 @@ image::PersonPanelLayout.png[width="760"]
 
 ---
 
-**Aspect:** Addition of Icons for secondaryDetails +
+**Aspect:** Addition of Icons for secondaryDetails. +
 **Alternative 1 (current choice):** Place icons on the left of each contact detail. +
-**Pros:** Quick to implement and makes it easier for user to differentiate between each contact detail. Icons can be easily taken from Google's Material.io website. +
+**Pros:** Quick to implement and makes it easier for user to differentiate between each contact detail. Icons can be
+easily taken from Google's Material.io website. +
 **Cons:** N/A +
 **Alternative 2:** Use different colours for each contact detail. +
 **Pros:** Even more quick to implement since it only involves CSS changes. +
-**Cons:** Bad idea design-wise because it violates the Triadic Colour Scheme. It could make the application look less professional and unattractive.
+**Cons:** Bad idea design-wise because it violates the Triadic Colour Scheme. It could make the application look less
+professional and unattractive.
 // end::personpanel[]
 
 //tag::partialfind[]
 === Partial Find
-The partial matching of the Find command is implemented by creating a method in the `StringUtil` class with the help of the `regionMatches` method from the java `String` class.
+The partial matching of the Find command is implemented by creating a method in the `StringUtil` class with the help of
+the `regionMatches` method from the java `String` class.
 It replaces the method for matching in all predicate classes that is used by the command.
 
 [NOTE]
 
-The Find command now only exclusively use partial matching and has lost the full matching functionality
+The Find command now only use partial matching and has lost the full matching functionality
 
 
 Previously, the method used for matching was implemented as such :
@@ -456,17 +548,18 @@ public static boolean containsWordIgnoreCase(String sentence, String word) {
     }
 ----
 
-By using the `equalsIgnoreCase` method, the query word has to exactly match, ignoring case, the sentence word for the method to return `true`. +
+By using the `equalsIgnoreCase` method, the query word has to exactly match, ignoring case, the sentence word for the
+method to return `true`. +
 
 
 
-Now, we introduce a  slightly modified version to allow for partial matching as such :
+Now, we introduce a slightly modified version to allow for partial matching as such :
 [source, java]
 ----
- public static boolean containsWordStartingWithIgnoreCase(String sentence, String word) {
+ public static boolean containsPartialIgnoreCase(String sentence, String word) {
         //..check and prepare arguments..
         for (String wordInSentence: wordsInPreppedSentence) {
-            if (wordInSentence.regionMatches(true, 0, preppedWord, 0, preppedWord.length())) {
+            if (wordInSentence.toLowerCase().contains(preppedWord.toLowerCase())) {
                 return true;
             }
         }
@@ -474,46 +567,50 @@ Now, we introduce a  slightly modified version to allow for partial matching as 
     }
 ----
 
-By using `regionMatches` from 0 (start of each word) to the length of the query word, we allow the sentence word to still match with the query word, even if the sentence word is longer. +
-More precisely, the method will now return `true` as long as the sentence word and query word matches within the specified region (start to query word's length).
-[NOTE]
-
-This type of partial matching only matches from the start of each word. It won't accept matches that start from the middle of the word. (e.g. `find mel` will match `Melissa` but not `Amelia`)
+By using the `contains` method, we now allow the query word to be a substring of the sentence word.
 
 
-We then replace the use of the previous method in the Predicate classes in model (e.g. `NameContainsKeywordsPredicate`) with the new method so that the Find command actually uses partial matching.
+We then replace the use of the previous method in the Predicate classes in model
+(_e.g. `NameContainsKeywordsPredicate`_) with the new method so that the Find command actually uses partial matching.
 
 
 ==== Design Considerations
 
-**Aspect:** Exclusive use of partial matching +
+**Aspect:** Exclusive use of partial matching. +
 **Alternative 1 (current choice):** Find command exclusively uses partial matching. +
-**Pros:** Simple implementation, doesn't affect complexity from user's perspective and easier for users to utilize Find command. +
-**Cons:** Users lose the ability to do full matching when it would be useful (e.g. A lot of people with similiar names). +
+**Pros:** Simple implementation, doesn't affect complexity from user's perspective and easier for users to utilize Find
+command. +
+**Cons:** Users lose the ability to do full matching when it would be useful
+(_e.g. a lot of people with similiar names_). +
 **Alternative 2:** Give the option to toggle/use either partial matching or full matching +
 **Pros:** More flexible and powerful. +
-**Cons:** Requires more complicated syntax which can be confusing to new users, most use cases are already covered by partial matching.
+**Cons:** Requires more complicated syntax which can be confusing to new users, most use cases are already covered by
+partial matching.
 
 
 ---
 
 **Aspect:** Type of partial matching +
-**Alternative 1 (current choice):** Matches are required to be from the start of each word. +
+**Alternative 1 (current choice):** Matches can be from anywhere in the word +
 **Pros:** Restricts the scope of search which increases relevancy but still giving enough flexibility for users. +
 **Cons:** Can be unintuitive, less powerful. +
-**Alternative 2:** Matches can be from anywhere in the word +
-**Pros:** More intuitive way of searching, simpler to understand. +
-**Cons:** Search results become less relevant for short keywords. +
+**Alternative 2:** Matches are required to be from the start of each word. +
+**Pros:** Restricts the scope of search which increases relevancy but still giving enough flexibility for users. +
+**Cons:** Can be unintuitive, less powerful. +
+
 // end::partialfind[]
 
 // tag::addtagcommand[]
 === Add Tag
 
-The add tag command is facilitated by the AddTagCommand, which is useful for adding a tag to a person inside the address book.
+The add tag command is facilitated by the AddTagCommand, which is useful for adding a tag to a person inside the
+address book.
 
 ==== Java Implementation
 
-AddTagCommand is a command. As AddTagCommand modifies the state of the address book (adding a tag to a contact in the address book), AddTagCommand inherits UndoableCommands. Therefore, users can undo/redo their previously entered AddTagCommand.
+AddTagCommand is a command. As AddTagCommand modifies the state of the address book (_adding a tag to a contact in the
+address book_), AddTagCommand inherits UndoableCommands. Therefore, users can undo/redo their previously
+entered AddTagCommand.
 
 AddTagCommand is implemented in this way:
 
@@ -527,7 +624,8 @@ public class AddTagCommand extends UndoableCommand {
 }
 ----
 
-AddTagCommand can be used by calling the method with an index and a string of tag name that will be added, shown by this code snippet:
+AddTagCommand can be used by calling the method with an index and a string of tag name that will be added, shown by
+this code snippet:
 
 [source,java]
 ----
@@ -543,46 +641,57 @@ public AddTagCommand(Index index, Set<Tag> addedTag) {
 ==== Design Considerations
 
 **Aspect:** Implementation of AddTagCommand +
-**Alternative 1 (current choice):** Implementing a new command AddTagCommand instead of using the existing Edit command.  +
+**Alternative 1 (current choice):** Implementing a new command AddTagCommand instead of using the existing
+Edit command.  +
 **Pros:** Users can add a single tag only by typing the new tag that they want to assign to a contact.  +
-**Cons:** Currently AddTagCommand could only add a single new tag every time it is executed (future enhancement will enable AddTagCommand to add more than 1 tag when executed). +
+**Cons:** Currently AddTagCommand could only add a single new tag every time it is executed (_future enhancement
+will enable AddTagCommand to add more than 1 tag when executed_). +
 **Alternative 2:** Use existing Edit command to add a single tag to a person in the address book. +
 **Pros:** Less command to remember. +
-**Cons:** Users need to type all existing tags added by the new tag when they are using Edit command. There is a possibility of some error that can be avoided when using AddTagCommand, such as mistyping the existing tags or not adding a complete set of existing tags.
+**Cons:** Users need to type all existing tags added by the new tag when they are using Edit command. There is a
+possibility of some error that can be avoided when using AddTagCommand, such as mistyping the existing tags or not
+adding a complete set of existing tags.
 
 // end::addtagcommand[]
 
 
 === Logging
 
-We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
+We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and
+logging destinations.
 
-* The logging level can be controlled using the `logLevel` setting in the configuration file (See link:#configuration[Configuration])
-* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
+* The logging level can be controlled using the `logLevel` setting in the configuration file
+(_See link:#configuration[Configuration]_).
+* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the
+specified logging level.
 * Currently log messages are output through: `Console` and to a `.log` file.
 
 *Logging Levels*
 
-* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
-* `WARNING` : Can continue, but with caution
-* `INFO` : Information showing the noteworthy actions by the App
-* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+* `SEVERE` : Critical problem detected which may possibly cause the termination of the application.
+* `WARNING` : Can continue, but with caution.
+* `INFO` : Information showing the noteworthy actions by the application.
+* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of
+just its size.
 
 === Configuration
 
-Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file
+(_default:_ `config.json`).
 
 == Documentation
 
 We use asciidoc for writing documentation.
 
 [NOTE]
-We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
+We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility
+in formatting.
 
 === Editing Documentation
 
-See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of your edits.
-Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
+See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview
+the end result of your edits. Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to
+preview the changes you have made to your `.adoc` files in real-time.
 
 === Publishing Documentation
 
@@ -590,17 +699,21 @@ See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to dep
 
 === Converting Documentation to PDF format
 
-We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
+We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as
+Chrome's PDF engine preserves hyperlinks used in webpages.
 
 Here are the steps to convert the project documentation files to PDF format.
 
-.  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in the `docs/` directory to HTML format.
-.  Go to your generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
+.  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files
+in the `docs/` directory to HTML format.
+.  Go to your generated HTML files in the `build/docs` folder, right click on them and select `Open with` ->
+`Google Chrome`.
 .  Within Chrome, click on the `Print` option in Chrome's menu.
-.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
+.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results,
+use the settings indicated in the screenshot below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 5.6.1 : Saving documentation as PDF files in Chrome_
+_Figure 5.3.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 
@@ -609,7 +722,8 @@ _Figure 5.6.1 : Saving documentation as PDF files in Chrome_
 There are three ways to run tests.
 
 [TIP]
-The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
+The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to
+platform/resolution-specific idiosyncrasies.
 
 *Method 1: Using IntelliJ JUnit test runner*
 
@@ -618,30 +732,35 @@ The most reliable way to run tests is the 3rd one. The first two methods might f
 
 *Method 2: Using Gradle*
 
-* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
+* Open a console and run the command `gradlew clean allTests` (_Mac/Linux:_ `./gradlew clean allTests`)
 
 [NOTE]
 See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
 
 *Method 3: Using Gradle (headless)*
 
-Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
+Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode.
+In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
 
-To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
+To run tests in headless mode, open a console and run the command `gradlew clean headless allTests`
+(_Mac/Linux:_ `./gradlew clean headless allTests`)
 
 === Types of tests
 
 We have two types of tests:
 
 .  *GUI Tests* - These are tests involving the GUI. They include,
-.. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
+.. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the
+`systemtests` package.
 .. _Unit tests_ that test the individual components. These are in `seedu.address.ui` package.
 .  *Non-GUI Tests* - These are tests not involving the GUI. They include,
 ..  _Unit tests_ targeting the lowest level methods/classes. +
 e.g. `seedu.address.commons.StringUtilTest`
-..  _Integration tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
+..  _Integration tests_ that are checking the integration of multiple code units (_those code units are assumed to be
+working_). +
 e.g. `seedu.address.storage.StorageManagerTest`
-..  Hybrids of unit and integration tests. These test are checking multiple code units as well as how the are connected together. +
+..  Hybrids of unit and integration tests. These test are checking multiple code units as well as how the are connected
+together. +
 e.g. `seedu.address.logic.LogicManagerTest`
 
 
@@ -659,7 +778,8 @@ See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build auto
 
 === Continuous Integration
 
-We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
+We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on
+our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
 === Making a Release
 
@@ -668,25 +788,29 @@ Here are the steps to create a new release.
 .  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
 .  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
 .  Tag the repo with the version number. e.g. `v0.1`
-.  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
+.  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file
+you created.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
-a. Include those libraries in the repo (this bloats the repo size) +
-b. Require developers to download those libraries manually (this creates extra work for developers)
+A project often depends on third-party libraries. For example, Address Book depends on the
+http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these dependencies can be automated
+using Gradle. For example, Gradle can download the dependencies automatically, which is better than
+these alternatives. +
+a. Include those libraries in the repo (_this bloats the repo size_) +
+b. Require developers to download those libraries manually (_this creates extra work for developers_)
 
 [appendix]
 == User Stories
 
-Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
+Priorities: High (_must have_) - `* * \*`, Medium (_nice to have_) - `* \*`, Low (_unlikely to have_) - `*`
 
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |normal user |add a new person |fill my addressbook with contacts
+|`* * *` |normal user |add a new person |fill my address book with contacts
 
 |`* * *` |normal user |edit contact details |keep entries updated
 
@@ -700,7 +824,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |normal user |redo command |correct my undo easily
 
-|`* * *` |normal user |store multiple details for contact (e.g multiple phones) |store details thoroughly
+|`* * *` |normal user |store multiple details for contact (_e.g multiple phones_) |store details thoroughly
 
 |`* * *` |normal user |set favorite contacts |look them up more quickly
 
@@ -710,13 +834,15 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |forgetful user |find with partial matches |search for contacts that I only partially remember the name of
 
-|`* * *` |user with multiple addressbook |import contact details |copy contacts to another addressbook easily
+|`* * *` |user with multiple address book |import contact details |copy contacts to another address book easily
 
-|`* * *` |careful/paranoid user |back up my contacts' details |Restore the contacts in case the original storage file is deleted or corrupted
+|`* * *` |careful/paranoid user |back up my contacts' details |Restore the contacts in case the original storage file is
+deleted or corrupted
 
 |`* * *` |careful/paranoid user |export my contacts' details |restore them in another computer if needed
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else
+seeing them by accident
 
 |`* *` |expert user |use the product seamlessly |start using the product immediately and easily
 
@@ -740,15 +866,16 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |get reminded of a contact's birthday |wish him/her happy birthday
 
-|`* *` |user multiple devices |set multiple instances of app to be in sync |use addressbook across multiple devices seamlessly
+|`* *` |user multiple devices |set multiple instances of app to be in sync |use address book across multiple devices
+seamlessly
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 
-|`*` |picky user |change font type |make my addressbook as fancy/simple as I like
+|`*` |picky user |change font type |make my address book as fancy/simple as I like
 
-|`*` |picky user |add font colour to my contact's name |make the addressbook colourful
+|`*` |picky user |add font colour to my contact's name |make the address book colourful
 
-|`*` |picky user |have an addressbook with sound effects |my addressbook is "cool"
+|`*` |picky user |have an address book with sound effects |my address book is "cool"
 
 |=======================================================================
 
@@ -756,7 +883,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise.
 
 [discrete]
 === Use case: Delete person
@@ -890,8 +1017,10 @@ Use case resumes at step 2.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  Should be available to use as long as the computer has sufficient power.
 .  Should be available to use with or without internet access.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-.  A user with little to no experience with a command line interface should be able to have easy access to the user guide, and be able to familiarise himself/herself with the commands.
+.  A user with above average typing speed for regular English text (_i.e. not code, not system admin commands_)
+should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  A user with little to no experience with a command line interface should be able to have easy access to the user
+guide, and be able to familiarise himself/herself with the commands.
 .  A user should only be able to use the supported commands; unsupported commands should be handled gracefully.
 .  A user is able to back up and restore all contacts in the event of the application breaking.
 .  The response to any user action should become visible within 5 seconds at maximum contacts capacity.
@@ -903,36 +1032,23 @@ Use case resumes at step 2.
 == Glossary
 
 [[command-line-interface]]
-Command Line Interface
+- *Command Line Interface (CLI)*: It is an interface which users respond to a visual prompt by typing in a command
+on a specified line, receive a response back from the system, and then enter another command. This goes on back and
+forth.
 
-....
-A Command Line Interface (CLI) is a user interface to a computer's operating system or an application in which the user responds to a visual prompt by typing in a command on a specified line, receives a response back from the system, and then enters another command, and so forth.
-....
+[[graphical-user-interface]]
+- *Graphical User Interface (GUI)*: It is a graphical (_rather than purely textual_) user interface to a computer.
 
 [[java]]
-Java
-
-....
-Java is a general purpose, high-level programming language developed by Sun Microsystems.
-....
+- *Java*: It is a general-purpose computer programming language that is used in many products today. To learn more,
+click link:https://go.java/index.html?intcmp=gojava-banner-java-com[here].
 
 [[mainstream-os]]
-Mainstream OS
-
-....
-Windows, Linux, Unix, OS-X.
-....
+- *Mainstream OS*: Examples include Windows, Linux, Unix, Mac OS X.
 
 [[open-source]]
-Open Source
-
-....
-Software for which the original source code is made freely available and may be redistributed and modified.
-....
+- *Open Source*: Software for which the original source code is made freely available and may be redistributed
+and modified.
 
 [[private-contact-detail]]
-Private contact detail
-
-....
-A contact detail that is not meant to be shared with others.
-....
+- *Private contact detail*: A contact detail that is not meant to be shared with others.
