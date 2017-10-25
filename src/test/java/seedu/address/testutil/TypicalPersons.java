@@ -51,7 +51,8 @@ public class TypicalPersons {
             .withAvatar().build();
     public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
             .withEmail("anna@example.com").withAddress("4th street").withBirthday("01/01/1991")
-            .withAvatar().build();
+            .withTags("colleagues").withAvatar().build();
+
 
     // Manually added
     public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
