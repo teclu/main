@@ -28,12 +28,14 @@ you understand what features we have implemented, and how we have done so.
 Before you get stared, do ensure that you have the following installed on your computer:
 
 * *Java SE Development Kit (JDK) `1.8.0_60`* or later
+You can download Java SE Development Kit link:http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html[here].
 +
 [NOTE]
 This application will not work with earlier versions of Java 8 (_anything before `1.8.0_60`_).
 +
 
 * *IntelliJ* Integrated Development Environment (IDE)
+You can download IntelliJ IDE link:https://www.jetbrains.com/idea/download/#section=windows[here].
 +
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed; do not disable them! If you have disabled them, go to
@@ -98,14 +100,14 @@ is Unix-based and AppVeyor is Windows-based_).
 ==== Before coding
 
 
-Before you start coding, do read the link:#architecture[Architecture] section so that you can get a clearer sense of
+Before you start coding, do read the link:#architecture[Architecture] section below so that you can get a clearer sense of
 the overall design of the application. This will help you understand how the application works, and how your changes
 can affect the entire system.
 
 ==== Updating documentation to match your fork
 
 Lastly, if you plan to develop this as a separate product (_i.e. instead of contributing to the
-`CS2103AUG2017-W11-B3/main`_), you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and
+`CS2103AUG2017-W11-B3/main`)_, you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and
 `UserGuide.adoc` with your fork's URL, and make changes to the documentation where necessary.
 
 == Design
@@ -529,7 +531,7 @@ It replaces the method for matching in all predicate classes that is used by the
 
 [NOTE]
 
-The Find command now only exclusively use partial matching and has lost the full matching functionality
+The Find command now only use partial matching and has lost the full matching functionality
 
 
 Previously, the method used for matching was implemented as such :
@@ -554,10 +556,10 @@ method to return `true`. +
 Now, we introduce a slightly modified version to allow for partial matching as such :
 [source, java]
 ----
- public static boolean containsWordStartingWithIgnoreCase(String sentence, String word) {
+ public static boolean containsPartialIgnoreCase(String sentence, String word) {
         //..check and prepare arguments..
         for (String wordInSentence: wordsInPreppedSentence) {
-            if (wordInSentence.regionMatches(true, 0, preppedWord, 0, preppedWord.length())) {
+            if (wordInSentence.toLowerCase().contains(preppedWord.toLowerCase())) {
                 return true;
             }
         }
@@ -565,14 +567,7 @@ Now, we introduce a slightly modified version to allow for partial matching as s
     }
 ----
 
-By using `regionMatches` from 0 (_start of each word_) to the length of the query word, we allow the sentence word to
-still match with the query word, even if the sentence word is longer. +
-More precisely, the method will now return `true` as long as the sentence word and query word matches within the
-specified region (_start to query word's length_).
-[NOTE]
-
-This type of partial matching only matches from the start of each word. It won't accept matches that start from the
-middle of the word. (_e.g. `find mel` will match `Melissa` but not `Amelia`_)
+By using the `contains` method, we now allow the query word to be a substring of the sentence word.
 
 
 We then replace the use of the previous method in the Predicate classes in model
@@ -595,13 +590,14 @@ partial matching.
 
 ---
 
-**Aspect:** Type of partial matching. +
-**Alternative 1 (current choice):** Matches are required to be from the start of each word. +
+**Aspect:** Type of partial matching +
+**Alternative 1 (current choice):** Matches can be from anywhere in the word +
 **Pros:** Restricts the scope of search which increases relevancy but still giving enough flexibility for users. +
 **Cons:** Can be unintuitive, less powerful. +
-**Alternative 2:** Matches can be from anywhere in the word. +
-**Pros:** More intuitive way of searching, simpler to understand. +
-**Cons:** Search results become less relevant for short keywords. +
+**Alternative 2:** Matches are required to be from the start of each word. +
+**Pros:** Restricts the scope of search which increases relevancy but still giving enough flexibility for users. +
+**Cons:** Can be unintuitive, less powerful. +
+
 // end::partialfind[]
 
 // tag::addtagcommand[]

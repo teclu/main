@@ -20,6 +20,7 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddTagCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteTagCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
@@ -62,6 +63,16 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_deleteTag() throws Exception {
+        List<String> tagList = Arrays.asList("neighbours");
+        Set<Tag> tagToDelete = ParserUtil.parseTags(tagList);
+        DeleteTagCommand command = (DeleteTagCommand) parser.parseCommand(
+                DeleteTagCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " "
+                        + tagList.stream().collect(Collectors.joining(" ")));
+        assertEquals(new DeleteTagCommand(INDEX_FIRST_PERSON, tagToDelete), command);
+    }
+
+    @Test
     public void parseCommand_clear() throws Exception {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD + " 3") instanceof ClearCommand);
@@ -80,8 +91,7 @@ public class AddressBookParserTest {
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(person));
-        System.out.println(command);
-        System.out.println(new EditCommand(INDEX_FIRST_PERSON, descriptor));
+
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
 
