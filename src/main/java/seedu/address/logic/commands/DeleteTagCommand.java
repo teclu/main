@@ -17,6 +17,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.avatar.Avatar;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -89,6 +90,7 @@ public class DeleteTagCommand extends UndoableCommand {
         Email email = personToEdit.getEmail();
         Address address = personToEdit.getAddress();
         Birthday birthday = personToEdit.getBirthday();
+        Avatar ava = personToEdit.getAvatar();
 
         Set<Tag> initialTags = personToEdit.getTags();
         Set<Tag> updatedTags = new HashSet<>();
@@ -99,7 +101,7 @@ public class DeleteTagCommand extends UndoableCommand {
             throw new CommandException(e.getMessage());
         }
 
-        return new Person(name, phone, email, address, birthday, updatedTags);
+        return new Person(name, phone, email, address, birthday, ava, updatedTags);
     }
 
     @Override
