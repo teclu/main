@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Arrays;
@@ -9,6 +10,7 @@ import java.util.Arrays;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.PhoneContainsKeywordsPredicate;
 import seedu.address.model.person.TagListContainsKeywordsPredicate;
 
 
@@ -38,6 +40,10 @@ public class FindCommandParser implements Parser<FindCommand> {
         if (toSearch.equals(PREFIX_TAG.getPrefix())) {
             return new FindCommand(new TagListContainsKeywordsPredicate(Arrays.asList(keywords)));
         }
+
+        if (toSearch.equals(PREFIX_PHONE.getPrefix())) {
+            return new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList(keywords)));
+        }
         return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
     }
 
@@ -45,7 +51,8 @@ public class FindCommandParser implements Parser<FindCommand> {
      * Checks if the given string prefix is a searchable prefix (i.e n/ and t/ currently).
      */
     public boolean isSearchablePrefix(String prefixString) {
-        return prefixString.equals(PREFIX_NAME.getPrefix()) || prefixString.equals(PREFIX_TAG.getPrefix());
+        return prefixString.equals(PREFIX_NAME.getPrefix()) || prefixString.equals(PREFIX_TAG.getPrefix())
+                || prefixString.equals(PREFIX_PHONE.getPrefix());
     }
 
 }
