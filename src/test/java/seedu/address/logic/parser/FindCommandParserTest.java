@@ -9,6 +9,7 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.model.person.AddressContainsKeywordsPredicate;
 import seedu.address.model.person.EmailContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.PhoneContainsKeywordsPredicate;
@@ -40,10 +41,13 @@ public class FindCommandParserTest {
                 new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList("85355251")));
         FindCommand expectedFindCommandForEmail =
                 new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList("asdf@example.com")));
+        FindCommand expectedFindCommandForAddress =
+                new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList("clementi")));
         assertParseSuccess(parser, "n/ Alice Bob", expectedFindCommand);
         assertParseSuccess(parser, "t/ Friends Family", expectedFindCommandForTags);
         assertParseSuccess(parser, "p/ 85355251", expectedFindCommandForPhone);
         assertParseSuccess(parser, "e/ asdf@example.com", expectedFindCommandForEmail);
+        assertParseSuccess(parser, "a/ clementi", expectedFindCommandForAddress);
     }
 
 }

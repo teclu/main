@@ -10,6 +10,7 @@ import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
+import static seedu.address.testutil.TypicalPersons.GEORGE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
@@ -24,6 +25,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.AddressContainsKeywordsPredicate;
 import seedu.address.model.person.EmailContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.PhoneContainsKeywordsPredicate;
@@ -92,6 +94,10 @@ public class FindCommandTest {
         String fourthExpectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
         FindCommand fourthCommand = prepareCommandForEmail("cornelia@example.com");
         assertCommandSuccess(fourthCommand, fourthExpectedMessage, Arrays.asList(DANIEL));
+
+        String fifthExpectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        FindCommand fifthCommand = prepareCommandForAddress("street");
+        assertCommandSuccess(fifthCommand, fifthExpectedMessage, Arrays.asList(CARL, DANIEL, GEORGE));
     }
 
     /**
@@ -130,6 +136,16 @@ public class FindCommandTest {
     private FindCommand prepareCommandForEmail(String userInput) {
         FindCommand command =
                 new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+
+    /**
+     * Parses {@code userInput} into a {@code FindCommand} for address prefix.
+     */
+    private FindCommand prepareCommandForAddress(String userInput) {
+        FindCommand command =
+                new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
