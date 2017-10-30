@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -12,6 +13,7 @@ import java.util.Arrays;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.AddressContainsKeywordsPredicate;
+import seedu.address.model.person.BirthdayContainsKeywordsPredicate;
 import seedu.address.model.person.EmailContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.PhoneContainsKeywordsPredicate;
@@ -49,18 +51,20 @@ public class FindCommandParser implements Parser<FindCommand> {
             return new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList(keywords)));
         } else if (toSearch.equals(PREFIX_ADDRESS.getPrefix())) {
             return new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList(keywords)));
+        } else if (toSearch.equals(PREFIX_BIRTHDAY.getPrefix())) {
+            return new FindCommand(new BirthdayContainsKeywordsPredicate(Arrays.asList(keywords)));
         } else {
             return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
         }
     }
 
     /**
-     * Checks if the given string prefix is a searchable prefix (i.e n/ and t/ currently).
+     * Checks if the given string prefix is a searchable prefix (n/, t/, p/, e/, a/, or b/).
      */
     public boolean isSearchablePrefix(String prefixString) {
         return prefixString.equals(PREFIX_NAME.getPrefix()) || prefixString.equals(PREFIX_TAG.getPrefix())
                 || prefixString.equals(PREFIX_PHONE.getPrefix()) || prefixString.equals(PREFIX_EMAIL.getPrefix())
-                || prefixString.equals(PREFIX_ADDRESS.getPrefix());
+                || prefixString.equals(PREFIX_ADDRESS.getPrefix()) || prefixString.equals(PREFIX_BIRTHDAY.getPrefix());
     }
 
 }
