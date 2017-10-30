@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -10,6 +11,7 @@ import java.util.Arrays;
 
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.AddressContainsKeywordsPredicate;
 import seedu.address.model.person.EmailContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.PhoneContainsKeywordsPredicate;
@@ -45,6 +47,8 @@ public class FindCommandParser implements Parser<FindCommand> {
             return new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList(keywords)));
         } else if (toSearch.equals(PREFIX_EMAIL.getPrefix())) {
             return new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList(keywords)));
+        } else if (toSearch.equals(PREFIX_ADDRESS.getPrefix())) {
+            return new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList(keywords)));
         } else {
             return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
         }
@@ -55,7 +59,8 @@ public class FindCommandParser implements Parser<FindCommand> {
      */
     public boolean isSearchablePrefix(String prefixString) {
         return prefixString.equals(PREFIX_NAME.getPrefix()) || prefixString.equals(PREFIX_TAG.getPrefix())
-                || prefixString.equals(PREFIX_PHONE.getPrefix()) || prefixString.equals(PREFIX_EMAIL.getPrefix());
+                || prefixString.equals(PREFIX_PHONE.getPrefix()) || prefixString.equals(PREFIX_EMAIL.getPrefix())
+                || prefixString.equals(PREFIX_ADDRESS.getPrefix());
     }
 
 }
