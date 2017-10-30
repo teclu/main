@@ -9,6 +9,7 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.model.person.EmailContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.PhoneContainsKeywordsPredicate;
 import seedu.address.model.person.TagListContainsKeywordsPredicate;
@@ -32,14 +33,17 @@ public class FindCommandParserTest {
         // multiple whitespaces between keywords
         assertParseSuccess(parser, " \n Alice \n \t Bob  \t", expectedFindCommand);
 
-        // use of prefix to indicate the property to match, currently either name or tag
+        // use of prefix to indicate the property to match (name, tag, phone, and email)
         FindCommand expectedFindCommandForTags =
                 new FindCommand(new TagListContainsKeywordsPredicate(Arrays.asList("Friends", "Family")));
         FindCommand expectedFindCommandForPhone =
                 new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList("85355251")));
+        FindCommand expectedFindCommandForEmail =
+                new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList("asdf@example.com")));
         assertParseSuccess(parser, "n/ Alice Bob", expectedFindCommand);
         assertParseSuccess(parser, "t/ Friends Family", expectedFindCommandForTags);
         assertParseSuccess(parser, "p/ 85355251", expectedFindCommandForPhone);
+        assertParseSuccess(parser, "e/ asdf@example.com", expectedFindCommandForEmail);
     }
 
 }

@@ -24,6 +24,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.EmailContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.PhoneContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -87,6 +88,10 @@ public class FindCommandTest {
         String thirdExpectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
         FindCommand thirdCommand = prepareCommandForPhone("85355255");
         assertCommandSuccess(thirdCommand, thirdExpectedMessage, Arrays.asList(ALICE));
+
+        String fourthExpectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        FindCommand fourthCommand = prepareCommandForEmail("cornelia@example.com");
+        assertCommandSuccess(fourthCommand, fourthExpectedMessage, Arrays.asList(DANIEL));
     }
 
     /**
@@ -115,6 +120,16 @@ public class FindCommandTest {
     private FindCommand prepareCommandForPhone(String userInput) {
         FindCommand command =
                 new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+
+    /**
+     * Parses {@code userInput} into a {@code FindCommand} for email prefix.
+     */
+    private FindCommand prepareCommandForEmail(String userInput) {
+        FindCommand command =
+                new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
