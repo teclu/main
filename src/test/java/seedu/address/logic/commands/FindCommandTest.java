@@ -26,6 +26,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.AddressContainsKeywordsPredicate;
+import seedu.address.model.person.BirthdayContainsKeywordsPredicate;
 import seedu.address.model.person.EmailContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.PhoneContainsKeywordsPredicate;
@@ -80,24 +81,60 @@ public class FindCommandTest {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         FindCommand command = prepareCommand("Kurz Elle Kunz");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
+    }
 
-        String secondExpectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 6);
-        FindCommand secondCommand = prepareCommandForTags("friends");
-        assertCommandSuccess(secondCommand,
-                secondExpectedMessage,
+    @Test
+    public void execute_findByTag() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 6);
+        FindCommand command = prepareCommandForTags("friends");
+        assertCommandSuccess(command,
+                expectedMessage,
                 Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA));
+    }
 
-        String thirdExpectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
-        FindCommand thirdCommand = prepareCommandForPhone("85355255");
-        assertCommandSuccess(thirdCommand, thirdExpectedMessage, Arrays.asList(ALICE));
+    @Test
+    public void execute_findByPhone() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        FindCommand command = prepareCommandForPhone("85355255");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE));
 
-        String fourthExpectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
-        FindCommand fourthCommand = prepareCommandForEmail("cornelia@example.com");
-        assertCommandSuccess(fourthCommand, fourthExpectedMessage, Arrays.asList(DANIEL));
+        String secondExpectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        FindCommand secondCommand = prepareCommandForPhone("11111111");
+        assertCommandSuccess(secondCommand, secondExpectedMessage, Collections.emptyList());
+    }
 
-        String fifthExpectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
-        FindCommand fifthCommand = prepareCommandForAddress("street");
-        assertCommandSuccess(fifthCommand, fifthExpectedMessage, Arrays.asList(CARL, DANIEL, GEORGE));
+    @Test
+    public void execute_findByEmail() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        FindCommand command = prepareCommandForEmail("cornelia@example.com");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(DANIEL));
+
+        String secondExpectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        FindCommand secondCommand = prepareCommandForEmail("example@example.com");
+        assertCommandSuccess(secondCommand, secondExpectedMessage, Collections.emptyList());
+    }
+
+    @Test
+    public void execute_findByAddress() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        FindCommand command = prepareCommandForAddress("street");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, DANIEL, GEORGE));
+
+        String secondExpectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        FindCommand secondCommand = prepareCommandForAddress("london");
+        assertCommandSuccess(secondCommand, secondExpectedMessage, Collections.emptyList());
+    }
+
+    @Test
+    public void execute_findByBirthday() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 7);
+        FindCommand command = prepareCommandForBirthday("01/01/1991");
+        assertCommandSuccess(command, expectedMessage,
+                Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+
+        String secondExpectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        FindCommand secondCommand = prepareCommandForBirthday("31/12/2017");
+        assertCommandSuccess(secondCommand, secondExpectedMessage, Collections.emptyList());
     }
 
     /**
@@ -146,6 +183,16 @@ public class FindCommandTest {
     private FindCommand prepareCommandForAddress(String userInput) {
         FindCommand command =
                 new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+
+    /**
+     * Parses {@code userInput} into a {@code FindCommand} for birthday prefix.
+     */
+    private FindCommand prepareCommandForBirthday(String userInput) {
+        FindCommand command =
+                new FindCommand(new BirthdayContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
