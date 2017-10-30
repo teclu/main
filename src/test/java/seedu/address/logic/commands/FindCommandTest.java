@@ -25,6 +25,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.PhoneContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.TagListContainsKeywordsPredicate;
 
@@ -76,11 +77,16 @@ public class FindCommandTest {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
         FindCommand command = prepareCommand("Kurz Elle Kunz");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
+
         String secondExpectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 6);
         FindCommand secondCommand = prepareCommandForTags("friends");
         assertCommandSuccess(secondCommand,
                 secondExpectedMessage,
                 Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA));
+
+        String thirdExpectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        FindCommand thirdCommand = prepareCommandForPhone("85355255");
+        assertCommandSuccess(thirdCommand, thirdExpectedMessage, Arrays.asList(ALICE));
     }
 
     /**
@@ -99,6 +105,16 @@ public class FindCommandTest {
     private FindCommand prepareCommandForTags(String userInput) {
         FindCommand command =
                 new FindCommand(new TagListContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+
+    /**
+     * Parses {@code userInput} into a {@code FindCommand} for phone prefix.
+     */
+    private FindCommand prepareCommandForPhone(String userInput) {
+        FindCommand command =
+                new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
