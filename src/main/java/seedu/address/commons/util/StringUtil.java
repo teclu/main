@@ -5,6 +5,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.List;
 
 /**
  * Helper functions for handling strings.
@@ -63,6 +64,42 @@ public class StringUtil {
 
         return sentence.toLowerCase().contains(preppedWord);
     }
+
+    /**
+     * Returns the earliest (starting) position in the sentence that matches with at least one of the keywords in words,
+     * or -1 if there are no matches.
+     * Ignores case, and a full word match is not required
+     * example : Say listOfWords is a List that contains the strings "Mat" and "Sen"
+     *      earliestIndexOf("tomatch", listOfWords) --> returns 2, matching "Mat"
+     *      earliestIndexOf("sentenceMatch", listOfWords) --> returns 0, matches both but "Sen" is matched at the start
+     *      earliestIndexOf("notCorrect", listOfWords) --> returns -1, no match
+     * @param sentence
+     * @param words
+     * @return
+     */
+    public static int earliestIndexOf(String sentence, List<String> words) {
+        requireNonNull(sentence);
+        requireNonNull(words);
+
+        String[] preppedWords = new String[words.size()];
+        for (int i = 0; i < words.size(); i++) {
+            String preppedWord = words.get(i).trim();
+            checkArgument(!preppedWord.isEmpty(), "Word parameter cannot contain an empty string");
+            checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
+            preppedWords[i] = preppedWord;
+        }
+
+        int earliestIndex = -1;
+        for (String keyword: preppedWords) {
+            int index = sentence.toLowerCase().indexOf(keyword);
+            if (index == 0) {
+                return index;
+            } else if (earliestIndex < 0 || (index >= 0 && index < earliestIndex)) {
+                earliestIndex = index;
+            }
+        }
+
+        return earliestIndex;
     }
 
     /**
