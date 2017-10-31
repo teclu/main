@@ -42,17 +42,18 @@ public class StringUtil {
     }
 
     /**
-     * Returns true if the sentence contains a word that starts with the given word
+     * Returns true if the sentence contains the word
      *  Ignores case, and a full word match is not required
      *   <br>examples:<pre>
-     *       containsPartialWordIgnoreCase("ABc def", "abc") == true
-     *       containsPartialWordIgnoreCase("ABc def", "DEF") == true
-     *       containsPartialWordIgnoreCase("ABc def", "AB") == true //partial match
+     *       containsWordPartialIgnoreCase("ABc def", "abc") == true
+     *       containsWordPartialIgnoreCase("ABc def", "DEF") == true
+     *       containsWordPartialIgnoreCase("ABc def", "AB") == true //  query partially match sentence
+     *       containsWordPartialIgnoreCase("ABc def", "AbCD") == false // sentence only partially match query
      *       </pre>
      * @param sentence cannot be null
      * @param word cannot be null, cannot be empty, must be a single word
      */
-    public static boolean containsWordStartingWithIgnoreCase(String sentence, String word) {
+    public static boolean containsWordPartialIgnoreCase(String sentence, String word) {
         requireNonNull(sentence);
         requireNonNull(word);
 
@@ -64,7 +65,7 @@ public class StringUtil {
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
 
         for (String wordInSentence: wordsInPreppedSentence) {
-            if (wordInSentence.regionMatches(true, 0, preppedWord, 0, preppedWord.length())) {
+            if (wordInSentence.toLowerCase().contains(preppedWord.toLowerCase())) {
                 return true;
             }
         }

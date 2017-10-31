@@ -44,7 +44,6 @@ public class PersonPanelTest extends GuiUnitTest {
         assertEquals("Email: " + expectedPerson.getEmail().toString(), personPanelHandle.getEmail());
         assertEquals("Address: " + expectedPerson.getAddress().toString(), personPanelHandle.getAddress());
         assertEquals("Birthday: " + expectedPerson.getBirthday().toString(), personPanelHandle.getBirthday());
-
         personPanelHandle.updateTags();
         assertTagsAreDisplayed(expectedPerson, personPanelHandle);
     }

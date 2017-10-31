@@ -24,6 +24,7 @@ public class PersonPanelHandle extends NodeHandle<Node> {
     private Label address;
     private Label email;
     private Label birthday;
+    private Label avatar;
     private List<Label> tagLabels;
 
     public PersonPanelHandle(Node personPanelNode) {
