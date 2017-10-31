@@ -1,5 +1,20 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.isNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+
+import java.util.Comparator;
+
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.ReadOnlyPerson;
+
+/**
+ * Sorts, depending on given option, either the current list or whole address book according to the given arguments.
+ */
 public class SortCommand extends Command {
 
     public static final String COMMAND_WORD = "sort";
