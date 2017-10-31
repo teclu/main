@@ -12,6 +12,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import org.junit.Test;
+
 import seedu.address.logic.commands.SortCommand;
 
 //@@author k-l-a
@@ -42,7 +43,7 @@ public class SortCommandParserTest {
     @Test
     public void parse_invalidOrder_failure() {
         //not an order
-        assertParseFailure(parser,"n/ notOrder", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "n/ notOrder", MESSAGE_INVALID_FORMAT);
 
         //two valid prefixes
         assertParseFailure(parser, PREFIX_NAME.getPrefix()
@@ -50,7 +51,7 @@ public class SortCommandParserTest {
     }
 
     @Test
-    public void parse_ValidArgs_success() {
+    public void parse_validArgs_success() {
         //no arguments
         assertParseSuccess(parser, "", new SortCommand(ARGUMENT_DEFAULT_ORDER, ARGUMENT_ASCENDING_WORD));
 

@@ -14,6 +14,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
+
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
@@ -55,7 +56,7 @@ public class SortCommandTest {
     }
 
     @Test
-    public void execute_DefaultOrderAscDes() {
+    public void execute_defaultOrder_success() {
         String expectedMessageA = String.format(MESSAGE_SORT_SUCCESS, ARGUMENT_DEFAULT_ORDER, ARGUMENT_ASCENDING_WORD);
         String expectedMessageD = String.format(MESSAGE_SORT_SUCCESS, ARGUMENT_DEFAULT_ORDER, ARGUMENT_DESCENDING_WORD);
 
@@ -71,9 +72,11 @@ public class SortCommandTest {
     }
 
     @Test
-    public void execute_ValidPrefixAscDes() {
-        String expectedMessageA = String.format(MESSAGE_SORT_SUCCESS, PREFIX_NAME.getPrefix(), ARGUMENT_ASCENDING_WORD);
-        String expectedMessageD = String.format(MESSAGE_SORT_SUCCESS, PREFIX_PHONE.getPrefix(), ARGUMENT_DESCENDING_WORD);
+    public void execute_validPrefix_success() {
+        String expectedMessageA = String
+                .format(MESSAGE_SORT_SUCCESS, PREFIX_NAME.getPrefix(), ARGUMENT_ASCENDING_WORD);
+        String expectedMessageD = String
+                .format(MESSAGE_SORT_SUCCESS, PREFIX_PHONE.getPrefix(), ARGUMENT_DESCENDING_WORD);
 
         //ascending name (alphanumeric)
         String testedPrefix = PREFIX_NAME.getPrefix();
