@@ -102,7 +102,6 @@ public class Avatar {
                 this.value = this.url.toString();
             }
         } catch (Exception e) {
-            System.out.println(e.toString());
             throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
         }
     }
