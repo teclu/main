@@ -26,15 +26,14 @@ This user guide will help you get started on using our application, and show you
 
 == Key Features
 
-=== Person Panel `In Development For v1.5`
+=== Person Panel
 
-This is where the details of a selected contact will be displayed. As of now, only the name, address, phone number and
-tags are displayed here. Planned features for the Person Panel include:
+This is where you will find a selected contact's information (_name, address, phone number, etc._) displayed neatly on a single page. When you click on the currently displayed Avatar of the contact, a new window will pop-up and you will have the option of selecting an image stored on the computer to replace it.
 
-* `For v1.3` Set a contact's avatar
-* `For v1.4` Notes/Comments on the contact
-* `For v1.5` Birthday Countdown
-* `For v2.0` Birthday Reminder
+Planned features for future versions include:
+
+* `For v2.0` Notes and Reminders
+* `For v2.0` Birthday Countdown
 
 === Colour Theme Switcher `In Development For v1.5`
 
@@ -114,16 +113,29 @@ Format: `help`
 === Adding a person: `add` or `a`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY v/AVATAR [t/TAG]...` or `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY v/AVATAR [t/TAG]...`
+
+Format: `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [v/AVATAR] [t/TAG]...` or `a n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [v/AVATAR] [t/TAG]...`
+
 
 [TIP]
 A person can have any number of tags (including 0).
 
+[TIP]
+`Since v1.3` Only the name field is mandatory, all other fields are optional. +
+ With the exception of tags, all missing fields will have a placeholder value.
+
 Examples:
 
+
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/01/01/1991`
+* `a n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/02/02/1992 t/criminal`
+
+=======
 * `add n/John Doe p/98765432 e/johnd@example.com a/John Street, Block 123, #01-01 b/01/01/1991`
 * `a n/Betsy Crowe t/client e/betsycrowe@example.com a/Newgate Prison p/1234567 b/02/02/1992 t/criminal`
 * `a n/Charlie Chopin t/boss e/charliec@example.com a/Madysun Triangle Park p/98765432 b/02/03/2000 v/C:\Users\Charlie\Pictures\cc.png'
+* `add n/Johnny`
+
 
 === Listing all persons : `list` or `l`
 

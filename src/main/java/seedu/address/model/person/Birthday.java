@@ -12,7 +12,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 public class Birthday {
 
-
+    public static final String DEFAULT_VALUE = "No Birthday";
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
             "Birthday should contain 8 digit number, first 2 digit for day (01-30), second 2 digit for month (01-12),"
                     + " and last 4 digit for year, separated by slash (/)";
@@ -37,7 +37,15 @@ public class Birthday {
      * Returns true if a given string is a valid person birthday.
      */
     public static boolean isValidBirthday(String test) {
-        return test.matches(BIRTHDAY_VALIDATION_REGEX);
+        return test.matches(BIRTHDAY_VALIDATION_REGEX) || test.equals(DEFAULT_VALUE);
+    }
+
+    /**
+     * Returns true if value is not the default value (No Birthday)
+     * @return
+     */
+    public boolean isNotDefault() {
+        return !value.equals(DEFAULT_VALUE);
     }
 
     @Override

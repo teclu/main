@@ -173,20 +173,29 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + BIRTHDAY_DESC_AMY + AVATAR_DESC_AMY;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
-        /* Case: missing phone -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + BIRTHDAY_DESC_AMY + AVATAR_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        /* Case: missing phone -> added with phone's default value */
+        toAdd =  new PersonBuilder().withName(VALID_NAME_AMY).withPhone(Phone.DEFAULT_VALUE).withEmail(VALID_EMAIL_AMY)
+                .withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_AMY).withAvatar(VALID_AVATAR_AMY)
+                .withTags(VALID_TAG_FRIEND).build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY
+                + AVATAR_DESC_AMY + TAG_DESC_FRIEND;
+        assertCommandSuccess(command, toAdd);
 
-        /* Case: missing email -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY
-                + BIRTHDAY_DESC_AMY + AVATAR_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        /* Case: missing email -> added with email's default value */
+        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(Email.DEFAULT_VALUE)
+                .withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_AMY).withAvatar(VALID_AVATAR_AMY)
+                .withTags(VALID_TAG_FRIEND).build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY + BIRTHDAY_DESC_AMY
+                + AVATAR_DESC_AMY + TAG_DESC_FRIEND;
+        assertCommandSuccess(command, toAdd);
 
-        /* Case: missing address -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                + BIRTHDAY_DESC_AMY + AVATAR_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        /* Case: missing address -> added with address' default value */
+        toAdd =  new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
+                .withAddress(Address.DEFAULT_VALUE).withBirthday(VALID_BIRTHDAY_AMY).withAvatar(VALID_AVATAR_AMY)
+                .withTags(VALID_TAG_FRIEND).build();
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + BIRTHDAY_DESC_AMY
+                + AVATAR_DESC_AMY + TAG_DESC_FRIEND;
+        assertCommandSuccess(command, toAdd);
 
         //@@author nadhira15
         /* Case: missing birthday -> rejected */
