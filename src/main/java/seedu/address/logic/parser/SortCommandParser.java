@@ -11,4 +11,11 @@ public class SortCommandParser {
                 || prefixString.equals(PREFIX_BIRTHDAY.getPrefix());
     }
 
+    /**
+     * Checks if the given string is a sort order argument (asc, des)
+     */
+    public boolean isSortArgument(String sortOrder) {
+        return sortOrder.equals(ARGUMENT_ASCENDING_WORD)
+                || sortOrder.equals(ARGUMENT_DESCENDING_WORD);
+    }
 }
