@@ -176,7 +176,9 @@ public class EditCommand extends UndoableCommand {
         }
 
         public void setPhone(Phone phone) {
-            this.phone = phone;
+            if (phone.isNotDefault()) {
+                this.phone = phone;
+            }
         }
 
         public Optional<Phone> getPhone() {
@@ -184,7 +186,9 @@ public class EditCommand extends UndoableCommand {
         }
 
         public void setEmail(Email email) {
-            this.email = email;
+            if (email.isNotDefault()) {
+                this.email = email;
+            }
         }
 
         public Optional<Email> getEmail() {
@@ -192,7 +196,9 @@ public class EditCommand extends UndoableCommand {
         }
 
         public void setAddress(Address address) {
-            this.address = address;
+            if (address.isNotDefault()) {
+                this.address = address;
+            }
         }
 
         public Optional<Address> getAddress() {
@@ -207,13 +213,17 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(avatar);
         }
 
+        //@@author nadhira15
         public void setBirthday(Birthday birthday) {
-            this.birthday = birthday;
+            if (birthday.isNotDefault()) {
+                this.birthday = birthday;
+            }
         }
 
         public Optional<Birthday> getBirthday() {
             return Optional.ofNullable(birthday);
         }
+        //@@author
 
         public void setTags(Set<Tag> tags) {
             this.tags = tags;
