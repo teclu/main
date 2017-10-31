@@ -41,7 +41,7 @@ public class StringUtil {
         }
         return false;
     }
-
+    //@@author k-l-a
     /**
      * Returns true if the sentence contains the word
      *  Ignores case, and a full word match is not required
@@ -101,7 +101,7 @@ public class StringUtil {
 
         return earliestIndex;
     }
-
+    //@@author
     /**
      * Returns a detailed message of the t, including the stack trace.
      */

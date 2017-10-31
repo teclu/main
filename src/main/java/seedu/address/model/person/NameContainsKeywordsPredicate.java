@@ -31,7 +31,7 @@ public class NameContainsKeywordsPredicate extends FieldContainsKeywordsPredicat
                 || (other instanceof NameContainsKeywordsPredicate // instanceof handles nulls
                 && this.keywords.equals(((NameContainsKeywordsPredicate) other).keywords)); // state check
     }
-
+    //@@author k-l-a
     @Override
     public Comparator<ReadOnlyPerson> sortOrderComparator() {
         return Comparator.comparingInt(person -> StringUtil

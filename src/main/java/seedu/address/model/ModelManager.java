@@ -102,7 +102,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
         updateSortedFilteredPersonList(null); //defaults to an unsorted list
     }
-
+    //@@author k-l-a
     @Override
     public void updateSortedFilteredPersonList(Comparator<ReadOnlyPerson> comparator) {
         sortedFilteredPersons.setComparator(comparator);
