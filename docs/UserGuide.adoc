@@ -296,9 +296,27 @@ Selects the 2nd person in the address book.
 `s 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Sort the address book `In development for v1.5`
+=== Sorting your contact list : `sort`
 
-Contact list can be sorted in alphabetical order.
+Sorts the current list lexicographically by the given prefix, in the given order. If no prefix is given then shows default order. +
+Format : `sort [PREFIX] [ORDER]`
+
+****
+* Only the current list is sorted, there is currently no lasting sort on the whole address book. +
+* ORDER can either be `asc` for ascending or `des` for descending. If ORDER is omitted, the list is still sorted ascendingly +
+* PREFIX can be any prefix with the exception of `t/` and `v/`. +
+* If PREFIX is omitted, the current list is sorted in the order of insertion. You can still reverse the order by using `des` without any prefix.
+****
+
+Examples:
+
+* `list` +
+`sort des` +
+Sorts the list in reverse order of insertion (i.e. the list is now reversed)
+* `find t/ friends` +
+`sort n/` +
+Sorts the resulting list from the `find` command by name, in ascending order. +
+(i.e. the list is now a list of people who has a tag matching `friends` alphabetically by name.)
 
 === Set favourite contacts `In development for v1.5`
 
