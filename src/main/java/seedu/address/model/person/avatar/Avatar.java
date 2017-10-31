@@ -50,14 +50,23 @@ public class Avatar {
                 this.image = ImageIO.read(this.url);
 
                 if (!isSavedInData(url)) {
-                    String outputName = "data/" + this.url.hashCode() + ".png";
-                    File outputImage = new File(outputName);
+                    String outputName = "/data/" + this.url.hashCode() + ".png";
+                    File outputImage = new File(System.getProperty("user.dir") + outputName);
+
+                    File parentDirectory = outputImage.getParentFile();
+                    if (!parentDirectory.exists()) {
+                        parentDirectory.mkdirs();
+                    }
+
                     ImageIO.write(this.image, "png", outputImage);
                     this.url = outputImage.toURI().toURL();
                 }
+                System.out.println("hi 12");
                 this.value = this.url.toString();
+                System.out.println("hi 13");
             }
         } catch (Exception e) {
+            System.out.println(e.toString());
             throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
         }
     }
