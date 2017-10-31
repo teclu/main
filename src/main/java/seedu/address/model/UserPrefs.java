@@ -1,10 +1,8 @@
 package seedu.address.model;
 
-import java.util.Comparator;
 import java.util.Objects;
 
 import seedu.address.commons.core.GuiSettings;
-import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * Represents User's preferences.
@@ -14,11 +12,9 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "MyAddressBook";
-    private Comparator<ReadOnlyPerson> defaultSortOrder;
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
-        this.setDefaultSortOrder(null);
     }
 
     public GuiSettings getGuiSettings() {
@@ -49,16 +45,6 @@ public class UserPrefs {
         this.addressBookName = addressBookName;
     }
 
-    //@@author k-l-a
-    public Comparator<ReadOnlyPerson> getDefaultSortOrder() {
-        return defaultSortOrder;
-    }
-
-    public void setDefaultSortOrder(Comparator<ReadOnlyPerson> sortOrder) {
-        this.defaultSortOrder = sortOrder;
-    }
-    //@@author
-
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -72,13 +58,12 @@ public class UserPrefs {
 
         return Objects.equals(guiSettings, o.guiSettings)
                 && Objects.equals(addressBookFilePath, o.addressBookFilePath)
-                && Objects.equals(addressBookName, o.addressBookName)
-                && Objects.equals(defaultSortOrder, o.defaultSortOrder);
+                && Objects.equals(addressBookName, o.addressBookName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(guiSettings, addressBookFilePath, addressBookName, defaultSortOrder);
+        return Objects.hash(guiSettings, addressBookFilePath, addressBookName);
     }
 
     @Override

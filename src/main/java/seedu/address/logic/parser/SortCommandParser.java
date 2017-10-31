@@ -4,13 +4,11 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.SortCommand.ARGUMENT_ASCENDING_WORD;
 import static seedu.address.logic.commands.SortCommand.ARGUMENT_DESCENDING_WORD;
-import static seedu.address.logic.commands.SortCommand.OPTION_ALL_WORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-
 
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -28,15 +26,11 @@ public class SortCommandParser implements Parser<SortCommand> {
     public SortCommand parse(String args) throws ParseException {
         requireNonNull(args);
 
-        boolean sortAll = false;
         String trimmedArgs = args.trim();
-        if (trimmedArgs.startsWith(OPTION_ALL_WORD)) {
-            sortAll = true;
-            trimmedArgs = trimmedArgs.replaceFirst(OPTION_ALL_WORD, "").trim();
-        }
-
-        if (trimmedArgs.isEmpty() || isSortArgument(trimmedArgs)) {
-            return new SortCommand(sortAll, null, null);
+        if (trimmedArgs.isEmpty()) {
+            return new SortCommand(null, ARGUMENT_ASCENDING_WORD);
+        } else if (isSortArgument(trimmedArgs)) {
+            return new SortCommand(null, trimmedArgs);
         }
 
         String[] splitArgs = trimmedArgs.split("\\s+");
@@ -46,7 +40,7 @@ public class SortCommandParser implements Parser<SortCommand> {
             order = splitArgs[1];
         }
         if (isSortablePrefix(prefix) && isSortArgument(order)) {
-            return new SortCommand(sortAll, prefix, order);
+            return new SortCommand(prefix, order);
         } else {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }

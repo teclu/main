@@ -42,7 +42,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         sortedFilteredPersons = new SortedList<>(filteredPersons);
-        defaultSortOrder = userPrefs.getDefaultSortOrder();
+        defaultSortOrder = null;
     }
 
     public ModelManager() {

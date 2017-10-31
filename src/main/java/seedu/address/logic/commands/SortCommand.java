@@ -13,30 +13,26 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
- * Sorts, depending on given option, either the current list or whole address book according to the given arguments.
+ * Sorts the current list according to the given arguments.
  */
 public class SortCommand extends Command {
 
     public static final String COMMAND_WORD = "sort";
 
-    public static final String OPTION_ALL_WORD = "-a";
     public static final String ARGUMENT_ASCENDING_WORD = "asc";
     public static final String ARGUMENT_DESCENDING_WORD = "des";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Sorts either the current list according to"
             + "given arguments. No prefix results in default order.\n"
-            + "Parameters: [" + OPTION_ALL_WORD + "] [PREFIX] [ORDER]\n"
+            + "Parameters: [PREFIX] [ORDER]\n"
             + "Example : sort n/ asc";
     public static final String MESSAGE_SORT_SUCCESS = "Sorted current list by %1$s in %2$s order.";
-    public static final String MESSAGE_SORT_ALL_SUCCESS = "Set default sort order to sort by %1$s in %2$s order.";
 
-    public final boolean sortAll;
     public final String prefix;
     public final String order;
 
-    public SortCommand(boolean sortAll, String prefix, String order) {
-        this.sortAll = sortAll;
+    public SortCommand(String prefix, String order) {
         this.prefix = prefix;
         this.order = order;
     }
@@ -55,13 +51,9 @@ public class SortCommand extends Command {
         if (isNull(order)) {
             order_string = "asc";
         }
-        if (sortAll) {
-            model.setUserPrefsDefaultSortOrder(sortOrder);
-            return new CommandResult(String.format(MESSAGE_SORT_ALL_SUCCESS, prefix_string, order_string));
-        } else {
-            model.updateSortedFilteredPersonList(sortOrder);
-            return new CommandResult(String.format(MESSAGE_SORT_SUCCESS, prefix_string, order_string));
-        }
+
+        model.updateSortedFilteredPersonList(sortOrder);
+        return new CommandResult(String.format(MESSAGE_SORT_SUCCESS, prefix_string, order_string));
     }
 
     /**
