@@ -18,7 +18,6 @@ public class Tag {
     public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
 
     private static final Random colourSelect = new Random();
-    private static final String[] tagColours = TagColours.getTagColours();
 
     public final String tagName;
     public final String tagColour;
@@ -44,6 +43,8 @@ public class Tag {
      * @return A random colour hex code.
      */
     private String assignTagColour() {
+        TagColours palette = new TagColours();
+        String[] tagColours = palette.getTagColours();
         int randomIndex = colourSelect.nextInt(tagColours.length);
 
         return tagColours[randomIndex];

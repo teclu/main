@@ -22,7 +22,7 @@ public class TagColours {
     /**
      * Returns a String array of available tag colours.
      */
-    public static String[] getTagColours() {
+    public String[] getTagColours() {
         return new String[] { RED, DARK_RED, ORANGE, LIGHT_ORANGE, YELLOW,
                                 GREEN, DARK_GREEN, BLUE, NAVY_BLUE, INDIGO, VIOLET, HOT_PINK, BLACK };
     }
