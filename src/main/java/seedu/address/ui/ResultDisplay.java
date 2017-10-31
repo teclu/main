@@ -40,13 +40,16 @@ public class ResultDisplay extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> displayed.setValue(event.message));
 
+        //@@author teclu
         if (event.isError) {
             setCommandFailureStyle();
         } else {
             setDefaultStyle();
         }
+        //@@author
     }
 
+    //@@author teclu
     /**
      * Sets {@code ResultDisplay} style to the default style.
      */
@@ -54,6 +57,7 @@ public class ResultDisplay extends UiPart<Region> {
         resultDisplay.getStyleClass().remove(ERROR_STYLE_CLASS);
     }
 
+    //@@author teclu
     /**
      * Sets {@code ResultDisplay} style to the fail-state style.
      */

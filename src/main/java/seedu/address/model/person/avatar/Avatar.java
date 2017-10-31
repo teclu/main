@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.AvatarUtil;
 
+//@@author teclu
 /**
  * Represents a Person's avatar in the address book.
  * Guarantees: immutable.

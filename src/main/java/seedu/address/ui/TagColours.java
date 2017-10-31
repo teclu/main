@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+//@@author teclu
 /**
  * A UI feature for each unique tag to have its own colour.
  */

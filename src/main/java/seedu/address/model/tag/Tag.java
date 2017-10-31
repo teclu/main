@@ -38,6 +38,7 @@ public class Tag {
         this.tagColour = assignTagColour();
     }
 
+    //@@author teclu
     /**
      * Assign a random colour to the tag.
      * @return A random colour hex code.
@@ -47,6 +48,7 @@ public class Tag {
 
         return tagColours[randomIndex];
     }
+    //@@author
 
     /**
      * Returns true if a given string is a valid tag name.

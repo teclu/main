@@ -121,6 +121,7 @@ public class Person implements ReadOnlyPerson {
         return birthday.get();
     }
 
+    //@@author teclu
     public void setAvatar(Avatar avatar) {
         this.avatar.set(requireNonNull(avatar));
     }
@@ -134,6 +135,7 @@ public class Person implements ReadOnlyPerson {
     public Avatar getAvatar() {
         return avatar.get();
     }
+    //@@author
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

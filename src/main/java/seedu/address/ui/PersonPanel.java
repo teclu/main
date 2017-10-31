@@ -16,6 +16,7 @@ import seedu.address.commons.events.ui.PersonPanelNoSelectionEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author teclu
 /**
  * The Person Panel of the App, which displays the contact details of a selected person.
  */

@@ -1,5 +1,6 @@
 package seedu.address.commons.util;
 
+//@@author teclu
 /**
  * Helps with checking the OS the application is running on.
  */

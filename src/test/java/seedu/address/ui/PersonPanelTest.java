@@ -14,6 +14,7 @@ import guitests.guihandles.PersonPanelHandle;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author teclu
 public class PersonPanelTest extends GuiUnitTest {
 
     private PersonPanel personPanel;
