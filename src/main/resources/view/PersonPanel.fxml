@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
+<!-- @@author teclu -->
 <SplitPane fx:id="personPanel" dividerPositions="0.35" orientation="VERTICAL" prefHeight="310.0" prefWidth="900.0"
            xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
     <items>

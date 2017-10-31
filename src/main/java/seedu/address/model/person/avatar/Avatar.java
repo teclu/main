@@ -8,11 +8,11 @@ import javax.imageio.ImageIO;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.AvatarUtil;
 
+//@@author teclu
 /**
  * Represents a Person's avatar in the address book.
- * Guarantees: N/A
+ * Guarantees: immutable.
  */
-
 public class Avatar {
     public static final String MESSAGE_AVATAR_CONSTRAINTS = "Avatar should be a valid online URL or local path.";
     public final String value;
@@ -29,7 +29,7 @@ public class Avatar {
     }
 
     /**
-     * Validates given avatar URL string.
+     * Validates given avatar URL string and saves it in the data directory.
      *
      * @throws IllegalValueException if given URL string is invalid.
      */
@@ -41,22 +41,45 @@ public class Avatar {
                 value = "";
             } else {
                 File defaultAvatar = new File(url);
-                if (url.contains("https://") || url.contains("http://")) {
+
+                if (isValidUrl(url)) {
                     this.url = new URL(url);
                 } else {
                     this.url = defaultAvatar.toURI().toURL();
                 }
                 this.image = ImageIO.read(this.url);
-                this.value = url;
+
+                if (!isSavedInData(url)) {
+                    String outputName = "/data/" + this.url.hashCode() + ".png";
+                    File outputImage = new File(System.getProperty("user.dir") + outputName);
+
+                    File parentDirectory = outputImage.getParentFile();
+                    if (!parentDirectory.exists()) {
+                        parentDirectory.mkdirs();
+                    }
+
+                    ImageIO.write(this.image, "png", outputImage);
+                    this.url = outputImage.toURI().toURL();
+                }
+                this.value = this.url.toString();
             }
         } catch (Exception e) {
-            System.out.println(e.toString());
             throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
         }
     }
 
-    public URL getUrl() {
-        return url;
+    /**
+     * Returns true if a given string is a valid url.
+     */
+    public static boolean isValidUrl(String url) {
+        return (url.contains("https://") || url.contains("http://") || url.contains("file:/"));
+    }
+
+    /**
+     * Returns true if a given valid url is already found in data folder.
+     */
+    public static boolean isSavedInData(String url) {
+        return (url.contains("file:/") && url.contains("data/"));
     }
 
     public BufferedImage getImage() {

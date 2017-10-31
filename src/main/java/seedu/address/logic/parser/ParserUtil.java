@@ -90,6 +90,7 @@ public class ParserUtil {
         return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
     }
 
+    //@@author teclu
     /**
      * Parses a {@code Optional<String> avatar} into an {@code Optional<Avatar>} if {@code avatar} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -98,6 +99,7 @@ public class ParserUtil {
         requireNonNull(avatar);
         return avatar.isPresent() ? Optional.of(new Avatar(avatar.get())) : Optional.empty();
     }
+    //@@author
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.

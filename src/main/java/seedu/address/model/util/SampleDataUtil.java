@@ -25,11 +25,11 @@ public class SampleDataUtil {
             return new Person[] {
                 new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
                     new Address("Blk 30 Geylang Street 29, #06-40"), new Birthday("01/01/1991"),
-                        new Avatar(),
+                        new Avatar("https://www.shareicon.net/data/128x128/2016/05/24/770009_man_512x512.png"),
                     getTagSet("friends")),
                 new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
                     new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"), new Birthday("03/12/1980"),
-                        new Avatar(),
+                        new Avatar("https://www.shareicon.net/download/2016/05/24/769994_people_512x512.png"),
                         getTagSet("colleagues", "friends")),
                 new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
                     new Address("Blk 11 Ang Mo Kio Street 74, #11-04"), new Birthday("15/10/1977"),
