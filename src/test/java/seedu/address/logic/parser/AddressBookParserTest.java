@@ -52,6 +52,7 @@ public class AddressBookParserTest {
         assertEquals(new AddCommand(person), command);
     }
 
+    //@@author nadhira15
     @Test
     public void parseCommand_addTag() throws Exception {
         List<String> tagList = Arrays.asList("neighbours");
@@ -71,6 +72,7 @@ public class AddressBookParserTest {
                         + tagList.stream().collect(Collectors.joining(" ")));
         assertEquals(new DeleteTagCommand(INDEX_FIRST_PERSON, tagToDelete), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_clear() throws Exception {

@@ -46,6 +46,7 @@ public class FindCommandParserTest {
         assertParseSuccess(parser, "t/ Friends Family", expectedFindCommandForTags);
     }
 
+    //@@author nadhira15
     @Test
     public void parse_validPhoneArgs_returnsFindCommand() {
         FindCommand expectedFindCommandForPhone =
@@ -73,5 +74,6 @@ public class FindCommandParserTest {
                 new FindCommand(new BirthdayContainsKeywordsPredicate(Arrays.asList("01/01/1991")));
         assertParseSuccess(parser, "b/ 01/01/1991", expectedFindCommandForBirthday);
     }
+    //@@author
 
 }

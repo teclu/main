@@ -92,6 +92,7 @@ public class FindCommandTest {
                 Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA));
     }
 
+    //@@author nadhira15
     @Test
     public void execute_findByPhone() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
@@ -136,6 +137,7 @@ public class FindCommandTest {
         FindCommand secondCommand = prepareCommandForBirthday("31/12/2017");
         assertCommandSuccess(secondCommand, secondExpectedMessage, Collections.emptyList());
     }
+    //@@author
 
     /**
      * Parses {@code userInput} into a {@code FindCommand} for no prefix and name prefix.
@@ -157,6 +159,7 @@ public class FindCommandTest {
         return command;
     }
 
+    //@@author nadhira15
     /**
      * Parses {@code userInput} into a {@code FindCommand} for phone prefix.
      */
@@ -196,6 +199,7 @@ public class FindCommandTest {
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
+    //@@author
 
     /**
      * Asserts that {@code command} is successfully executed, and<br>

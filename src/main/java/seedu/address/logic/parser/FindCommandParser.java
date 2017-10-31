@@ -45,6 +45,7 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         if (toSearch.equals(PREFIX_TAG.getPrefix())) {
             return new FindCommand(new TagListContainsKeywordsPredicate(Arrays.asList(keywords)));
+        //@@author nadhira15
         } else if (toSearch.equals(PREFIX_PHONE.getPrefix())) {
             return new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList(keywords)));
         } else if (toSearch.equals(PREFIX_EMAIL.getPrefix())) {
@@ -53,6 +54,7 @@ public class FindCommandParser implements Parser<FindCommand> {
             return new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList(keywords)));
         } else if (toSearch.equals(PREFIX_BIRTHDAY.getPrefix())) {
             return new FindCommand(new BirthdayContainsKeywordsPredicate(Arrays.asList(keywords)));
+        //@@author
         } else {
             return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
         }
