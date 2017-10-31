@@ -102,7 +102,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
-        updateSortedFilteredPersonList(defaultSortOrder); //defaults to an unsorted list
+        updateSortedFilteredPersonList(defaultSortOrder);
     }
 
     //@@author k-l-a
