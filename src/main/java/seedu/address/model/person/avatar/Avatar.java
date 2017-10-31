@@ -62,10 +62,6 @@ public class Avatar {
         }
     }
 
-    public URL getUrl() {
-        return url;
-    }
-
     public BufferedImage getImage() {
         return image;
     }
