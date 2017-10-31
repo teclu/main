@@ -23,6 +23,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
+//@@author nadhira15
 /**
  * Adds a tag to a person in the address book.
  */

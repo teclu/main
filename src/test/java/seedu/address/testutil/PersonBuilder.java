@@ -24,8 +24,7 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_BIRTHDAY = "01/01/1991";
-    public static final String DEFAULT_AVATAR =
-            "https://www.shareicon.net/data/128x128/2016/05/24/770009_man_512x512.png";
+    public static final String DEFAULT_AVATAR = "";
     public static final String DEFAULT_TAGS = "friends";
 
     private Person person;
@@ -113,6 +112,7 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author nadhira15
     /**
      * Sets the {@code Birthday} of the {@code Person} that we are building.
      */
@@ -124,7 +124,9 @@ public class PersonBuilder {
         }
         return this;
     }
+    //@@author
 
+    //@@author teclu
     /**
      * Sets the {@code Avatar} of the {@code Person} that we are building.
      */
@@ -148,6 +150,7 @@ public class PersonBuilder {
         }
         return this;
     }
+    //@@author
 
     public Person build() {
         return this.person;
