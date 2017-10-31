@@ -8,10 +8,7 @@ import java.util.List;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.tag.Tag;
 
-<<<<<<< HEAD
-=======
 //@@author k-l-a
->>>>>>> 2bf3e2f... Make ModelManager use a defaultSortOrder as comparator and set it to null as default
 /**
  * Tests that a Person's Tag List contains at least one tag whose string matches any of the keywords given.
  */

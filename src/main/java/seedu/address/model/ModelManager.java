@@ -42,7 +42,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         sortedFilteredPersons = new SortedList<>(filteredPersons);
-        defaultSortOrder = null;
+        defaultSortOrder = userPrefs.getDefaultSortOrder();
     }
 
     public ModelManager() {
@@ -102,13 +102,10 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
-        updateSortedFilteredPersonList(defaultSortOrder); //defaults to an unsorted list
+        updateSortedFilteredPersonList(defaultSortOrder);
     }
 
-<<<<<<< HEAD
-=======
     //@@author k-l-a
->>>>>>> 2bf3e2f... Make ModelManager use a defaultSortOrder as comparator and set it to null as default
     @Override
     public void updateSortedFilteredPersonList(Comparator<ReadOnlyPerson> comparator) {
         sortedFilteredPersons.setComparator(comparator);
