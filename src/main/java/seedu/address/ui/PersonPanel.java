@@ -95,14 +95,12 @@ public class PersonPanel extends UiPart<Region> {
     }
 
     /**
-     * Clicking the Avatar will trigger this method.
+     * Clicking the Avatar will trigger a GUI option of uploading pictures.
      * Note: Implementation is not complete; may or may not use this.
      */
     @FXML
     private void avatarPrompt() {
-        if (isBlankPage) {
-            System.out.println("Don't do anything!");
-        } else {
+        if (!isBlankPage) {
             System.out.println("avatarPrompt success!");
         }
     }

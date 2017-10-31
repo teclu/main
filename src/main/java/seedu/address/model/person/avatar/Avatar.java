@@ -10,9 +10,8 @@ import seedu.address.commons.util.AvatarUtil;
 
 /**
  * Represents a Person's avatar in the address book.
- * Guarantees: N/A
+ * Guarantees: immutable.
  */
-
 public class Avatar {
     public static final String MESSAGE_AVATAR_CONSTRAINTS = "Avatar should be a valid online URL or local path.";
     public final String value;
@@ -29,7 +28,7 @@ public class Avatar {
     }
 
     /**
-     * Validates given avatar URL string.
+     * Validates given avatar URL string and saves it in the data directory.
      *
      * @throws IllegalValueException if given URL string is invalid.
      */
@@ -41,16 +40,24 @@ public class Avatar {
                 value = "";
             } else {
                 File defaultAvatar = new File(url);
-                if (url.contains("https://") || url.contains("http://")) {
+
+                if (url.contains("https://") || url.contains("http://") || url.contains("file:/")) {
                     this.url = new URL(url);
                 } else {
                     this.url = defaultAvatar.toURI().toURL();
                 }
                 this.image = ImageIO.read(this.url);
-                this.value = url;
+
+                if (!url.contains("file:/")) {
+                    String outputName = "data/" + this.url.hashCode() + ".png";
+                    File outputImage = new File(outputName);
+                    ImageIO.write(this.image, "png", outputImage);
+                    this.url = outputImage.toURI().toURL();
+                }
+                this.value = this.url.toString();
+                System.out.println(this.value);
             }
         } catch (Exception e) {
-            System.out.println(e.toString());
             throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
         }
     }

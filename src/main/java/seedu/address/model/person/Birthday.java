@@ -11,7 +11,6 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 public class Birthday {
 
-
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
             "Birthday should contain 8 digit number, first 2 digit for day (01-30), second 2 digit for month (01-12),"
                     + " and last 4 digit for year, separated by slash (/)";
