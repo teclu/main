@@ -82,7 +82,7 @@ public class AddressBookParser {
             return new FindCommandParser().parse(arguments);
 
         case SortCommand.COMMAND_WORD:
-            return null;
+            return new SortCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_ALIAS:
