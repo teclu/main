@@ -89,8 +89,8 @@ public class SortCommandTest {
         //descending phone (digits)
         testedPrefix = PREFIX_PHONE.getPrefix();
         SortCommand commandD = prepareCommand(testedPrefix, ARGUMENT_DESCENDING_WORD);
-        expectedModel.updateSortedFilteredPersonList((person1, person2) -> (person1.getPhone()
-                .value.compareToIgnoreCase(person2.getPhone().value)));
+        expectedModel.updateSortedFilteredPersonList((person1, person2) -> (person2.getPhone()
+                .value.compareToIgnoreCase(person1.getPhone().value)));
         assertCommandSuccess(commandD, model, expectedMessageD, expectedModel);
 
         //ascending address
