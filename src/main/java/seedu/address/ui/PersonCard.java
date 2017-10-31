@@ -34,9 +34,12 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private FlowPane tags;
 
+    private int displayedIndex;
+
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
+        this.displayedIndex = displayedIndex;
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
@@ -63,6 +66,10 @@ public class PersonCard extends UiPart<Region> {
             tagLabel.setStyle("-fx-background-color: " + tag.tagColour);
             tags.getChildren().add(tagLabel);
         });
+    }
+
+    public int getDisplayedIndex() {
+        return displayedIndex;
     }
 
     @Override

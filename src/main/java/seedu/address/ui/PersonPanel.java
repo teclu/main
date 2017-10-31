@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelNoSelectionEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.logic.Logic;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author teclu
@@ -22,7 +23,9 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class PersonPanel extends UiPart<Region> {
     private static final String FXML = "PersonPanel.fxml";
+    private final Logic logic;
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+    private PersonCard selectedPersonCard;
     private ReadOnlyPerson selectedPerson;
     private boolean isBlankPage = true;
 
@@ -43,8 +46,9 @@ public class PersonPanel extends UiPart<Region> {
     @FXML
     private ImageView avatar;
 
-    public PersonPanel() {
+    public PersonPanel(Logic logic) {
         super(FXML);
+        this.logic = logic;
         registerAsAnEventHandler(this);
         loadBlankPersonPage();
     }
@@ -83,7 +87,8 @@ public class PersonPanel extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         loadBlankPersonPage();
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        selectedPerson = event.getNewSelection().person;
+        selectedPersonCard = event.getNewSelection();
+        selectedPerson = selectedPersonCard.person;
         isBlankPage = false;
         loadPersonPage();
     }
@@ -102,7 +107,7 @@ public class PersonPanel extends UiPart<Region> {
     @FXML
     private void avatarPrompt() {
         if (!isBlankPage) {
-            System.out.println("avatarPrompt success!");
+            new AvatarWindow(selectedPersonCard, logic);
         }
     }
 }
