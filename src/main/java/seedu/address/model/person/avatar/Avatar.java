@@ -55,7 +55,6 @@ public class Avatar {
                     this.url = outputImage.toURI().toURL();
                 }
                 this.value = this.url.toString();
-                System.out.println(this.value);
             }
         } catch (Exception e) {
             throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
