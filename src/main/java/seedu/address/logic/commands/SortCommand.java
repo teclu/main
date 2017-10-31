@@ -26,4 +26,49 @@ public class SortCommand extends Command {
         this.order = order;
     }
 
+    @Override
+    public CommandResult execute() throws CommandException {
+        Comparator<ReadOnlyPerson> sortOrder = createAscComparator(prefix);
+        if (ARGUMENT_DESCENDING_WORD.equals(order)) {
+            sortOrder = sortOrder.reversed();
+        }
+        String prefix_string = prefix;
+        String order_string = order;
+        if (isNull(prefix)) {
+            prefix_string = "default";
+        }
+        if (isNull(order)) {
+            order_string = "asc";
+        }
+        if (sortAll) {
+            model.setUserPrefsDefaultSortOrder(sortOrder);
+            return new CommandResult(String.format(MESSAGE_SORT_ALL_SUCCESS, prefix_string, order_string));
+        } else {
+            model.updateSortedFilteredPersonList(sortOrder);
+            return new CommandResult(String.format(MESSAGE_SORT_SUCCESS, prefix_string, order_string));
+        }
+    }
+
+    /**
+     *
+     */
+    public Comparator<ReadOnlyPerson> createAscComparator(String prefix) {
+        if (isNull(prefix)) {
+            return (person1, person2) -> (-1);
+        }
+
+        if (prefix.equals(PREFIX_NAME.getPrefix())) {
+            return (person1, person2) -> (person1.getName().fullName.compareToIgnoreCase(person2.getName().fullName));
+        } else if (prefix.equals(PREFIX_PHONE.getPrefix())) {
+            return (person1, person2) -> (person1.getPhone().value.compareToIgnoreCase(person2.getPhone().value));
+        } else if (prefix.equals(PREFIX_EMAIL.getPrefix())) {
+            return (person1, person2) -> (person1.getEmail().value.compareToIgnoreCase(person2.getPhone().value));
+        } else if (prefix.equals(PREFIX_ADDRESS.getPrefix())) {
+            return (person1, person2) -> (person1.getAddress().value.compareToIgnoreCase(person2.getAddress().value));
+        } else if (prefix.equals(PREFIX_BIRTHDAY.getPrefix())) {
+            return (person1, person2) -> (person1.getBirthday().value.compareToIgnoreCase(person2.getBirthday().value));
+        }
+
+        return null;
+    }
 }
