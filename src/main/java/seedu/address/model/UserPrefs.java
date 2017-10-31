@@ -78,7 +78,7 @@ public class UserPrefs {
 
     @Override
     public int hashCode() {
-        return Objects.hash(guiSettings, addressBookFilePath, addressBookName);
+        return Objects.hash(guiSettings, addressBookFilePath, addressBookName, defaultSortOrder);
     }
 
     @Override
