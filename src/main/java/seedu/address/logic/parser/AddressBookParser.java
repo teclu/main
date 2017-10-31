@@ -53,7 +53,7 @@ public class AddressBookParser {
         case AddCommand.COMMAND_WORD:
         case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
-            
+
         //@@author nadhira15
         case AddTagCommand.COMMAND_WORD:
             return new AddTagCommandParser().parse(arguments);
