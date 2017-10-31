@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.isNull;
+import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -39,43 +40,55 @@ public class SortCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        Comparator<ReadOnlyPerson> sortOrder = createAscComparator(prefix);
-        if (ARGUMENT_DESCENDING_WORD.equals(order)) {
-            sortOrder = sortOrder.reversed();
-        }
+        Comparator<ReadOnlyPerson> sortOrder = createAscComparator(prefix, order);
+
         String prefix_string = prefix;
         String order_string = order;
-        if (isNull(prefix)) {
-            prefix_string = "default";
-        }
         if (isNull(order)) {
             order_string = "asc";
         }
-
+        if (isNull(prefix)) {
+            prefix_string = "default";
+        }
+        model.updateSortedFilteredPersonList(null); //reset any order first
         model.updateSortedFilteredPersonList(sortOrder);
         return new CommandResult(String.format(MESSAGE_SORT_SUCCESS, prefix_string, order_string));
     }
 
     /**
-     *
+     *  Creates a ReadOnlyPerson Comparator from the given prefix and ordering.
      */
-    public Comparator<ReadOnlyPerson> createAscComparator(String prefix) {
+    public Comparator<ReadOnlyPerson> createAscComparator(String prefix, String order) {
         if (isNull(prefix)) {
-            return (person1, person2) -> (-1);
+            if (ARGUMENT_DESCENDING_WORD.equals(order)) {
+                return (person1, person2) -> (1);
+            } else if (ARGUMENT_ASCENDING_WORD.equals(order)) {
+                return (person1, person2) -> (-1);
+            }
         }
 
+        Comparator<ReadOnlyPerson> sortOrderComp = null;
         if (prefix.equals(PREFIX_NAME.getPrefix())) {
-            return (person1, person2) -> (person1.getName().fullName.compareToIgnoreCase(person2.getName().fullName));
+            sortOrderComp = (person1, person2) -> (person1.getName()
+                    .fullName.compareToIgnoreCase(person2.getName().fullName));
         } else if (prefix.equals(PREFIX_PHONE.getPrefix())) {
-            return (person1, person2) -> (person1.getPhone().value.compareToIgnoreCase(person2.getPhone().value));
+            sortOrderComp = (person1, person2) -> (person1.getPhone()
+                    .value.compareToIgnoreCase(person2.getPhone().value));
         } else if (prefix.equals(PREFIX_EMAIL.getPrefix())) {
-            return (person1, person2) -> (person1.getEmail().value.compareToIgnoreCase(person2.getPhone().value));
+            sortOrderComp = (person1, person2) -> (person1.getEmail()
+                    .value.compareToIgnoreCase(person2.getEmail().value));
         } else if (prefix.equals(PREFIX_ADDRESS.getPrefix())) {
-            return (person1, person2) -> (person1.getAddress().value.compareToIgnoreCase(person2.getAddress().value));
+            sortOrderComp = (person1, person2) -> (person1.getAddress()
+                    .value.compareToIgnoreCase(person2.getAddress().value));
         } else if (prefix.equals(PREFIX_BIRTHDAY.getPrefix())) {
-            return (person1, person2) -> (person1.getBirthday().value.compareToIgnoreCase(person2.getBirthday().value));
+            sortOrderComp = (person1, person2) -> (person1.getBirthday()
+                    .value.compareToIgnoreCase(person2.getBirthday().value));
         }
 
-        return null;
+        if (ARGUMENT_DESCENDING_WORD.equals(order)) {
+            requireNonNull(sortOrderComp);
+            sortOrderComp = sortOrderComp.reversed();
+        }
+        return sortOrderComp;
     }
 }
