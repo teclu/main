@@ -42,14 +42,14 @@ public class Avatar {
             } else {
                 File defaultAvatar = new File(url);
 
-                if (url.contains("https://") || url.contains("http://") || url.contains("file:/")) {
+                if (isValidUrl(url)) {
                     this.url = new URL(url);
                 } else {
                     this.url = defaultAvatar.toURI().toURL();
                 }
                 this.image = ImageIO.read(this.url);
 
-                if (!url.contains("file:/")) {
+                if (!isSavedInData(url)) {
                     String outputName = "data/" + this.url.hashCode() + ".png";
                     File outputImage = new File(outputName);
                     ImageIO.write(this.image, "png", outputImage);
@@ -60,6 +60,20 @@ public class Avatar {
         } catch (Exception e) {
             throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
         }
+    }
+
+    /**
+     * Returns true if a given string is a valid url.
+     */
+    public static boolean isValidUrl(String url) {
+        return (url.contains("https://") || url.contains("http://") || url.contains("file:/"));
+    }
+
+    /**
+     * Returns true if a given valid url is already found in data folder.
+     */
+    public static boolean isSavedInData(String url) {
+        return (url.contains("file:/") && url.contains("data/"));
     }
 
     public BufferedImage getImage() {
