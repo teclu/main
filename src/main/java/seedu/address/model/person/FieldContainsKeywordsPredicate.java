@@ -1,9 +1,11 @@
 package seedu.address.model.person;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
 
+//@@author k-l-a
 /**
  *  Represents a predicate for a field of a ReadOnlyPerson with the ability to test an instance of a ReadOnlyPerson.
  */
@@ -12,10 +14,10 @@ public abstract class FieldContainsKeywordsPredicate implements Predicate<ReadOn
     protected String fieldToSearch;
 
     /**
-     * Returns the List of keywords that is used to evaluate a ReadOnlyPerson.
+     * Returns an immutable List of keywords that is used to evaluate a ReadOnlyPerson.
      */
     public List<String> getKeywords() {
-        return keywords;
+        return Collections.unmodifiableList(keywords);
     }
 
     /**

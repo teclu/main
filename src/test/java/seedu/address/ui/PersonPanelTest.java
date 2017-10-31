@@ -12,8 +12,13 @@ import org.junit.Test;
 
 import guitests.guihandles.PersonPanelHandle;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.logic.Logic;
+import seedu.address.logic.LogicManager;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//@@author teclu
 public class PersonPanelTest extends GuiUnitTest {
 
     private PersonPanel personPanel;
@@ -21,7 +26,10 @@ public class PersonPanelTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        guiRobot.interact(() -> personPanel = new PersonPanel());
+        Model model = new ModelManager();
+        Logic logic = new LogicManager(model);
+
+        guiRobot.interact(() -> personPanel = new PersonPanel(logic));
         uiPartRule.setUiPart(personPanel);
         personPanelHandle = new PersonPanelHandle(personPanel.getRoot());
     }

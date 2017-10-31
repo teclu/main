@@ -107,6 +107,7 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    //@@author nadhira15
     public void setBirthday(Birthday birthday) {
         this.birthday.set(requireNonNull(birthday));
     }
@@ -120,7 +121,9 @@ public class Person implements ReadOnlyPerson {
     public Birthday getBirthday() {
         return birthday.get();
     }
+    //@@author
 
+    //@@author teclu
     public void setAvatar(Avatar avatar) {
         this.avatar.set(requireNonNull(avatar));
     }
@@ -134,6 +137,7 @@ public class Person implements ReadOnlyPerson {
     public Avatar getAvatar() {
         return avatar.get();
     }
+    //@@author
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
