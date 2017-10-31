@@ -61,9 +61,7 @@ public class Avatar {
                     ImageIO.write(this.image, "png", outputImage);
                     this.url = outputImage.toURI().toURL();
                 }
-                System.out.println("hi 12");
                 this.value = this.url.toString();
-                System.out.println("hi 13");
             }
         } catch (Exception e) {
             System.out.println(e.toString());
