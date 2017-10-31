@@ -93,6 +93,7 @@ public class FindCommandTest {
         return command;
     }
 
+    //@@author k-l-a
     /**
      * Parses {@code userInput} into a {@code FindCommand} for tag prefix.
      */
@@ -102,6 +103,7 @@ public class FindCommandTest {
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
+    //@@author
 
     /**
      * Asserts that {@code command} is successfully executed, and<br>
