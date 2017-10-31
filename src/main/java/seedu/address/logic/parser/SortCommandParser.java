@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.SortCommand.ARGUMENT_ASCENDING_WORD;
+import static seedu.address.logic.commands.SortCommand.ARGUMENT_DEFAULT_ORDER;
 import static seedu.address.logic.commands.SortCommand.ARGUMENT_DESCENDING_WORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
@@ -29,9 +30,9 @@ public class SortCommandParser implements Parser<SortCommand> {
 
         String trimmedArgs = args.trim();
         if (trimmedArgs.isEmpty()) {
-            return new SortCommand(null, ARGUMENT_ASCENDING_WORD);
+            return new SortCommand(ARGUMENT_DEFAULT_ORDER, ARGUMENT_ASCENDING_WORD);
         } else if (isSortArgument(trimmedArgs)) {
-            return new SortCommand(null, trimmedArgs);
+            return new SortCommand(ARGUMENT_DEFAULT_ORDER, trimmedArgs);
         }
 
         String[] splitArgs = trimmedArgs.split("\\s+");
