@@ -79,12 +79,10 @@ public class AddCommandParserTest {
                 + ADDRESS_DESC_AMY + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + AVATAR_DESC_BOB + TAG_DESC_FRIEND,
                 new AddCommand(expectedPerson));
 
-        //@@author nadhira15
         // multiple birthdays - last birthday accepted
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                         + ADDRESS_DESC_BOB + BIRTHDAY_DESC_AMY + BIRTHDAY_DESC_BOB + AVATAR_DESC_BOB + TAG_DESC_FRIEND,
                 new AddCommand(expectedPerson));
-        //@@author
 
         // multiple tags - all accepted
         Person expectedPersonMultipleTags = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
@@ -104,6 +102,36 @@ public class AddCommandParserTest {
                 .withAvatar(VALID_AVATAR_AMY).withTags().build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + BIRTHDAY_DESC_AMY + ADDRESS_DESC_AMY + AVATAR_DESC_AMY, new AddCommand(expectedPerson));
+
+        // no phone
+        expectedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(Phone.DEFAULT_VALUE)
+                .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withBirthday(VALID_BIRTHDAY_BOB)
+                .withAvatar(VALID_AVATAR_BOB).withTags(VALID_TAG_FRIEND).build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB
+                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + AVATAR_DESC_BOB
+                + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+
+        // no email
+        expectedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+                .withEmail(Email.DEFAULT_VALUE).withAddress(VALID_ADDRESS_BOB).withBirthday(VALID_BIRTHDAY_BOB)
+                .withAvatar(VALID_AVATAR_BOB).withTags(VALID_TAG_FRIEND).build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + ADDRESS_DESC_BOB
+                + BIRTHDAY_DESC_BOB + AVATAR_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+
+        // no address
+        expectedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+                .withEmail(VALID_EMAIL_BOB).withAddress(Address.DEFAULT_VALUE).withBirthday(VALID_BIRTHDAY_BOB)
+                .withAvatar(VALID_AVATAR_BOB).withTags(VALID_TAG_FRIEND).build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                + BIRTHDAY_DESC_BOB + AVATAR_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+
+        // no birthday
+        expectedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+                .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withBirthday(Birthday.DEFAULT_VALUE)
+                .withAvatar(VALID_AVATAR_BOB).withTags(VALID_TAG_FRIEND).build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                + ADDRESS_DESC_BOB + AVATAR_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedPerson));
+
     }
 
     @Test
@@ -113,24 +141,6 @@ public class AddCommandParserTest {
         // missing name prefix
         assertParseFailure(parser, AddCommand.COMMAND_WORD + VALID_NAME_BOB + PHONE_DESC_BOB
                 + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + AVATAR_DESC_BOB, expectedMessage);
-
-        // missing phone prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + VALID_PHONE_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + AVATAR_DESC_BOB, expectedMessage);
-
-        // missing email prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
-                + VALID_EMAIL_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + AVATAR_DESC_BOB, expectedMessage);
-
-        // missing address prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + VALID_ADDRESS_BOB + BIRTHDAY_DESC_BOB + AVATAR_DESC_BOB, expectedMessage);
-
-        //@@author nadhira15
-        // missing birthday prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + VALID_BIRTHDAY_BOB + AVATAR_DESC_BOB, expectedMessage);
-        //@@author
 
         // all prefixes missing
         assertParseFailure(parser, AddCommand.COMMAND_WORD + VALID_NAME_BOB + VALID_PHONE_BOB
@@ -160,13 +170,11 @@ public class AddCommandParserTest {
                         + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 Address.MESSAGE_ADDRESS_CONSTRAINTS);
 
-        //@@author nadhira15
         // invalid birthday
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                         + ADDRESS_DESC_BOB + INVALID_BIRTHDAY_DESC + AVATAR_DESC_BOB
                         + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS);
-        //@@author
 
         // invalid tag
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
