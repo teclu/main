@@ -26,15 +26,14 @@ This user guide will help you get started on using our application, and show you
 
 == Key Features
 
-=== Person Panel `In Development For v1.5`
+=== Person Panel
 
-This is where the details of a selected contact will be displayed. As of now, only the name, address, phone number and
-tags are displayed here. Planned features for the Person Panel include:
+This is where you will find a selected contact's information (_name, address, phone number, etc._) displayed neatly on a single page. When you click on the currently displayed Avatar of the contact, a new window will pop-up and you will have the option of selecting an image stored on the computer to replace it.
 
-* `For v1.3` Set a contact's avatar
-* `For v1.4` Notes/Comments on the contact
-* `For v1.5` Birthday Countdown
-* `For v2.0` Birthday Reminder
+Planned features for future versions include:
+
+* `For v2.0` Notes and Reminders
+* `For v2.0` Birthday Countdown
 
 === Colour Theme Switcher `In Development For v1.5`
 
