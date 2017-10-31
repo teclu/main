@@ -99,6 +99,7 @@ public class AvatarWindow extends UiPart<Region> {
         try {
             CommandResult commandResult = logic.execute("edit " + displayedIndex + " v/" + url);
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
+            dialogStage.close();
         } catch (CommandException | ParseException e) {
             raise(new NewResultAvailableEvent(e.getMessage(), true));
         }
