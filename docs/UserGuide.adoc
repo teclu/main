@@ -127,13 +127,9 @@ A person can have any number of tags (including 0).
 Examples:
 
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/01/01/1991`
-* `a n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/02/02/1992 t/criminal`
-
-=======
-* `add n/John Doe p/98765432 e/johnd@example.com a/John Street, Block 123, #01-01 b/01/01/1991`
-* `a n/Betsy Crowe t/client e/betsycrowe@example.com a/Newgate Prison p/1234567 b/02/02/1992 t/criminal`
-* `a n/Charlie Chopin t/boss e/charliec@example.com a/Madysun Triangle Park p/98765432 b/02/03/2000 v/C:\Users\Charlie\Pictures\cc.png'
+* `add n/John Doe p/98765432 e/johnd@example.com a/John Street, Block 123, #01-01 b/01/01/1991` +
+* `a n/Betsy Crowe t/client e/betsycrowe@example.com a/Newgate Prison p/1234567 b/02/02/1992 t/criminal` +
+* `a n/Charlie Chopin t/boss e/charliec@example.com a/Madysun Triangle Park p/98765432 b/02/03/2000 v/C:\Users\Charlie\Pictures\cc.png' +
 * `add n/Johnny`
 
 
@@ -186,7 +182,7 @@ Adding a `friends` tag for the 3rd person on the list.
 === Deleting a tag : `deletetag`
 
 Deleting a tag of an existing person in the address book. +
-Format: `detetag INDEX TAG`
+Format: `deletetag INDEX TAG`
 
 ****
 * Deleting a tag for the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
