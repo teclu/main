@@ -22,7 +22,7 @@ public class EmailContainsKeywordsPredicate extends FieldContainsKeywordsPredica
     @Override
     public boolean test(ReadOnlyPerson person) {
         return keywords.stream().anyMatch(keyword -> StringUtil
-                .containsWordIgnoreCase(person.getEmail().value, keyword));
+                .containsWordPartialIgnoreCase(person.getEmail().value, keyword));
     }
 
     @Override

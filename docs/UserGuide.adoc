@@ -237,16 +237,21 @@ Returns any person with at least one of the tags `friends`, `family`, or `collea
 
 ==== By any field
 
-To find by other fields, use their respective prefixes. (`p/` for phone, `e/` for email, and so on) +
-All fields save for avatar (`v/`) is searchable as of `v1.4` +
-Phone (`p/`) and email (`e/`) only accepts full matches, not partial matches. +
+To find by other fields, use their respective prefixes. (`p/` for phone, `e/` for email, `b/` for birthday,
+ `a/` for address) +
+All fields except avatar (`v/`) is searchable as of `v1.4` +
+All prefixes will show contacts with partial matches of the respective information. +
 
 Examples:
 
 * `find p/ 1234567` +
-Returns any person with the exact phone number `1234567`
+Returns any person with phone number containing `1234567`.
 * `find a/ Jurong` +
 Returns any person with address containing the word `Jurong` (case-insensitive) in it.
+* `find b/ 16/02` +
+Returns any person with birthday containing `16/02`.
+* `find e/ johndoe` +
+Returns any person with email containing `johndoe`.
 
 ==== Partial matching
 `Since v1.2` +
