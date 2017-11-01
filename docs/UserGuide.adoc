@@ -158,7 +158,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `e 2 n/Betsy Crower v/http://example.com/profile.png t/` +
 Edits the name of the 2nd person to be `Betsy Crower`, change the avatar and clears all existing tags.
 
-=== Adding a tag : `addtag`
+=== Adding a tag : `addtag` or `at`
 
 `Since v1.2`
 Adding a tag of an existing person in the address book. +
@@ -179,8 +179,9 @@ Adding a `friends` tag for the 3rd person on the list.
 
 `In development for v1.5` Adding more than 1 tag with a single addtag command
 
-=== Deleting a tag : `deletetag`
+=== Deleting a tag : `deletetag` of `dt`
 
+`Since v1.3`
 Deleting a tag of an existing person in the address book. +
 Format: `deletetag INDEX TAG`
 

@@ -57,9 +57,11 @@ public class AddressBookParser {
 
         //@@author nadhira15
         case AddTagCommand.COMMAND_WORD:
+        case AddTagCommand.COMMAND_ALIAS:
             return new AddTagCommandParser().parse(arguments);
 
         case DeleteTagCommand.COMMAND_WORD:
+        case DeleteTagCommand.COMMAND_ALIAS:
             return new DeleteTagCommandParser().parse(arguments);
         //@@author
 
