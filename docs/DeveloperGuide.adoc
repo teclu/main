@@ -556,7 +556,7 @@ method to return `true`. +
 Now, we introduce a slightly modified version to allow for partial matching as such :
 [source, java]
 ----
- public static boolean containsPartialIgnoreCase(String sentence, String word) {
+ public static boolean containsWordPartialIgnoreCase(String sentence, String word) {
         //..check and prepare arguments..
         for (String wordInSentence: wordsInPreppedSentence) {
             if (wordInSentence.toLowerCase().contains(preppedWord.toLowerCase())) {

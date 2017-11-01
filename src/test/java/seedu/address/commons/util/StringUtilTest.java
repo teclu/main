@@ -137,8 +137,8 @@ public class StringUtilTest {
         assertTrue(StringUtil.containsWordIgnoreCase("AAA bBb ccc  bbb", "bbB"));
     }
 
+    //@@author k-l-a
     //---------------- Tests for containsWordPartialIgnoreCase --------------------------------------
-
     @Test
     public void containsWordPartialIgnoreCase_nullWord_throwsNullPointerException() {
         assertOtherExceptionThrown(NullPointerException.class, "typical sentence", null,
@@ -222,6 +222,7 @@ public class StringUtilTest {
         assertTrue(StringUtil.containsWordPartialIgnoreCase("AAa bbb cCc abc", "ab"));
         assertTrue(StringUtil.containsWordPartialIgnoreCase("AAa bcb cbc abc", "bc")); //multiple partial matches
     }
+    //@@author
     //---------------- Tests for getDetails --------------------------------------
 
     /*
