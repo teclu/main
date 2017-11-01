@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+//@@author teclu
 /**
  * A class to draw the default placeholder avatar.
  */

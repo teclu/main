@@ -32,7 +32,8 @@ public class HelpWindow extends UiPart<Region> {
         Scene scene = new Scene(getRoot());
         //Null passed as the parent stage to make it non-modal.
         dialogStage = createDialogStage(TITLE, null, scene);
-        dialogStage.setMaximized(true); //TODO: set a more appropriate initial size
+        dialogStage.setHeight(800);
+        dialogStage.setWidth(600);
         FxViewUtil.setStageIcon(dialogStage, ICON);
 
         String userGuideUrl = getClass().getResource(USERGUIDE_FILE_PATH).toString();

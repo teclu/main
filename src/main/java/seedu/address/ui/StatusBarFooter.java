@@ -74,12 +74,14 @@ public class StatusBarFooter extends UiPart<Region> {
         Platform.runLater(() -> this.syncStatus.setText(status));
     }
 
+    //@@author teclu
     /**
      * Sets the total number of contacts.
      */
     private void setNumTotalContacts(int numTotalContacts) {
         this.numTotalContacts.setText("Total: " + numTotalContacts + " contact(s)");
     }
+    //@@author
 
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {

@@ -6,7 +6,7 @@
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
         <birthday isPrivate="false">01/01/1991</birthday>
-        <avatar isPrivate="false">https://www.shareicon.net/download/2016/05/24/770009_man_512x512.png</avatar>
+        <avatar isPrivate="false"></avatar>
     </persons>
     <persons>
         <name>Ruth Mueller</name>
@@ -14,7 +14,7 @@
         <email isPrivate="false">ruth@example.com</email>
         <address isPrivate="false">81th street</address>
         <birthday isPrivate="false">02/02/1992</birthday>
-        <avatar isPrivate="false">https://www.shareicon.net/download/2016/05/24/770009_man_512x512.png</avatar>
+        <avatar isPrivate="false"></avatar>
     </persons>
     <persons>
         <name>Heinz Kurz</name>
@@ -22,7 +22,7 @@
         <email isPrivate="false">heinz@example.com</email>
         <address isPrivate="false">wall street</address>
         <birthday isPrivate="false">03/03/1993</birthday>
-        <avatar isPrivate="false">https://www.shareicon.net/download/2016/05/24/770009_man_512x512.png</avatar>
+        <avatar isPrivate="false"></avatar>
     </persons>
     <persons>
         <name>Cornelia Meier</name>
@@ -30,7 +30,7 @@
         <email isPrivate="false">cornelia@example.com</email>
         <address isPrivate="false">10th street</address>
         <birthday isPrivate="false">04/04/1994</birthday>
-        <avatar isPrivate="false">https://www.shareicon.net/download/2016/05/24/770009_man_512x512.png</avatar>
+        <avatar isPrivate="false"></avatar>
     </persons>
     <persons>
         <name>Werner Meyer</name>
@@ -38,7 +38,7 @@
         <email isPrivate="false">werner@example.com</email>
         <address isPrivate="false">michegan ave</address>
         <birthday isPrivate="false">05/05/1995</birthday>
-        <avatar isPrivate="false">https://www.shareicon.net/download/2016/05/24/770009_man_512x512.png</avatar>
+        <avatar isPrivate="false"></avatar>
     </persons>
     <persons>
         <name>Lydia Kunz</name>
@@ -46,7 +46,7 @@
         <email isPrivate="false">lydia@example.com</email>
         <address isPrivate="false">little tokyo</address>
         <birthday isPrivate="false">06/06/1996</birthday>
-        <avatar isPrivate="false">https://www.shareicon.net/download/2016/05/24/770009_man_512x512.png</avatar>
+        <avatar isPrivate="false"></avatar>
     </persons>
     <persons>
         <name>Anna Best</name>
@@ -54,7 +54,7 @@
         <email isPrivate="false">anna@example.com</email>
         <address isPrivate="false">4th street</address>
         <birthday isPrivate="false">07/07/1997</birthday>
-        <avatar isPrivate="false">https://www.shareicon.net/download/2016/05/24/770009_man_512x512.png</avatar>
+        <avatar isPrivate="false"></avatar>
     </persons>
     <persons>
         <name>Stefan Meier</name>
@@ -62,7 +62,7 @@
         <email isPrivate="false">stefan@example.com</email>
         <address isPrivate="false">little india</address>
         <birthday isPrivate="false">09/09/1999</birthday>
-        <avatar isPrivate="false">https://www.shareicon.net/download/2016/05/24/770009_man_512x512.png</avatar>
+        <avatar isPrivate="false"></avatar>
     </persons>
     <persons>
         <name>Martin Mueller</name>
@@ -70,6 +70,6 @@
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">chicago ave</address>
         <birthday isPrivate="false">01/01/1991</birthday>
-        <avatar isPrivate="false">https://www.shareicon.net/download/2016/05/24/770009_man_512x512.png</avatar>
+        <avatar isPrivate="false"></avatar>
     </persons>
 </addressbook>

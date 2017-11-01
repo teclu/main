@@ -32,6 +32,7 @@ import seedu.address.testutil.PersonBuilder;
  * Contains integration tests (interaction with the Model) and unit tests for AddTagCommand.
  */
 
+//@@author nadhira15
 public class AddTagCommandTest {
 
     public static final String VALID_TAG = "neighbours";
