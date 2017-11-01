@@ -236,9 +236,9 @@ Returns any person with at least one of the tags `friends`, `family`, or `collea
 
 ==== By any field
 
-To find by other fields, use their respective prefixes. (`p/` for phone, `e/` for email, and so on)
-All fields save for avatar (`v/`) is searchable as of `v1.4`
-Phone (`p`) and email (`e`) only accepts full matches, not partial matches.
+To find by other fields, use their respective prefixes. (`p/` for phone, `e/` for email, and so on) +
+All fields save for avatar (`v/`) is searchable as of `v1.4` +
+Phone (`p`) and email (`e`) only accepts full matches, not partial matches. +
 
 Examples:
 
