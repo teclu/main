@@ -456,7 +456,7 @@ Add,"add | a",add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]... 
 
 Clear,"clear | c", clear, clear
 Delete, "delete | d", delete INDEX, delete 3
-Edit, "edit | e", edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]..., edit 2 n/James Lee
+Edit, "edit | e", INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]..., edit 2 n/James Lee
 Add Tag, "addtag | at", addtag INDEX TAG, addtag 2 friends
 Delete Tag, "deletag | dt", deletetag INDEX TAG, deletetag 2 friends
 Find, "find | f", find [PREFIX] KEYWORD [MORE_KEYWORDS], find n/ James Jake
