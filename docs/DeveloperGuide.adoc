@@ -696,7 +696,7 @@ command, without retyping all the current tags.
 ==== Java Implementation
 
 As `addtag` and `deletetag` are commands, their implementations are a part of Logic component in the address book.
-The implementation of add tag and delete tag can be found in AddTagCommand and DeleteTagCommand. AddTagCommand and 
+The implementation of add tag and delete tag can be found in AddTagCommand and DeleteTagCommand. AddTagCommand and
 DeleteTagCommand inherits UndoableCommands, as they modify the state of the address book (_adding and deleting a
 person's tag in the address book_). Therefore, users can undo/redo their previously entered `addtag` and `deletetag`
 command.

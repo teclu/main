@@ -21,7 +21,7 @@ public class PersonPanelHandle extends NodeHandle<Node> {
     private Label avatar;
     private List<Label> tagLabels;
 
-    public PersonPanelHandle(Node personPanelNode) {	
+    public PersonPanelHandle(Node personPanelNode) {
         super(personPanelNode);
 
         this.name = getChildNode(NAME_FIELD_ID);
