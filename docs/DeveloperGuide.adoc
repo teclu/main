@@ -439,29 +439,32 @@ the following 2 code snippets:
 ----
 @Subscribe
 private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    loadBlankPersonPage();
     logger.info(LogsCenter.getEventHandlingLogMessage(event));
-    loadPersonPage(event.getNewSelection().person);
+    selectedPersonCard = event.getNewSelection();
+    selectedPerson = selectedPersonCard.person;
+    isBlankPage = false;
+    loadPersonPage();
 }
 ----
 
 **Code Snippet 1 (handlePersonPanelSelectionChangedEvent()):** Whenever a contact is selected, an event will be
-triggered. The method will respond to the event by obtaining a ReadOnlyPerson variable (_which contains all the details
-of the contact_), and pass it into loadPersonPage().
+triggered. The method will respond to the event by obtaining a PersonCard variable and ReadOnlyPerson variable (_which contains all the details of the contact_), and pass it into loadPersonPage().
 
 [source,java]
 ----
-private void loadPersonPage(ReadOnlyPerson person) {
-    name.setText(person.getName().fullName);
-    phone.setText("Phone: " + person.getPhone().toString());
-    address.setText("Address: " + person.getAddress().toString());
-	email.setText("Email: " + person.getEmail().toString());
-	birthday.setText("Birthday: " + person.getBirthday().toString());
-	tags.getChildren().clear();
-	person.getTags().forEach(tag -> {
-		Label tagLabel = new Label(tag.tagName);
-		tagLabel.setStyle("-fx-background-color: " + tag.tagColour);
-		tags.getChildren().add(tagLabel);
-	});
+private void loadPersonPage() {
+    name.setText(selectedPerson.getName().fullName);
+    phone.setText("Phone: " + selectedPerson.getPhone().toString());
+    address.setText("Address: " + selectedPerson.getAddress().toString());
+    email.setText("Email: " + selectedPerson.getEmail().toString());
+    birthday.setText("Birthday: " + selectedPerson.getBirthday().toString());
+    avatar.setImage(SwingFXUtils.toFXImage(selectedPerson.getAvatar().getImage(), null));
+    selectedPerson.getTags().forEach(tag -> {
+        Label tagLabel = new Label(tag.tagName);
+        tagLabel.setStyle("-fx-background-color: " + tag.tagColour);
+        tags.getChildren().add(tagLabel);
+    });
 }
 ----
 
@@ -473,19 +476,21 @@ Upon opening the application, no contact details will be displayed since no cont
 
 ==== Layout Implementation
 
-The layout for PersonPanel is specified in PersonPanel.fxml. Visually, it can be broken down into 2 parts as shown:
+The layout for PersonPanel is specified in `PersonPanel.fxml`. Visually, it can be broken down into 2 parts as shown:
 
 image::PersonPanelLayout.png[width="760"]
 _Figure 4.4.2.1: Visual breakdown of PersonPanel_
 
 **Part 1 (primaryDetails):** This is subdivided into parts A and B. Part A contains the avatar picture of the contact.
-At the moment, there is a placeholder image. In the future, we will implement support for custom avatars.
+Clicking on the avatar picture will cause a new `AvatarWindow` to be generated, which allows users to change the current
+avatar picture of the selected contact. More information about the implementation of `Avatar` can be found in the next section.
+
 Part B contains the Name and Tags of the contact, which we found to be important in recognising a displayed contact
 quickly. Hence, they are in a larger font in order to stand out.
 
 **Part 2 (secondaryDetails):** This displays the Address, Email, Contact Number and Birthday of the contact. As these
 details are less important than the Name and Tags, they are placed below and are in a smaller font. At the moment, this
-section appears simple but empty. We plan to implement more features, such as a "Notes about Contact" and
+section appears simple but empty. We plan to implement more features for v2.0, such as a "Notes about Contact" and
 "Birthday Countdown".
 
 ==== Design Considerations
@@ -515,8 +520,8 @@ contact's details. +
 **Aspect:** Addition of Icons for secondaryDetails. +
 **Alternative 1 (current choice):** Place icons on the left of each contact detail. +
 **Pros:** Quick to implement and makes it easier for user to differentiate between each contact detail. Icons can be
-easily taken from Google's Material.io website. +
-**Cons:** N/A +
+easily taken from Google's Material Design. +
+**Cons:** If we were to include more contact details (_e.g. social media links_) in the future, then we would have to keep adding more icons; relevant icons may not be found on Google's Material Design.  +
 **Alternative 2:** Use different colours for each contact detail. +
 **Pros:** Even more quick to implement since it only involves CSS changes. +
 **Cons:** Bad idea design-wise because it violates the Triadic Colour Scheme. It could make the application look less
