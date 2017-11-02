@@ -448,10 +448,10 @@ e.g.`select 2`
 
 == Command Cheatsheet
 [format="csv"]
-[options="header",cols="1s,^4m,10m,1m"]
+[options="header",cols="1s,^4m,1m,1m"]
 |===========================
 Action,Command | Alias,Format,Example
-Add,"add | a",add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]... ,"add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/16/08/1995 t/friend t/colleague"
+Add,"add | a",add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]... ,"add n/James Ho "
 
 
 Clear,"clear | c", clear, clear
