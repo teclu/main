@@ -162,11 +162,11 @@ Edits the name of the 2nd person to be `Betsy Crower`, change the avatar and cle
 === Adding a tag : `addtag` or `at`
 
 `Since v1.2`
-Adding a tag of an existing person in the address book. +
+Adds a tag to an existing person in the address book. +
 Format: `addtag INDEX TAG`
 
 ****
-* Adding a tag for the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Adds the given tag to the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * When adding the tag, the existing tags of the person will NOT be removed i.e. adding the tag is cumulative.
 * The new tag added must be different from existing tags i.e. no duplicate tags will be allowed
 ****
@@ -174,19 +174,19 @@ Format: `addtag INDEX TAG`
 Examples:
 
 * `addtag 1 owesMoney` +
-Adding a `owesMoney` tag for the 1st person on the list. If previously the 1st person has `friends` tag, now the 1st person has both `friends` and `owesMoney` tag.
+Adds a `owesMoney` tag for the 1st person on the list. If previously the 1st person has `friends` tag, now the 1st person has both `friends` and `owesMoney` tag.
 * `addtag 3 friends` +
-Adding a `friends` tag for the 3rd person on the list.
+Adds a `friends` tag for the 3rd person on the list.
 
 `In development for v1.5` Adding more than 1 tag with a single addtag command
 
 === Deleting a tag : `deletetag` or `dt`
 `Since v1.3`
-Deleting a tag of an existing person in the address book. +
+Deletes given tag from an existing person in the address book. +
 Format: `deletetag INDEX TAG`
 
 ****
-* Deleting a tag for the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Deletes given tag from the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * When deleting the tag, only specified tag will be removed.
 * The tag that will be deleted must exist in the person's tag list.
 ****
@@ -194,9 +194,9 @@ Format: `deletetag INDEX TAG`
 Examples:
 
 * `deletetag 1 owesMoney` +
-Deleting the `owesMoney` tag from the 1st person on the list.
+Deletes the `owesMoney` tag from the 1st person on the list.
 * `deletetag 3 friends` +
-Deleting a `friends` tag from the 3rd person on the list.
+Deletes the `friends` tag from the 3rd person on the list.
 
 `In development for v1.5` Deleting more than 1 tag with a single deletetag command
 
