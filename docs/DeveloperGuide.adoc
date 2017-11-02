@@ -31,22 +31,25 @@ Before you get stared, do ensure that you have the following installed on your c
 You can download Java SE Development Kit link:http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html[here].
 +
 [NOTE]
-This application will not work with earlier versions of Java 8 (_anything before `1.8.0_60`_).
+This application will not work with earlier versions of Java 8 (_anything before `1.8.0_60`)_.
 +
 
 * *IntelliJ* Integrated Development Environment (IDE)
 You can download IntelliJ IDE link:https://www.jetbrains.com/idea/download/#section=windows[here].
 +
 [NOTE]
-IntelliJ by default has Gradle and JavaFx plugins installed; do not disable them! If you have disabled them, go to
+By default, IntelliJ has Gradle and JavaFx plugins installed; do not disable them! If you have disabled them, go to
 `File` > `Settings` > `Plugins` to re-enable them.
 
-Once you have installed everything required, you can continue on with the next part.
+Once you have installed the above, you can continue on with the next step.
 
 === Setting up the project in your computer
 
 . Fork https://github.com/CS2103AUG2017-W11-B3/main[this] repository to your GitHub account, and clone the fork to your
 computer.
++
+[NOTE]
+Don't have a GitHub account? You can register for one https://github.com/[here].
 . Open IntelliJ (_if you are not in the welcome screen, click `File` > `Close Project` to close the existing project
 dialog first_)
 . Set up the correct JDK version for Gradle
@@ -64,7 +67,7 @@ This will generate all resources required by the application and tests. You shou
 
 === Verifying the setup
 
-. Run the `seedu.address.MainApp` and try a entering few commands in the application.
+. In Intellij, right click on the `seedu.address.MainApp` file and click `Run MainApp().main`. You should see the project building, and the application should start afterwards. Try a entering few commands in the application to ensure that the application is running.
 . link:#testing[Run the tests] to ensure they all pass.
 
 === Configurations to do before writing code
@@ -99,7 +102,6 @@ is Unix-based and AppVeyor is Windows-based_).
 
 ==== Before coding
 
-
 Before you start coding, do read the link:#architecture[Architecture] section below so that you can get a clearer sense of
 the overall design of the application. This will help you understand how the application works, and how your changes
 can affect the entire system.
@@ -112,7 +114,7 @@ Lastly, if you plan to develop this as a separate product (_i.e. instead of cont
 
 == Design
 
-=== Architecture
+=== Introduction: Architecture
 
 The *_Architecture Diagram_* below explains the high-level design of the application:
 
@@ -139,7 +141,7 @@ communicate with other components using events (_i.e. a form of Event Driven des
 
 ==== The Other 4 Components
 
-The rest of the App consists of four components.
+The rest of the App consists of four components:
 
 * link:#ui-component[*`UI`*] : The user interface (_UI_) of the application.
 * link:#logic-component[*`Logic`*] : The command executor.
@@ -155,7 +157,7 @@ Each of the four components
 
 ==== Components Interaction
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command
+The Sequence Diagram below shows how the components interact for the scenario where the user issues the command
 `delete 1`:
 
 image::SDforDeletePerson.png[width="800"]
@@ -184,7 +186,7 @@ _Figure 3.3.1 : Structure of the UI Component_
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`,
-`StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+`StatusBarFooter`, `BrowserPanel` etc. All of these parts, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are
 in the `src/main/resources/view` folder. For example, the layout of the
@@ -1151,6 +1153,9 @@ guide, and be able to familiarise himself/herself with the commands.
 [appendix]
 == Glossary
 
+[[avatar]]
+- *Avatar*: A picture representing a particular person in the address book.
+
 [[command-line-interface]]
 - *Command Line Interface (CLI)*: It is an interface which users respond to a visual prompt by typing in a command
 on a specified line, receive a response back from the system, and then enter another command. This goes on back and
@@ -1171,4 +1176,10 @@ click link:https://go.java/index.html?intcmp=gojava-banner-java-com[here].
 and modified.
 
 [[private-contact-detail]]
-- *Private contact detail*: A contact detail that is not meant to be shared with others.
+- *Private Contact Detail*: A contact detail that is not meant to be shared with others.
+
+[[sequence-diagram]]
+- *Sequence Diagram*: A sequence diagram is an interaction diagram that shows how objects operate with one another and in what order.
+
+[[triadic-colour-scheme]]
+= *Triadic Colour Scheme*: A colour scheme that uses only three colors that are equally spaced around the color wheel. 
