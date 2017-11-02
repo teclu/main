@@ -28,7 +28,7 @@ you understand what features we have implemented, and how we have done so.
 Before you get stared, do ensure that you have the following installed on your computer:
 
 * *Java SE Development Kit (JDK) `1.8.0_60`* or later
-You can download Java SE Development Kit link:http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html[here].
+You can download link:#java[Java] SE Development Kit link:http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html[here].
 +
 [NOTE]
 This application will not work with earlier versions of Java 8 (_anything before `1.8.0_60`)_.
@@ -344,7 +344,7 @@ popping the `undoStack`.
 
 === Sequence Diagram
 
-The following sequence diagram shows how the undo operation works:
+The following link:#sequence-diagram[sequence diagram ]shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
 _Figure 4.2.1_
@@ -483,7 +483,7 @@ The layout for PersonPanel is specified in `PersonPanel.fxml`. Visually, it can 
 image::PersonPanelLayout.png[width="760"]
 _Figure 4.4.2.1: Visual breakdown of PersonPanel_
 
-**Part 1 (primaryDetails):** This is subdivided into parts A and B. Part A contains the avatar picture of the contact.
+**Part 1 (primaryDetails):** This is subdivided into parts A and B. Part A contains the link:#avatar[avatar] picture of the contact.
 Clicking on the avatar picture will cause a new `AvatarWindow` to be generated, which allows users to change the current
 avatar picture of the selected contact. More information about the implementation of `Avatar` can be found in the next section.
 
@@ -526,8 +526,7 @@ easily taken from Google's Material Design. +
 **Cons:** If we were to include more contact details (_e.g. social media links_) in the future, then we would have to keep adding more icons; relevant icons may not be found on Google's Material Design.  +
 **Alternative 2:** Use different colours for each contact detail. +
 **Pros:** Even more quick to implement since it only involves CSS changes. +
-**Cons:** Bad idea design-wise because it violates the Triadic Colour Scheme. It could make the application look less
-professional and unattractive.
+**Cons:** Bad idea design-wise because it violates the link:#tradic-colour-scheme[Triadic Colour Scheme]. It could make the application look less professional and unattractive.
 // end::personpanel[]
 
 //tag::partialfind[]
@@ -1141,14 +1140,13 @@ Use case resumes at step 2.
 .  Should be available to use with or without internet access.
 .  A user with above average typing speed for regular English text (_i.e. not code, not system admin commands_)
 should be able to accomplish most of the tasks faster using commands than using the mouse.
-.  A user with little to no experience with a command line interface should be able to have easy access to the user
-guide, and be able to familiarise himself/herself with the commands.
+.  A user with little to no experience with a link:#command-line-interface[command line interface] should be able to have easy access to the user guide, and be able to familiarise himself/herself with the commands.
 .  A user should only be able to use the supported commands; unsupported commands should be handled gracefully.
 .  A user is able to back up and restore all contacts in the event of the application breaking.
 .  The response to any user action should become visible within 5 seconds at maximum contacts capacity.
 .  The application should be offered as a free software available for download.
 .  The functionality of the application should be able to be increased or extended even after deployment.
-.  The source code should be open source.
+.  The source code should be link:#open-source[open source].
 
 [appendix]
 == Glossary
