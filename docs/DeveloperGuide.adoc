@@ -1182,4 +1182,4 @@ and modified.
 - *Sequence Diagram*: A sequence diagram is an interaction diagram that shows how objects operate with one another and in what order.
 
 [[triadic-colour-scheme]]
-= *Triadic Colour Scheme*: A colour scheme that uses only three colors that are equally spaced around the color wheel. 
+- *Triadic Colour Scheme*: A colour scheme that uses only three colors that are equally spaced around the color wheel. 
