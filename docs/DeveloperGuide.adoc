@@ -627,7 +627,7 @@ You can find the full implementation of `AvatarWindow` in the folder `java/seedu
 **Cons:** May be stifling for users who want to have a GUI option. +
 **Alternative 2 (current choice):** Create a GUI alternative for users to change the Avatar of the contact. +
 **Pros:** Makes the application more user friendly; easier for users to point and click instead of copying the
-picture's directory path, which may take a longer time.+
+picture's directory path, which may take a longer time. +
 **Cons:** Some classes (e.g. _PersonCard_, _PersonPanel_, etc.) have to be modified in order to implement this option.
 
 ---
