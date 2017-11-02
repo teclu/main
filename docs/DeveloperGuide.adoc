@@ -600,19 +600,108 @@ partial matching.
 
 // end::partialfind[]
 
-// tag::addtagcommand[]
-=== Add Tag
-
-The add tag command is facilitated by the AddTagCommand, which is useful for adding a tag to a person inside the
-address book.
+// tag::findbyallfield[]
+=== Find by All Field
+The find by all field feature is implemented by adding one argument, prefix of field that want to be searched, to the
+`find` command parameter. If the user does not specify the prefix, the address book will automatically search the query
+in the name field. The FindCommandParser will parse the input given by the user. The mechanism to find by each field is
+implemented in <field name>ContainsKeywordPredicate class (i.e. NameContainsKeywordPredicate,
+AddressContainsKeywordPredicate) inside Model component.
 
 ==== Java Implementation
 
-AddTagCommand is a command. As AddTagCommand modifies the state of the address book (_adding a tag to a contact in the
-address book_), AddTagCommand inherits UndoableCommands. Therefore, users can undo/redo their previously
-entered AddTagCommand.
+The FindCommandParser is now able to parse the additional prefix argument, as shown in the code snippet below:
 
-AddTagCommand is implemented in this way:
+[source,java]
+----
+public FindCommand parse(String args) throws ParseException {
+        // make sure that the argument is valid
+        // store the prefix inside String 'toSearch'
+        // store the search query inside array of string 'keyword'
+
+        if (toSearch.equals(PREFIX_TAG.getPrefix())) {
+            return new FindCommand(new TagListContainsKeywordsPredicate(Arrays.asList(keywords)));
+        } else if (toSearch.equals(PREFIX_PHONE.getPrefix())) {
+            return new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList(keywords)));
+        } else if (toSearch.equals(PREFIX_EMAIL.getPrefix())) {
+            return new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList(keywords)));
+        } else if (toSearch.equals(PREFIX_ADDRESS.getPrefix())) {
+            return new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList(keywords)));
+        } else if (toSearch.equals(PREFIX_BIRTHDAY.getPrefix())) {
+            return new FindCommand(new BirthdayContainsKeywordsPredicate(Arrays.asList(keywords)));
+        } else {
+            return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
+        }
+    }
+----
+
+After FindCommandParser parse the arguments, it will call the <field name>ContainsKeywordsPredicate class for each
+respective field.
+
+All contacts with partial matches will appear on the search result, implemented in the method below for phone field.
+The method is similar for other field.
+
+[source,java]
+----
+public boolean test(ReadOnlyPerson person) {
+        return keywords.stream().anyMatch(keyword -> StringUtil
+                .containsWordPartialIgnoreCase(person.getPhone().value, keyword));
+    }
+----
+
+
+
+==== Design Considerations
+
+**Aspect:** Implementation of find by all field +
+**Alternative 1 (current choice):** Enables user to find by all field (name, phone, email, address, birthday, and
+tag). +
+**Pros:** Easier for user to find their contacts when the user does not remember their contact's name, instead they
+remember the contacts' details (such as address or birthday). This feature is useful for a broader range of purpose,
+for example when the user wants to send a birthday wishes to their contacts, the user can easily find by using
+birthday field. +
+**Cons:** Need to type the prefix of the field that want to be searched. +
+**Alternative 2:** Find by name only. +
+**Pros:** Some people only remember their contact's name, and find by all field feature might not be useful for them as
+they don't remember their contact's details. +
+**Cons:** User could not find their contact details when they do not remember their contact's name.
+
+---
+
+**Aspect:** Find result upon executing `find` command. +
+**Alternative 1 (current choice):** All contacts with partial match with the find query will appear. +
+**Pros:** With less restrictive requirement, users can find a broad range of contacts when they are searching using a
+global keyword. For example, a user can find all their contacts who lived in "Clementi" when using this alternative. +
+**Cons:** More contacts will appear on the find result, some of them might not be the target contact that the user
+wants to find. +
+**Alternative 2:** Only contacts with exact match will appear. +
+**Pros:** Less contacts will appear on the find result, easier to find the exact person while searching for a single
+person. +
+**Cons:** It will be hard for a forgetful user to find their contacts as they may remember their contact details'
+partially. This alternative is also more cumbersome when applied to find by address, as user need to type the full
+address of their contact.
+
+// end::findbyallfield[]
+
+// tag::adddeletetagcommand[]
+=== Add Tag and Delete Tag
+
+Add tag and delete tag mechanism is facilitated by the `addtag` command and `deletetag` command, or their equivalent
+aliases `at` and `dt`, which is useful for adding and deleting a tag in a person's tag list. On previous versions
+before Add and Delete tag feature was introduced, users are able to change a person's tag list by using `edit` command.
+Using `edit` command to add and delete a tag is quite cumbersome as users need to retype all the current tags that they
+didn't want to edit. `addtag` command and `deletetag` command enables user to add and delete a tag using only a single
+command, without retyping all the current tags.
+
+==== Java Implementation
+
+As `addtag` and `deletetag` are commands, their implementations are a part of Logic component in the address book.
+The implementation of add tag and delete tag can be found in AddTagCommand and DeleteTagCommand. AddTagCommand and 
+DeleteTagCommand inherits UndoableCommands, as they modify the state of the address book (_adding and deleting a
+person's tag in the address book_). Therefore, users can undo/redo their previously entered `addtag` and `deletetag`
+command.
+
+`addtag` command is implemented in this way:
 
 [source,java]
 ----
@@ -624,7 +713,7 @@ public class AddTagCommand extends UndoableCommand {
 }
 ----
 
-AddTagCommand can be used by calling the method with an index and a string of tag name that will be added, shown by
+`addtag` command can be used by calling the method with an index and a string of tag name that will be added, shown by
 this code snippet:
 
 [source,java]
@@ -638,21 +727,47 @@ public AddTagCommand(Index index, Set<Tag> addedTag) {
 }
 ----
 
+Similar to `addtag` command, `deletetag` command is implemented in this way:
+
+[source,java]
+----
+public class DeleteTagCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        // ... list logic ...
+    }
+}
+----
+
+`deletetag` command can be used by calling the method with an index and a string of tag name that will be added, just
+like `addtag` command, shown by the following code snippet:
+
+[source,java]
+----
+public DeleteTagCommand(Index index, Set<Tag> deletedTag) {
+    requireNonNull(index);
+    requireNonNull(deletedTag);
+
+    this.index = index;
+    this.addedTag = deletedTag;
+}
+----
+
 ==== Design Considerations
 
-**Aspect:** Implementation of AddTagCommand +
-**Alternative 1 (current choice):** Implementing a new command AddTagCommand instead of using the existing
+**Aspect:** Implementation of AddTagCommand and DeleteTagCommand +
+**Alternative 1 (current choice):** Implementing a new command `addtag` and `deletetag` instead of using the existing
 Edit command.  +
-**Pros:** Users can add a single tag only by typing the new tag that they want to assign to a contact.  +
-**Cons:** Currently AddTagCommand could only add a single new tag every time it is executed (_future enhancement
-will enable AddTagCommand to add more than 1 tag when executed_). +
-**Alternative 2:** Use existing Edit command to add a single tag to a person in the address book. +
+**Pros:** Users can add and delete a single tag only by typing the new tag that they want to assign or remove from
+a contact.  +
+**Cons:** Currently `addtag` and `deletetag` could only add and delete a single tag every time it is executed (_future
+enhancement will enable `addtag` and `deletetag` to add and delete more than 1 tag when executed_). +
+**Alternative 2:** Use existing Edit command to add or delete a single tag from a person in the address book. +
 **Pros:** Less command to remember. +
-**Cons:** Users need to type all existing tags added by the new tag when they are using Edit command. There is a
-possibility of some error that can be avoided when using AddTagCommand, such as mistyping the existing tags or not
-adding a complete set of existing tags.
+**Cons:** Users need to retype all existing tags they want to keep when they are using `edit` command. Users might
+mistype existing tags or not typing a complete set of existing tags while using `edit` command.
 
-// end::addtagcommand[]
+// end::adddeletetagcommand[]
 
 
 === Logging
