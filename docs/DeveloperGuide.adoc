@@ -342,12 +342,12 @@ _Figure 4.1.4_
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when
 popping the `undoStack`.
 
-=== Sequence Diagram
+==== Sequence Diagram
 
 The following link:#sequence-diagram[sequence diagram ]shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
-_Figure 4.2.1_
+_Figure 4.1.1.1_
 
 The redo does the exact opposite: pops from `redoStack`, push to `undoStack`, and restores the address book to the state
 after the command is executed.
@@ -361,20 +361,20 @@ time the `redoStack` is no longer empty. It will be purged as it no longer make 
 (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
-_Figure 4.2.2_
+_Figure 4.1.1.2_
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command`
 rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
-_Figure 4.2.3_
+_Figure 4.1.1.3_
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
-_Figure 4.2.4_
+_Figure 4.1.1.4_
 
-=== Design Considerations
+==== Design Considerations
 
 **Aspect:** Implementation of `UndoableCommand`. +
 **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`. +
@@ -481,7 +481,7 @@ Upon opening the application, no contact details will be displayed since no cont
 The layout for PersonPanel is specified in `PersonPanel.fxml`. Visually, it can be broken down into 2 parts as shown:
 
 image::PersonPanelLayout.png[width="760"]
-_Figure 4.4.2.1: Visual breakdown of PersonPanel_
+_Figure 4.2.2.1: Visual breakdown of PersonPanel_
 
 **Part 1 (primaryDetails):** This is subdivided into parts A and B. Part A contains the link:#avatar[avatar] picture of the contact.
 Clicking on the avatar picture will cause a new `AvatarWindow` to be generated, which allows users to change the current
