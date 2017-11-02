@@ -623,7 +623,7 @@ You can find the full implementation of `AvatarWindow` in the folder `java/seedu
 
 **Aspect:** Additional ways of changing `Avatar`. +
 **Alternative 1:** Only allow user to use the Add and Edit commands to change the Avatar of the contact. +
-**Pros:** No time is spent to make new ways of changing Avatar +
+**Pros:** No time is spent to make new ways of changing Avatar. +
 **Cons:** May be stifling for users who want to have a GUI option. +
 **Alternative 2 (current choice):** Create a GUI alternative for users to change the Avatar of the contact. +
 **Pros:** Makes the application more user friendly; easier for users to point and click instead of copying the
@@ -635,10 +635,10 @@ picture's directory path, which may take a longer time. +
 **Aspect:** Saving of pictures. +
 **Alternative 1:** Save the pictures within the `.jar` file. +
 **Pros:** Users will not be able to modify the pictures downloaded; lesser chances of error exceptions occuring due
-to missing files.+
-**Cons:** May be inconvenient for a user who would want to manipulate these pictures directly for any purpose +
+to missing files. +
+**Cons:** May be inconvenient for a user who would want to manipulate these pictures directly for any purpose. +
 **Alternative 2 (current choice):** Save the pictures outside of the `.jar` file, inside the `data/` folder. +
-**Pros:** Users will be able to directly access downloaded pictures and manipulate them as they please.+
+**Pros:** Users will be able to directly access downloaded pictures and manipulate them as they please. +
 **Cons:** If users are not careful (e.g. permanently.delete a picture by mistake), the contact's avatar may get
 overrided by the default placeholder.
 
