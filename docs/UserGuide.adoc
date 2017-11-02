@@ -1,7 +1,7 @@
 = K.N.S. AddressBook - User Guide
 :toc:
 :toc-title:
-:toc-placement: preamble
+:toc-placement!: preamble
 :sectnums:
 :imagesDir: images
 :stylesDir: stylesheets
@@ -23,6 +23,9 @@ Most of the interactions with the application are done through an in-built Comma
 you do add, edit and remove contacts quickly with only the use of a keyboard.
 
 This user guide will help you get started on using our application, and show you how you can make use of it.
+
+== Table of Contents
+toc::[]
 
 == Key Features
 
@@ -443,6 +446,28 @@ e.g.`select 2`
 * *Undo* : `undo`
 * *Redo* : `redo`
 
+== Command Cheatsheet
+[format="csv"]
+[options="header",cols="1s,^4m,10m,1m"]
+|===========================
+Action,Command | Alias,Format,Example
+Add,"add | a",add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]... ,"add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/16/08/1995 t/friend t/colleague"
+
+
+Clear,"clear | c", clear, clear
+Delete, "delete | d", delete INDEX, delete 3
+Edit, "edit | e", edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]..., edit 2 n/James Lee
+Add Tag, "addtag | at", addtag INDEX TAG, addtag 2 friends
+Delete Tag, "deletag | dt", deletetag INDEX TAG, deletetag 2 friends
+Find, "find | f", find [PREFIX] KEYWORD [MORE_KEYWORDS], find n/ James Jake
+List, "list | l", list, list
+View Help, help, help, help
+Select, "select | s", select INDEX, select 2
+Sort, sort   , sort [PREFIX] [ORDER], sort n/ asc
+History, history | h, history, history
+Undo, undo | u, undo, u
+Redo, redo | r, redo, r
+|===========================
 == F.A.Q.
 
 *Q*: How do I transfer my data to another Computer? +
