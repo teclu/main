@@ -429,12 +429,12 @@ things. +
 // tag::personpanel[]
 === Person Panel
 
-The PersonPanel replaces the previous BrowserPanel, and is a crucial part of MainWindow.
+The PersonPanel replaces the previous BrowserPanel, and is a crucial part of `MainWindow`.
 
 ==== Java Implementation
 
-By taking advantage of the java.util.logging package, PersonPanel is able to display all of the details of a contact
-(_name, address, email, contact number, birthday, tags_) selected in PersonCard. This implementation can be seen from
+By taking advantage of the `java.util.logging package`, PersonPanel is able to display all of the details of a contact
+(_name, address, email, contact number, birthday, tags_) selected in `PersonCard`. This implementation can be seen from
 the following 2 code snippets:
 
 [source,java]
@@ -450,7 +450,7 @@ private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedE
 }
 ----
 
-**Code Snippet 1 (handlePersonPanelSelectionChangedEvent()):** Whenever a contact is selected, an event will be
+**Code Snippet 1 (`handlePersonPanelSelectionChangedEvent()`):** Whenever a contact is selected, an event will be
 triggered. The method will respond to the event by obtaining a PersonCard variable and ReadOnlyPerson variable (_which contains all the details of the contact_), and pass it into loadPersonPage().
 
 [source,java]
@@ -470,7 +470,7 @@ private void loadPersonPage() {
 }
 ----
 
-**Code Snippet 2 (loadPersonPage()):** The ReadOnlyPerson variable passed into loadPersonPage can then be used to
+**Code Snippet 2 (`loadPersonPage()`):** The ReadOnlyPerson variable passed into loadPersonPage can then be used to
 extract the contact's details for display; the UI will be updated accordingly to reflect these changes.
 
 [NOTE]
@@ -528,6 +528,123 @@ easily taken from Google's Material Design. +
 **Pros:** Even more quick to implement since it only involves CSS changes. +
 **Cons:** Bad idea design-wise because it violates the link:#tradic-colour-scheme[Triadic Colour Scheme]. It could make the application look less professional and unattractive.
 // end::personpanel[]
+
+//tag::avatar[]
+=== Avatar
+
+The Avatar class is a new contact detail that displays a display picture obtained
+via a valid Uniform Resource Locator (URL) or a local directory path in your computer.
+If no display picture is assigned to the contact, then creates a default placeholder image.
+In order for the user to upload an avatar for the contact, he/she can use the Add command or Graphical
+User Interface (GUI) upload (`AvatarWindow`) to do so.
+
+==== Java Implementation: `Avatar`
+
+The display and storage of a display picture can be seen in the following code snippets:
+
+[source,java]
+----
+public Avatar() {
+    AvatarUtil placeholder = new AvatarUtil();
+    image = placeholder.getPlaceholderAvatar();
+    value = "";
+}
+----
+**Code Snippet 1 (`Avatar()`):** The default constructor for Avatar is used when no display
+picture is assigned to a newly added contact. The default placeholder avatar is generated
+with `AvatarUtil`.
+
+[source,java]
+----
+public Avatar(String url) throws IllegalValueException {
+    try {
+        if (url.isEmpty()) {
+            AvatarUtil placeholder = new AvatarUtil();
+            image = placeholder.getPlaceholderAvatar();
+            value = "";
+        } else {
+            File defaultAvatar = new File(url);
+
+            if (isValidUrl(url)) {
+                this.url = new URL(url);
+            } else {
+                this.url = defaultAvatar.toURI().toURL();
+            }
+            this.image = ImageIO.read(this.url);
+			// Code Continued in Snippet 2B
+----
+**Code Snippet 2A (`Avatar(String url)`):** If a URL or local directory path string is provided,
+then the parameterized constructor will check if the provided string is valid or not. If the string
+is valid (i.e. non-empty and existing), then it will parse the URL and read the image given.
+
+[source,java]
+----
+            if (!isSavedInData(url)) {
+                String outputName = "/data/" + this.url.hashCode() + ".png";
+                File outputImage = new File(System.getProperty("user.dir") + outputName);
+
+                File parentDirectory = outputImage.getParentFile();
+                if (!parentDirectory.exists()) {
+                    parentDirectory.mkdirs();
+                }
+
+                ImageIO.write(this.image, "png", outputImage);
+                this.url = outputImage.toURI().toURL();
+            }
+            this.value = this.url.toString();
+        }
+    } catch (Exception e) {
+        throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
+    }
+}
+----
+**Code Snippet 2B (`Avatar(String url)`):** If the image given has not yet been stored in the data
+directory, it will generate a new file and save it.
+
+==== Dependant Class: `AvatarUtil`
+
+AvatarUtil generates a default placeholder image if the contact is not given a display picture. It relies
+on the `java.awt` library to generate a picture drawn by the methods found in `Graphics2D` and `Color`.
+
+[NOTE]
+You can find the full implementation of `AvatarUtil` in the folder `java/seedu/address/commons/util`.
+
+==== Dependant Class: `AvatarWindow`
+
+AvatarWindow is a UI component and is triggered when the current avatar of a contact is clicked on. A window
+will appear for the user to load and save a picture from the computer. If a valid picture is loaded and saved,
+it will create an Edit command and raise a new event; this event is the same as typing an actual valid edit command,
+and can also be undone or redone as per normal.
+
+[NOTE]
+You can find the full implementation of `AvatarWindow` in the folder `java/seedu/address/ui`.
+
+==== Design Considerations
+
+**Aspect:** Additional ways of changing `Avatar`. +
+**Alternative 1:** Only allow user to use the Add and Edit commands to change the Avatar of the contact. +
+**Pros:** No time is spent to make new ways of changing Avatar +
+**Cons:** May be stifling for users who want to have a GUI option. +
+**Alternative 2 (current choice):** Create a GUI alternative for users to change the Avatar of the contact. +
+**Pros:** Makes the application more user friendly; easier for users to point and click instead of copying the
+picture's directory path, which may take a longer time.+
+**Cons:** Some classes (e.g. _PersonCard_, _PersonPanel_, etc.) have to be modified in order to implement this option.
+
+---
+
+**Aspect:** Saving of pictures. +
+**Alternative 1:** Save the pictures within the `.jar` file. +
+**Pros:** Users will not be able to modify the pictures downloaded; lesser chances of error exceptions occuring due
+to missing files.+
+**Cons:** May be inconvenient for a user who would want to manipulate these pictures directly for any purpose +
+**Alternative 2 (current choice):** Save the pictures outside of the `.jar` file, inside the `data/` folder. +
+**Pros:** Users will be able to directly access downloaded pictures and manipulate them as they please.+
+**Cons:** If users are not careful (e.g. permanently.delete a picture by mistake), the contact's avatar may get
+overrided by the default placeholder.
+
+---
+
+// end::Avatar[]
 
 //tag::partialfind[]
 === Partial Find
@@ -592,7 +709,6 @@ command. +
 **Pros:** More flexible and powerful. +
 **Cons:** Requires more complicated syntax which can be confusing to new users, most use cases are already covered by
 partial matching.
-
 
 ---
 
