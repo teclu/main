@@ -44,6 +44,12 @@ As of now, the dark theme is the default colour theme for the application. Plann
 * `For v1.4` 5 Preset Themes: Light, Dark (current default theme), Red, Blue and Green.
 * `For v1.5` Detailed instructions for advanced users to make their own themes.
 
+=== Find by All Field
+
+You can find your contact by using any field as the search query. For example, you can type in a phone number as the search query, and the contact in your address book who has that phone number will appear in the search result.
+
+Find by all field supports find by name, phone number, email, address, birthday, and tags.
+
 === Saving the data
 
 The Address Book's data is saved in the hard disk automatically after any executable command that changes the data. +
