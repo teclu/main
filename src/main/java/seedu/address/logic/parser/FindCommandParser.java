@@ -39,7 +39,7 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         String[] keywords = trimmedArgs.split("\\s+");
         String toSearch = keywords[0];
-        if (isSearchablePrefix(toSearch) || startsWithSearchablePrefix(toSearch)) {
+        if (startsWithSearchablePrefix(toSearch)) {
             String extractedKeyword = toSearch.substring(2, toSearch.length());
             toSearch = toSearch.substring(0, 2);
             if (!extractedKeyword.isEmpty()) {
@@ -77,7 +77,7 @@ public class FindCommandParser implements Parser<FindCommand> {
      * Checks if the given string prefix stars with a searchable prefix (n/, t/, p/, e/, a/, or b/).
      */
     public boolean startsWithSearchablePrefix(String prefixString) {
-        if (prefixString.length() <= 2) {
+        if (prefixString.length() < 2) {
             return false;
         }
         String prefix = prefixString.substring(0, 2);
