@@ -448,25 +448,25 @@ e.g.`select 2`
 
 == Command Cheatsheet
 [format="csv"]
-[options="header",cols="^4m,1m,1m"]
+[options="header",cols="1s,^4m,10m,1m"]
 |===========================
-Command | Alias,Format,Example
-"add | a",add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]... ,"add n/James Ho "
+Action,Command | Alias,Format,Example
+Add,"add | a",a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]... ,"add n/James Ho"
 
 
-"clear | c", clear, clear
- "delete | d", delete INDEX, delete 3
-"edit | e", INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]..., edit 2 n/James Lee
- "addtag | at", addtag INDEX TAG, addtag 2 friends
- "deletag | dt", deletetag INDEX TAG, deletetag 2 friends
- "find | f", find [PREFIX] KEYWORD [MORE_KEYWORDS], find n/ James Jake
- "list | l", list, list
- help, help, help
- "select | s", select INDEX, select 2
- sort   , sort [PREFIX] [ORDER], sort n/ asc
- history | h, history, history
- undo | u, undo, u
- redo | r, redo, r
+Clear,"clear | c", clear, clear
+Delete, "delete | d", delete INDEX, delete 3
+Edit, "edit | e", e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]..., edit 2 n/James Lee
+Add Tag, "addtag | at", at INDEX TAG, addtag 2 friends
+Delete Tag, "deletag | dt", dt INDEX TAG, deletetag 2 friends
+Find, "find | f", find [PREFIX] KEYWORD [MORE_KEYWORDS], find n/ James Jake
+List, "list | l", list, list
+View Help, help, help, help
+Select, "select | s", select INDEX, select 2
+Sort, sort   , sort [PREFIX] [ORDER], sort n/ asc
+History, history | h, history, history
+Undo, undo | u, undo, u
+Redo, redo | r, redo, r
 |===========================
 == F.A.Q.
 
