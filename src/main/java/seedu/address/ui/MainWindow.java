@@ -34,12 +34,11 @@ public class MainWindow extends UiPart<Region> {
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 768;
     private static final int MIN_WIDTH = 1366;
-
+    private static String currentTheme;
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private Stage primaryStage;
     private Logic logic;
-    private String currentTheme;
 
     // Independent Ui parts residing in this Ui container
     private PersonPanel personPanel;
@@ -208,6 +207,13 @@ public class MainWindow extends UiPart<Region> {
     GuiSettings getCurrentGuiSetting() {
         return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
                 (int) primaryStage.getX(), (int) primaryStage.getY());
+    }
+
+    /**
+     * Returns the current theme.
+     */
+    public static String getCurrentTheme() {
+        return currentTheme;
     }
 
     /**

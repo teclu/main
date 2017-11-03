@@ -36,4 +36,19 @@ public class MainMenuHandle extends NodeHandle<Node> {
     private void clickOnMenuItemsSequentially(String... menuItems) {
         Arrays.stream(menuItems).forEach(guiRobot::clickOn);
     }
+
+    /**
+     * Changes to the dark theme using the menu bar in {@code MainWindow}.
+     */
+    public void changeToDarkThemeUsingMenu() {
+        clickOnMenuItemsSequentially("Theme", "Dark");
+    }
+
+    /**
+     * Changes to the light theme using the menu bar in {@code MainWindow}.
+     */
+    public void changeToLightThemeUsingMenu() {
+        clickOnMenuItemsSequentially("Theme", "Light");
+    }
+
 }
