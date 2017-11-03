@@ -51,6 +51,7 @@ public abstract class AddressBookGuiTest {
     public void setup() throws Exception {
         FxToolkit.setupStage((stage) -> {
             this.stage = stage;
+            this.stage.setFullScreen(true);
         });
         FxToolkit.setupApplication(() -> new TestApp(this::getInitialData, getDataFileLocation()));
         FxToolkit.showStage();
