@@ -37,7 +37,13 @@ public class FindCommandParserTest {
 
         // use of prefix to indicate the property to match (name)
         assertParseSuccess(parser, "n/ Alice Bob", expectedFindCommand);
-        assertParseSuccess(parser, "n/Alice Bob", expectedFindCommand);
+        assertParseSuccess(parser, "n/Alice Bob", expectedFindCommand); //no space between prefix & keyword
+
+        expectedFindCommand = new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList("a")));
+
+        // a one-character keyword is correctly parsed as searching the name field
+        assertParseSuccess(parser, "a", expectedFindCommand);
+
     }
 
     //@@author k-l-a
