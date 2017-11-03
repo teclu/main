@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
@@ -54,8 +55,10 @@ public class AvatarWindow extends UiPart<Region> {
         //Null passed as the parent stage to make it non-modal.
         dialogStage = createDialogStage(TITLE, null, scene);
         dialogStage.setResizable(false);
+        dialogStage.setAlwaysOnTop(true);
         dialogStage.setHeight(325);
         dialogStage.setWidth(250);
+        dialogStage.initModality(Modality.APPLICATION_MODAL);
         FxViewUtil.setStageIcon(dialogStage, ICON);
 
         avatarW.setImage(SwingFXUtils.toFXImage(selectedPersonCard.person.getAvatar().getImage(), null));

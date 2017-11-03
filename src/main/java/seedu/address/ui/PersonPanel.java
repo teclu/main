@@ -23,8 +23,10 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class PersonPanel extends UiPart<Region> {
     private static final String FXML = "PersonPanel.fxml";
+
     private final Logic logic;
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+
     private PersonCard selectedPersonCard;
     private ReadOnlyPerson selectedPerson;
     private boolean isBlankPage = true;
