@@ -26,7 +26,7 @@ public class FindCommandParserTest {
     }
 
     @Test
-    public void parse_validArgs_returnsFindCommand() {
+    public void parse_validNameArgs_returnsFindCommand() {
         // no leading and trailing whitespaces
         FindCommand expectedFindCommand =
                 new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
@@ -37,13 +37,16 @@ public class FindCommandParserTest {
 
         // use of prefix to indicate the property to match (name)
         assertParseSuccess(parser, "n/ Alice Bob", expectedFindCommand);
+        assertParseSuccess(parser, "n/Alice Bob", expectedFindCommand);
     }
 
+    //@@author k-l-a
     @Test
     public void parse_validTagsArgs_returnsFindCommand() {
         FindCommand expectedFindCommandForTags =
                 new FindCommand(new TagListContainsKeywordsPredicate(Arrays.asList("Friends", "Family")));
         assertParseSuccess(parser, "t/ Friends Family", expectedFindCommandForTags);
+        assertParseSuccess(parser, "t/Friends Family", expectedFindCommandForTags); //no space between prefix & keyword
     }
 
     //@@author nadhira15
