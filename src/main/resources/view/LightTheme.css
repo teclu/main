@@ -48,14 +48,13 @@
 }
 
 #mainWindow .split-pane {
-    -fx-background-color: transparent;
+    -fx-background-color: #f7f5f4;
     -fx-background-image: url("../images/LightThemeBackground.png") no-repeat center center;
 }
 
 #mainWindow .VBox {
     -fx-border-width: 5px;
 }
-
 /* End: Default Settings */
 
 /* Start: Menu Bar */
@@ -95,6 +94,10 @@
     -fx-background-color: #f7f5f4;
 }
 
+#personListView, #personListPanelPlaceholder {
+    -fx-background-color: #f7f5f4;
+}
+
 #cardPane #name, #id {
     -fx-font-size: 18pt;
     -fx-text-fill: #333333;
@@ -110,6 +113,7 @@
 }
 
 .list-cell {
+    -fx-background-color: #f7f5f4;
     -fx-label-padding: 0 0 0 0;
     -fx-graphic-text-gap: 0;
     -fx-padding: 0 0 0 0;
@@ -128,6 +132,7 @@
     -fx-border-color: #a9c1e8;
     -fx-border-width: 1px;
 }
+
 /* End: Person List Card */
 
 /* Start: Person Panel */
