@@ -26,11 +26,14 @@ public class AvatarUtil {
         Graphics2D g2d = placeholder.createGraphics();
         g2d.setColor(lightGray); // Backdrop
         g2d.fillRect(1, 1, 198, 198);
+
         g2d.setColor(gray); // Body
-        g2d.fillOval(25, 135, 155, 150);
-        g2d.setColor(darkGray); // Head
+        g2d.fillOval(25, 135, 155, 50);
+        g2d.fillRect(25, 163, 155, 50);
+
+        g2d.setColor(gray); // Head
         g2d.fillOval(55, 35, 95, 95);
-        g2d.fillOval(55, 35, 95, 120);
+
         g2d.setColor(Color.white); // Border Frame
         g2d.drawRect(0, 0, 199, 199);
         g2d.dispose();
