@@ -22,7 +22,7 @@ public class PhoneContainsKeywordsPredicate extends FieldContainsKeywordsPredica
     @Override
     public boolean test(ReadOnlyPerson person) {
         return keywords.stream().anyMatch(keyword -> StringUtil
-                .containsWordIgnoreCase(person.getPhone().value, keyword));
+                .containsWordPartialIgnoreCase(person.getPhone().value, keyword));
     }
 
     @Override

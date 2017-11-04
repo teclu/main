@@ -15,6 +15,8 @@ import seedu.address.commons.util.AvatarUtil;
  */
 public class Avatar {
     public static final String MESSAGE_AVATAR_CONSTRAINTS = "Avatar should be a valid online URL or local path.";
+    public static final String DEFAULT_VALUE = "No Avatar";
+
     public final String value;
     private URL url;
     private BufferedImage image;
@@ -25,7 +27,7 @@ public class Avatar {
     public Avatar() throws IllegalValueException {
         AvatarUtil placeholder = new AvatarUtil();
         image = placeholder.getPlaceholderAvatar();
-        value = "";
+        value = DEFAULT_VALUE;
     }
 
     /**
@@ -35,10 +37,10 @@ public class Avatar {
      */
     public Avatar(String url) throws IllegalValueException {
         try {
-            if (url.isEmpty()) {
+            if (url.isEmpty() || DEFAULT_VALUE.equals(url)) {
                 AvatarUtil placeholder = new AvatarUtil();
                 image = placeholder.getPlaceholderAvatar();
-                value = "";
+                value = DEFAULT_VALUE;
             } else {
                 File defaultAvatar = new File(url);
 
