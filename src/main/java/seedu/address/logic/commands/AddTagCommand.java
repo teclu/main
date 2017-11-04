@@ -30,6 +30,7 @@ import seedu.address.model.tag.Tag;
 public class AddTagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "addtag";
+    public static final String COMMAND_ALIAS = "at";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a tag to a person in the address book. "
             + "Parameters: INDEX (must be a positive integer) "

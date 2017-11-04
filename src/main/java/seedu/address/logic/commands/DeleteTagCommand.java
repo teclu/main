@@ -29,6 +29,7 @@ import seedu.address.model.tag.Tag;
 public class DeleteTagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "deletetag";
+    public static final String COMMAND_ALIAS = "dt";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes a person's tag in the address book. "
             + "Parameters: INDEX (must be a positive integer) "

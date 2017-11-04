@@ -185,4 +185,29 @@ public class AddCommandParserTest {
         assertParseFailure(parser, AddCommand.COMMAND_WORD + INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + INVALID_ADDRESS_DESC + BIRTHDAY_DESC_BOB, Name.MESSAGE_NAME_CONSTRAINTS);
     }
+
+    //@@author nadhira15
+    @Test
+    public void parse_commandAlias() {
+        Person expectedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+                .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withBirthday(VALID_BIRTHDAY_BOB)
+                .withAvatar(VALID_AVATAR_BOB).withTags(VALID_TAG_FRIEND).build();
+
+        // complete input, success
+        assertParseSuccess(parser, AddCommand.COMMAND_ALIAS + NAME_DESC_BOB + PHONE_DESC_BOB
+                        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + AVATAR_DESC_BOB + TAG_DESC_FRIEND,
+                new AddCommand(expectedPerson));
+
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
+
+        // missing name prefix, failure
+        assertParseFailure(parser, AddCommand.COMMAND_ALIAS + VALID_NAME_BOB + PHONE_DESC_BOB
+                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + AVATAR_DESC_BOB, expectedMessage);
+
+        // invalid name, failure
+        assertParseFailure(parser, AddCommand.COMMAND_ALIAS + INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                        + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + AVATAR_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                Name.MESSAGE_NAME_CONSTRAINTS);
+    }
+    //@@author
 }
