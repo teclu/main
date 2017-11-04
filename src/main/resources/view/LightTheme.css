@@ -194,22 +194,6 @@
     -fx-font-family: "Courier New";
     -fx-font-size: 14pt;
 }
-
-.text-area {
-    -fx-background-color: #444444;
-}
-
-.text-area .scroll-pane {
-    -fx-background-color: transparent;
-}
-
-.text-area .scroll-pane .viewport{
-    -fx-background-color: transparent;
-}
-
-.text-area .scroll-pane .content{
-    -fx-background-color: transparent;
-}
 /* End: Command Box */
 
 /* Start: Status Bar */
