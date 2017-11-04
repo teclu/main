@@ -201,6 +201,30 @@ public class MainWindow extends UiPart<Region> {
         mainWindow.getStylesheets().add(currentTheme);
     }
 
+    @FXML
+    private void setToRedTheme() {
+        mainWindow.getStylesheets().remove(currentTheme);
+        prefs.setAddressBookTheme("RedTheme.css");
+        currentTheme = "view/" + prefs.getAddressBookTheme();
+        mainWindow.getStylesheets().add(currentTheme);
+    }
+
+    @FXML
+    private void setToBlueTheme() {
+        mainWindow.getStylesheets().remove(currentTheme);
+        prefs.setAddressBookTheme("BlueTheme.css");
+        currentTheme = "view/" + prefs.getAddressBookTheme();
+        mainWindow.getStylesheets().add(currentTheme);
+    }
+
+    @FXML
+    private void setToGreenTheme() {
+        mainWindow.getStylesheets().remove(currentTheme);
+        prefs.setAddressBookTheme("GreenTheme.css");
+        currentTheme = "view/" + prefs.getAddressBookTheme();
+        mainWindow.getStylesheets().add(currentTheme);
+    }
+
     /**
      * Returns the current size and the position of the main Window.
      */
