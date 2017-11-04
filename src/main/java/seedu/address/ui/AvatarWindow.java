@@ -32,7 +32,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class AvatarWindow extends UiPart<Region> {
 
     private static final Logger logger = LogsCenter.getLogger(AvatarWindow.class);
-    private static final String ICON = "/images/avatarPlaceholder.png";
+    private static final String ICON = "/images/AvatarWindowIcon.png";
     private static final String FXML = "AvatarWindow.fxml";
     private static final String TITLE = "Avatar Options";
 

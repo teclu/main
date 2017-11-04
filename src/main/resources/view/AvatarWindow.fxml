@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 
 <!-- @@author teclu -->
-<StackPane fx:id="avatarWindowRoot" prefHeight="286.0" prefWidth="250.0" style="-fx-background-color: #eeeeee;" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="avatarWindowRoot" prefHeight="286.0" prefWidth="250.0" style="-fx-background-color: #eeeeee;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TitledPane animated="false" prefHeight="54.0" prefWidth="250.0" text="Options" StackPane.alignment="BOTTOM_CENTER">
         <content>

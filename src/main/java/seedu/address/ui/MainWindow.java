@@ -30,7 +30,7 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/AddressBookIcon.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 768;
     private static final int MIN_WIDTH = 1366;
@@ -161,7 +161,7 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Sets the given image as the icon of the main window.
-     * @param iconSource e.g. {@code "/images/help_icon.png"}
+     * @param iconSource e.g. {@code "/images/HelpIcon.png"}
      */
     private void setIcon(String iconSource) {
         FxViewUtil.setStageIcon(primaryStage, iconSource);

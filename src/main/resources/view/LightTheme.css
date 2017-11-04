@@ -160,6 +160,26 @@
 
 #personPanel #address, #personPanel #email, #personPanel #phone, #personPanel #birthday {
     -fx-font-size: 18pt;
+    -fx-label-padding: 0 0 0 42;
+    -fx-background-position: 10 5;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 32px;
+}
+
+#personPanel #address {
+    -fx-background-image: url("../images/AddressIcon.png");
+}
+
+#personPanel #email {
+    -fx-background-image: url("../images/EmailIcon.png");
+}
+
+#personPanel #phone {
+    -fx-background-image: url("../images/PhoneIcon.png");
+}
+
+#personPanel #birthday {
+    -fx-background-image: url("../images/BirthdayIcon.png");
 }
 /* End: Person Panel */
 
@@ -173,6 +193,22 @@
 .text-field {
     -fx-font-family: "Courier New";
     -fx-font-size: 14pt;
+}
+
+.text-area {
+    -fx-background-color: #444444;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
 }
 /* End: Command Box */
 
