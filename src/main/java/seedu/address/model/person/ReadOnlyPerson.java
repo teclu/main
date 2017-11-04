@@ -57,6 +57,8 @@ public interface ReadOnlyPerson {
                 .append(getAddress())
                 .append(" | Birthday: ")
                 .append(getBirthday())
+                .append(" | Avatar: ")
+                .append(getAvatar())
                 .append(" | Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
