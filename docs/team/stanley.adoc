@@ -77,9 +77,13 @@ include::../DeveloperGuide.adoc[tag=avatar]
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Proposed: Birthday Countdown & Reminders
 
-{Explain similar to the Undo/Redo feature above.}
+==== Justification
+
+With the inclusion of a birthday field (_implemented by Nadhira_), it would be useful to the user if the AddressBook can inform
+him/her of a contact's upcoming birthday. To a freelancer, this can be very important because he/she would want to make themselves
+appear professional and thoughtful by wishing their clients happy birthday.
 
 === Other Contributions
 
