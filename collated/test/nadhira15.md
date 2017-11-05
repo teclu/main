@@ -304,24 +304,28 @@ public class DeleteTagCommandTest {
 ```
 ###### \java\seedu\address\logic\parser\AddCommandParserTest.java
 ``` java
-        // multiple birthdays - last birthday accepted
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                        + ADDRESS_DESC_BOB + BIRTHDAY_DESC_AMY + BIRTHDAY_DESC_BOB + AVATAR_DESC_BOB + TAG_DESC_FRIEND,
+    @Test
+    public void parse_commandAlias() {
+        Person expectedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+                .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withBirthday(VALID_BIRTHDAY_BOB)
+                .withAvatar(VALID_AVATAR_BOB).withTags(VALID_TAG_FRIEND).build();
+
+        // complete input, success
+        assertParseSuccess(parser, AddCommand.COMMAND_ALIAS + NAME_DESC_BOB + PHONE_DESC_BOB
+                        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + AVATAR_DESC_BOB + TAG_DESC_FRIEND,
                 new AddCommand(expectedPerson));
-```
-###### \java\seedu\address\logic\parser\AddCommandParserTest.java
-``` java
-        // missing birthday prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + VALID_BIRTHDAY_BOB + AVATAR_DESC_BOB, expectedMessage);
-```
-###### \java\seedu\address\logic\parser\AddCommandParserTest.java
-``` java
-        // invalid birthday
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                        + ADDRESS_DESC_BOB + INVALID_BIRTHDAY_DESC + AVATAR_DESC_BOB
-                        + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
-                Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS);
+
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
+
+        // missing name prefix, failure
+        assertParseFailure(parser, AddCommand.COMMAND_ALIAS + VALID_NAME_BOB + PHONE_DESC_BOB
+                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + AVATAR_DESC_BOB, expectedMessage);
+
+        // invalid name, failure
+        assertParseFailure(parser, AddCommand.COMMAND_ALIAS + INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB
+                        + ADDRESS_DESC_BOB + BIRTHDAY_DESC_BOB + AVATAR_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
+                Name.MESSAGE_NAME_CONSTRAINTS);
+    }
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
@@ -543,21 +547,4 @@ public class BirthdayTest {
         }
         return this;
     }
-```
-###### \java\systemtests\AddCommandSystemTest.java
-``` java
-        /* Case: add a person with all fields same as another person in the address book except birthday -> added */
-        toAdd = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY)
-                .withAddress(VALID_ADDRESS_AMY).withBirthday(VALID_BIRTHDAY_BOB).withAvatar(VALID_AVATAR_AMY)
-                .withTags(VALID_TAG_FRIEND).build();
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + BIRTHDAY_DESC_BOB + AVATAR_DESC_AMY + TAG_DESC_FRIEND;
-        assertCommandSuccess(command, toAdd);
-```
-###### \java\systemtests\AddCommandSystemTest.java
-``` java
-        /* Case: missing birthday -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                + ADDRESS_DESC_AMY + AVATAR_DESC_AMY;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 ```
