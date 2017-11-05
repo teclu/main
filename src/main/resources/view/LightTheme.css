@@ -3,21 +3,17 @@
 /* Start: Default Settings */
 .root {
     -fx-font-family: "Calibri Light";
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #333333;
     -fx-font-size: 14pt;
 }
 
 .background {
-    -fx-background-color: #333333;
-    background-color: #333333; /* Used in the default.html file */
-}
-
-.scroll-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: #f7f5f4;
+    background-color: #ffffff; /* Used in the default.html file */
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: #515151;
+    -fx-background-color: #a5a5a5;
 }
 
 .scroll-bar .increment-button, .scroll-bar .decrement-button {
@@ -52,33 +48,32 @@
 }
 
 #mainWindow .split-pane {
-    -fx-background-color: #333333;
-    -fx-background-image: url("../images/DarkThemeBackground.png") no-repeat center center;
+    -fx-background-color: #f7f5f4;
+    -fx-background-image: url("../images/LightThemeBackground.png") no-repeat center center;
 }
 
 #mainWindow .VBox {
     -fx-border-width: 5px;
 }
-
 /* End: Default Settings */
 
 /* Start: Menu Bar */
 .menu-bar {
-    -fx-background-color: #43484f;
-    -fx-border-color: #35393f;
+    -fx-background-color: #e0e0e0;
+    -fx-border-color: #d0d0d0;
     -fx-border-width: 0 0 1 0;
 }
 
 .menu-bar .menu {
-    -fx-background-color: #43484f;
+    -fx-background-color: #e0e0e0;
 }
 
 .menu-bar .menu:hover {
-    -fx-background-color: #35393f;
+    -fx-background-color: #d0d0d0;
 }
 
 .menu-bar .menu .label {
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #333333;
 }
 
 .menu-bar .menu-item {
@@ -90,22 +85,22 @@
 }
 
 .menu-bar .menu-item .label {
-    -fx-text-fill: #000000;
+    -fx-text-fill: #333333;
 }
 /* End: Menu Bar */
 
 /* Start: Person List Card */
 #personList {
-    -fx-background-color: #333333;
+    -fx-background-color: #f7f5f4;
 }
 
-#personListView {
-    -fx-background-color: transparent #383838 transparent #383838;
+#personListView, #personListPanelPlaceholder {
+    -fx-background-color: #f7f5f4;
 }
 
 #cardPane #name, #id {
     -fx-font-size: 18pt;
-    -fx-text-fill: #EEEEEE;
+    -fx-text-fill: #333333;
 }
 
 #cardPane #tags .label {
@@ -118,23 +113,23 @@
 }
 
 .list-cell {
-    -fx-background-color: #333333;
+    -fx-background-color: #f7f5f4;
     -fx-label-padding: 0 0 0 0;
     -fx-graphic-text-gap: 0;
     -fx-padding: 0 0 0 0;
 }
 
 .list-cell:filled:even {
-    -fx-background-color: #3c3e3f;
+    -fx-background-color: #e2e2e2;
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: #515658;
+    -fx-background-color: #f2f2f2;
 }
 
 .list-cell:filled:selected {
-    -fx-background-color: #424d5f;
-    -fx-border-color: #3e7b91;
+    -fx-background-color: #c4d4ed;
+    -fx-border-color: #a9c1e8;
     -fx-border-width: 1px;
 }
 
@@ -146,27 +141,21 @@
 }
 
 #primaryDetails {
-    -fx-background-color: #3c3e3f;
+    -fx-background-color: #e2e2e2;
 }
 
 #secondaryDetails {
     -fx-font-family: "Calibri Light";
-    -fx-background-color: #515658;
+    -fx-background-color: #f2f2f2;
 }
 
 #personPanel #name {
-    -fx-text-fill: #eeeeee;
     -fx-font-size: 42pt;
 }
 
 #personPanel #tags .label {
     -fx-font-family: "Calibri";
     -fx-font-size: 20pt;
-}
-
-#personPanel #address, #personPanel #email, #personPanel #phone, #personPanel #birthday {
-    -fx-text-fill: #eeeeee;
-    -fx-font-size: 18pt;
 }
 
 #personPanel #address, #personPanel #email, #personPanel #phone, #personPanel #birthday {
@@ -197,51 +186,23 @@
 /* Start: Command Box */
 .result-display {
     -fx-font-family: "Courier New";
-    -fx-background-color: transparent;
     -fx-font-size: 14pt;
-    -fx-text-fill: #eeeeee;
+    -fx-text-fill: #000000;
 }
 
 .text-field {
-    -fx-background-color: #444444;
     -fx-font-family: "Courier New";
     -fx-font-size: 14pt;
-}
-
-.text-area {
-    -fx-background-color: #444444;
-}
-
-.text-area .scroll-pane {
-    -fx-background-color: transparent;
-}
-
-.text-area .scroll-pane .viewport{
-    -fx-background-color: transparent;
-}
-
-.text-area .scroll-pane .content{
-    -fx-background-color: transparent;
-}
-
-#commandTextField {
-    -fx-text-fill: #eeeeee;
-}
-
-.pane-with-border {
-    -fx-background-color: #333333;
-    -fx-border-color: #333333;
-    -fx-border-top-width: 1px;
 }
 /* End: Command Box */
 
 /* Start: Status Bar */
 .status-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: #e0e0e0;
 }
 
 .status-bar .label {
     -fx-font-size: 12pt;
-    -fx-text-fill: #EEEEEE;
+    -fx-text-fill: #333333;
 }
 /* End: Status Bar */

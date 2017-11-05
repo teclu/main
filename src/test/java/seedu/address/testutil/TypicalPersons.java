@@ -31,15 +31,12 @@ public class TypicalPersons {
     public static final ReadOnlyPerson ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withPhone("85355255").withBirthday("01/01/1991")
-            .withAvatar()
-            .withTags("friends").build();
+            .withAvatar().withTags("friends").build();
     public static final ReadOnlyPerson BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25").withEmail("johnd@example.com").withPhone("98765432")
-            .withBirthday("01/01/1991").withTags("owesMoney", "friends")
-            .withAvatar().build();
+            .withBirthday("01/01/1991").withTags("owesMoney", "friends").withAvatar().build();
     public static final ReadOnlyPerson CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
-            .withEmail("heinz@example.com").withAddress("wall street").withBirthday("01/01/1991")
-            .withAvatar().build();
+            .withEmail("heinz@example.com").withAddress("wall street").withBirthday("01/01/1991").withAvatar().build();
     public static final ReadOnlyPerson DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
             .withEmail("cornelia@example.com").withAddress("10th street").withBirthday("01/01/1991")
             .withAvatar().build();
