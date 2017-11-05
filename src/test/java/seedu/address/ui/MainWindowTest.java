@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import guitests.AddressBookGuiTest;
 
+//@@author teclu
 public class MainWindowTest extends AddressBookGuiTest {
 
     @Test

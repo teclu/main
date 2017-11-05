@@ -7,6 +7,7 @@
 public class AddTagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "addtag";
+    public static final String COMMAND_ALIAS = "at";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a tag to a person in the address book. "
             + "Parameters: INDEX (must be a positive integer) "
@@ -135,6 +136,7 @@ public class AddTagCommand extends UndoableCommand {
 public class DeleteTagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "deletetag";
+    public static final String COMMAND_ALIAS = "dt";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes a person's tag in the address book. "
             + "Parameters: INDEX (must be a positive integer) "
@@ -245,7 +247,9 @@ public class DeleteTagCommand extends UndoableCommand {
 ###### \java\seedu\address\logic\commands\EditCommand.java
 ``` java
         public void setBirthday(Birthday birthday) {
-            this.birthday = birthday;
+            if (birthday.isNotDefault()) {
+                this.birthday = birthday;
+            }
         }
 
         public Optional<Birthday> getBirthday() {
@@ -255,9 +259,11 @@ public class DeleteTagCommand extends UndoableCommand {
 ###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
         case AddTagCommand.COMMAND_WORD:
+        case AddTagCommand.COMMAND_ALIAS:
             return new AddTagCommandParser().parse(arguments);
 
         case DeleteTagCommand.COMMAND_WORD:
+        case DeleteTagCommand.COMMAND_ALIAS:
             return new DeleteTagCommandParser().parse(arguments);
 ```
 ###### \java\seedu\address\logic\parser\AddTagCommandParser.java
@@ -390,17 +396,6 @@ public class DeleteTagCommandParser implements Parser<DeleteTagCommand> {
 
 }
 ```
-###### \java\seedu\address\logic\parser\FindCommandParser.java
-``` java
-        } else if (toSearch.equals(PREFIX_PHONE.getPrefix())) {
-            return new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList(keywords)));
-        } else if (toSearch.equals(PREFIX_EMAIL.getPrefix())) {
-            return new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList(keywords)));
-        } else if (toSearch.equals(PREFIX_ADDRESS.getPrefix())) {
-            return new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList(keywords)));
-        } else if (toSearch.equals(PREFIX_BIRTHDAY.getPrefix())) {
-            return new FindCommand(new BirthdayContainsKeywordsPredicate(Arrays.asList(keywords)));
-```
 ###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
@@ -453,11 +448,12 @@ public class AddressContainsKeywordsPredicate extends FieldContainsKeywordsPredi
 
 public class Birthday {
 
+    public static final String DEFAULT_VALUE = "No Birthday";
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
             "Birthday should contain 8 digit number, first 2 digit for day (01-30), second 2 digit for month (01-12),"
                     + " and last 4 digit for year, separated by slash (/)";
-    public static final String BIRTHDAY_VALIDATION_REGEX = "[0-3]+[\\d]+[\\/]+[0-1]+[\\d]+[\\/]+\\d{4}";
+    public static final String BIRTHDAY_VALIDATION_REGEX = "[0-3][\\d][/][0-1][\\d][/]\\d{4}";
     public final String value;
 
     /**
@@ -478,7 +474,15 @@ public class Birthday {
      * Returns true if a given string is a valid person birthday.
      */
     public static boolean isValidBirthday(String test) {
-        return test.matches(BIRTHDAY_VALIDATION_REGEX);
+        return test.matches(BIRTHDAY_VALIDATION_REGEX) || test.equals(DEFAULT_VALUE);
+    }
+
+    /**
+     * Returns true if value is not the default value (No Birthday)
+     * @return
+     */
+    public boolean isNotDefault() {
+        return !value.equals(DEFAULT_VALUE);
     }
 
     @Override
@@ -548,7 +552,7 @@ public class EmailContainsKeywordsPredicate extends FieldContainsKeywordsPredica
     @Override
     public boolean test(ReadOnlyPerson person) {
         return keywords.stream().anyMatch(keyword -> StringUtil
-                .containsWordIgnoreCase(person.getEmail().value, keyword));
+                .containsWordPartialIgnoreCase(person.getEmail().value, keyword));
     }
 
     @Override
@@ -596,7 +600,7 @@ public class PhoneContainsKeywordsPredicate extends FieldContainsKeywordsPredica
     @Override
     public boolean test(ReadOnlyPerson person) {
         return keywords.stream().anyMatch(keyword -> StringUtil
-                .containsWordIgnoreCase(person.getPhone().value, keyword));
+                .containsWordPartialIgnoreCase(person.getPhone().value, keyword));
     }
 
     @Override

@@ -94,7 +94,7 @@ This application will not work with earlier versions of Java 8 (_anything before
 .  Double-click the file to start the application. The Graphical User Interface (GUI) should appear in a few seconds as
 such:
 +
-image::FirstTimeLaunch.png[width="600"]
+image::FirstTimeLaunch.png[width="766"]
 
 And that's all, you're now ready to use K.N.S. AddressBook!
 
