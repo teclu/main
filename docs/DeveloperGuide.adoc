@@ -1,4 +1,4 @@
-= K.N.S. AddressBook - Developer Guide
+= K.N.S. AddressBook v1.5.0rc - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
