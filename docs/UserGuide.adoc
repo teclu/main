@@ -33,6 +33,7 @@ toc::[]
 K.N.S. AddressBook has many useful features for you to use. Listed below are some key features found in K.N.S.
 AddressBook that can help you out.
 
+// tag::personpanel[]
 === Person Panel
 
 This is where you will find a selected contact's information (_name, address, phone number, etc._) displayed neatly on
@@ -42,6 +43,7 @@ image::UiPersonPanel.png[width="497"]
 
 When you click `load`, you will be given the option to select an image (_either in .JPG or .PNG format_) stored on
 your computer. Afterwards, clicking `save` will let you replace the current Avatar of the contact.
+// end::personpanel[]
 
 In K.N.S. AddressBook v2.0, you can look forward to the following enhancements to Person Panel:
 
@@ -50,6 +52,7 @@ contact.
 * *Birthday Countdown & Reminder*: You'll always know whose birthday is coming up soon! You can also get a reminder in
 advance of a contact's upcoming birthday; no more remembering and forgetting needed!
 
+// tag::themeswitcher[]
 === Theme Switcher
 
 When you click on 'Theme' in the Menu Bar, you should see 5 preset themes that you can choose for K.N.S. AddressBook:
@@ -61,6 +64,7 @@ of the other 4 preset themes will result in an immediate appearance change; hope
 your liking! Here is what K.N.S. AddressBook look's like in all 5 preset themes:
 
 image::UiAllThemes.gif[width="668"]
+// end::themeswitcher[]
 
 In K.N.S. AddressBook v2.0, you can look forward to the following enhancements to Theme Switcher:
 
