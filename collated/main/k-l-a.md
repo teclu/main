@@ -160,8 +160,14 @@ public class SortCommand extends Command {
 
         String[] keywords = trimmedArgs.split("\\s+");
         String toSearch = keywords[0];
-        if (isSearchablePrefix(toSearch)) {
-            keywords = Arrays.copyOfRange(keywords, 1, keywords.length);
+        if (startsWithSearchablePrefix(toSearch)) {
+            String extractedKeyword = toSearch.substring(2, toSearch.length());
+            toSearch = toSearch.substring(0, 2);
+            if (!extractedKeyword.isEmpty()) {
+                keywords[0] = extractedKeyword;
+            } else {
+                keywords = Arrays.copyOfRange(keywords, 1, keywords.length);
+            }
         }
 
         if (toSearch.equals(PREFIX_TAG.getPrefix())) {
@@ -188,6 +194,16 @@ public class SortCommand extends Command {
                 || prefixString.equals(PREFIX_ADDRESS.getPrefix()) || prefixString.equals(PREFIX_BIRTHDAY.getPrefix());
     }
 
+    /**
+     * Checks if the given string prefix stars with a searchable prefix (n/, t/, p/, e/, a/, or b/).
+     */
+    public boolean startsWithSearchablePrefix(String prefixString) {
+        if (prefixString.length() < 2) {
+            return false;
+        }
+        String prefix = prefixString.substring(0, 2);
+        return isSearchablePrefix(prefix);
+    }
 }
 ```
 ###### \java\seedu\address\logic\parser\SortCommandParser.java
