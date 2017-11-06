@@ -190,6 +190,17 @@ public class SortCommandTest {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\FindCommandParserTest.java
+``` java
+    @Test
+    public void parse_validTagsArgs_returnsFindCommand() {
+        FindCommand expectedFindCommandForTags =
+                new FindCommand(new TagListContainsKeywordsPredicate(Arrays.asList("Friends", "Family")));
+        assertParseSuccess(parser, "t/ Friends Family", expectedFindCommandForTags);
+        assertParseSuccess(parser, "t/Friends Family", expectedFindCommandForTags); //no space between prefix & keyword
+    }
+
+```
 ###### \java\seedu\address\logic\parser\SortCommandParserTest.java
 ``` java
 public class SortCommandParserTest {

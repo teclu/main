@@ -7,6 +7,9 @@
 public class AvatarUtil {
     private static final BufferedImage placeholder =
             new BufferedImage(200, 200, BufferedImage.TYPE_BYTE_INDEXED);
+    private static final Color gray = new Color(200, 200, 200);
+    private static final Color darkGray = new Color(177, 177, 177);
+    private static final Color lightGray = new Color(244, 244, 244);
 
     public AvatarUtil() {
         drawPlaceholderAvatar();
@@ -17,13 +20,16 @@ public class AvatarUtil {
      */
     private void drawPlaceholderAvatar() {
         Graphics2D g2d = placeholder.createGraphics();
-        g2d.setColor(Color.lightGray); // Backdrop
+        g2d.setColor(lightGray); // Backdrop
         g2d.fillRect(1, 1, 198, 198);
-        g2d.setColor(Color.gray); // Body
-        g2d.fillOval(25, 135, 155, 150);
-        g2d.setColor(Color.darkGray); // Head
+
+        g2d.setColor(gray); // Body
+        g2d.fillOval(25, 135, 155, 50);
+        g2d.fillRect(25, 163, 155, 50);
+
+        g2d.setColor(gray); // Head
         g2d.fillOval(55, 35, 95, 95);
-        g2d.fillOval(55, 35, 95, 120);
+
         g2d.setColor(Color.white); // Border Frame
         g2d.drawRect(0, 0, 199, 199);
         g2d.dispose();
@@ -53,6 +59,8 @@ public class AvatarUtil {
  */
 public class Avatar {
     public static final String MESSAGE_AVATAR_CONSTRAINTS = "Avatar should be a valid online URL or local path.";
+    public static final String DEFAULT_VALUE = "No Avatar";
+
     public final String value;
     private URL url;
     private BufferedImage image;
@@ -63,7 +71,7 @@ public class Avatar {
     public Avatar() throws IllegalValueException {
         AvatarUtil placeholder = new AvatarUtil();
         image = placeholder.getPlaceholderAvatar();
-        value = "";
+        value = DEFAULT_VALUE;
     }
 
     /**
@@ -73,10 +81,10 @@ public class Avatar {
      */
     public Avatar(String url) throws IllegalValueException {
         try {
-            if (url.isEmpty()) {
+            if (url.isEmpty() || DEFAULT_VALUE.equals(url)) {
                 AvatarUtil placeholder = new AvatarUtil();
                 image = placeholder.getPlaceholderAvatar();
-                value = "";
+                value = DEFAULT_VALUE;
             } else {
                 File defaultAvatar = new File(url);
 
@@ -173,6 +181,38 @@ public class Avatar {
         return tagColours[randomIndex];
     }
 ```
+###### \java\seedu\address\model\tag\TagColours.java
+``` java
+/**
+ * A UI feature for each unique tag to have its own colour.
+ */
+public class TagColours {
+    private static final String RED = "#CB4335";
+    private static final String DARK_RED = "#911205";
+    private static final String ORANGE = "#FF7700";
+    private static final String LIGHT_ORANGE = "#FF9030";
+    private static final String YELLOW = "#F4D03F";
+    private static final String GREEN = "#27AE60";
+    private static final String DARK_GREEN = "#006D36";
+    private static final String BLUE = "#2980B9";
+    private static final String NAVY_BLUE = "#095282";
+    private static final String INDIGO = "#8E44AD";
+    private static final String VIOLET = "#DB2B6F";
+    private static final String PURPLE = "#6F3CB7";
+    private static final String HOT_PINK = "#FF0062";
+    private static final String CYAN = "#008C96";
+    private static final String BROWN = "#684D03";
+
+    /**
+     * Returns a String array of available tag colours.
+     */
+    public String[] getTagColours() {
+        return new String[] { RED, DARK_RED, ORANGE, LIGHT_ORANGE, YELLOW,
+                                GREEN, DARK_GREEN, BLUE, NAVY_BLUE, INDIGO,
+                                VIOLET, HOT_PINK, PURPLE, CYAN, BROWN };
+    }
+}
+```
 ###### \java\seedu\address\ui\AvatarWindow.java
 ``` java
 /**
@@ -181,7 +221,7 @@ public class Avatar {
 public class AvatarWindow extends UiPart<Region> {
 
     private static final Logger logger = LogsCenter.getLogger(AvatarWindow.class);
-    private static final String ICON = "/images/avatarPlaceholder.png";
+    private static final String ICON = "/images/AvatarWindowIcon.png";
     private static final String FXML = "AvatarWindow.fxml";
     private static final String TITLE = "Avatar Options";
 
@@ -204,8 +244,10 @@ public class AvatarWindow extends UiPart<Region> {
         //Null passed as the parent stage to make it non-modal.
         dialogStage = createDialogStage(TITLE, null, scene);
         dialogStage.setResizable(false);
+        dialogStage.setAlwaysOnTop(true);
         dialogStage.setHeight(325);
         dialogStage.setWidth(250);
+        dialogStage.initModality(Modality.APPLICATION_MODAL);
         FxViewUtil.setStageIcon(dialogStage, ICON);
 
         avatarW.setImage(SwingFXUtils.toFXImage(selectedPersonCard.person.getAvatar().getImage(), null));
@@ -263,8 +305,10 @@ public class AvatarWindow extends UiPart<Region> {
  */
 public class PersonPanel extends UiPart<Region> {
     private static final String FXML = "PersonPanel.fxml";
+
     private final Logic logic;
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+
     private PersonCard selectedPersonCard;
     private ReadOnlyPerson selectedPerson;
     private boolean isBlankPage = true;
@@ -396,42 +440,13 @@ public class PersonPanel extends UiPart<Region> {
         this.numTotalContacts.setText("Total: " + numTotalContacts + " contact(s)");
     }
 ```
-###### \java\seedu\address\ui\TagColours.java
-``` java
-/**
- * A UI feature for each unique tag to have its own colour.
- */
-public class TagColours {
-    private static final String RED = "#CB4335";
-    private static final String DARK_RED = "#911205";
-    private static final String ORANGE = "#F39C12";
-    private static final String LIGHT_ORANGE = "#FFAA23";
-    private static final String YELLOW = "#F4D03F";
-    private static final String GREEN = "#27AE60";
-    private static final String DARK_GREEN = "#006D36";
-    private static final String BLUE = "#2980B9";
-    private static final String NAVY_BLUE = "#095282";
-    private static final String INDIGO = "#8E44AD";
-    private static final String VIOLET = "#DB2B6F";
-    private static final String BLACK = "#000000";
-    private static final String HOT_PINK = "#FF0062";
-
-    /**
-     * Returns a String array of available tag colours.
-     */
-    public String[] getTagColours() {
-        return new String[] { RED, DARK_RED, ORANGE, LIGHT_ORANGE, YELLOW,
-                                GREEN, DARK_GREEN, BLUE, NAVY_BLUE, INDIGO, VIOLET, HOT_PINK, BLACK };
-    }
-}
-```
 ###### \resources\view\AvatarWindow.fxml
 ``` fxml
-<StackPane fx:id="avatarWindowRoot" prefHeight="286.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="avatarWindowRoot" prefHeight="286.0" prefWidth="250.0" style="-fx-background-color: #eeeeee;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TitledPane animated="false" prefHeight="54.0" prefWidth="250.0" text="Options" StackPane.alignment="BOTTOM_CENTER">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #dddddd;">
                <children>
                   <Button fx:id="avatarLoad" layoutY="2.0" mnemonicParsing="false" onAction="#loadPrompt" text="Load" />
                   <Button fx:id="avatarSave" layoutX="49.0" layoutY="2.0" mnemonicParsing="false" onAction="#savePrompt" text="Save" />
@@ -441,7 +456,7 @@ public class TagColours {
       </TitledPane>
        <ImageView fx:id="avatarW" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
          <effect>
-            <DropShadow />
+            <DropShadow color="#333333" height="18.0" radius="8.5" width="18.0" />
          </effect>
          <StackPane.margin>
             <Insets top="15.0" />
@@ -450,6 +465,903 @@ public class TagColours {
    </children>
 </StackPane>
 ```
+###### \resources\view\BlueTheme.css
+``` css
+
+/* Start: Default Settings */
+.root {
+    -fx-font-family: "Calibri Light";
+    -fx-text-fill: #333333;
+    -fx-font-size: 14pt;
+}
+
+.background {
+    -fx-background-color: #f7f5f4;
+    background-color: #ffffff; /* Used in the default.html file */
+}
+
+.scroll-bar {
+    -fx-background-color: #f4f8ff;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #8698ba;
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 1 1 1 1;
+}
+
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+}
+
+.scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
+    -fx-padding: 0 8 0 8;
+}
+
+.split-pane-divider {
+    -fx-background-color: transparent;
+}
+
+#tags {
+    -fx-font-family: "Calibri";
+    -fx-font-weight: bold;
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+#tags .label {
+    -fx-text-fill: #ffffff;
+    -fx-padding: 1 5 1 5;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+#mainWindow .split-pane {
+    -fx-background-color: #f7f5f4;
+    -fx-background-image: url("../images/LightThemeBackground.png") no-repeat center center;
+}
+
+#mainWindow .VBox {
+    -fx-border-width: 5px;
+}
+/* End: Default Settings */
+
+/* Start: Menu Bar */
+.menu-bar {
+    -fx-background-color: #3e6fc1;
+    -fx-border-color: #375fa3;
+    -fx-border-width: 0 0 1 0;
+}
+
+.menu-bar .menu {
+    -fx-background-color: #3e6fc1;
+}
+
+.menu-bar .menu:hover {
+    -fx-background-color: #375fa3;
+}
+
+.menu-bar .menu .label {
+    -fx-text-fill: #eeeeee;
+}
+
+.menu-bar .menu-item {
+    -fx-background-color: #ffffff;
+}
+
+.menu-bar .menu-item:hover {
+    -fx-background-color: #f2f2f2;
+}
+
+.menu-bar .menu-item .label {
+    -fx-text-fill: #333333;
+}
+/* End: Menu Bar */
+
+/* Start: Person List Card */
+#personList {
+    -fx-background-color: #f7f5f4;
+}
+
+#personListView, #personListPanelPlaceholder {
+    -fx-background-color: #f7f5f4;
+}
+
+#cardPane #name, #id {
+    -fx-font-size: 18pt;
+    -fx-text-fill: #333333;
+}
+
+#cardPane #tags .label {
+    -fx-font-size: 13pt;
+}
+
+.list-view {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.list-cell {
+    -fx-background-color: #f7f5f4;
+    -fx-label-padding: 0 0 0 0;
+    -fx-graphic-text-gap: 0;
+    -fx-padding: 0 0 0 0;
+}
+
+.list-cell:filled:even {
+    -fx-background-color: #f7f9ff;
+}
+
+.list-cell:filled:odd {
+    -fx-background-color: #eff4ff;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #d3e3ff;
+    -fx-border-color: #c1d8ff;
+    -fx-border-width: 1px;
+}
+
+/* End: Person List Card */
+
+/* Start: Person Panel */
+#personPanelPlaceholder {
+    -fx-background-color: transparent;
+}
+
+#primaryDetails {
+    -fx-background-color: #3e6fc1;
+}
+
+#secondaryDetails {
+    -fx-font-family: "Calibri Light";
+    -fx-background-color: #f2f2f2;
+}
+
+#personPanel #name {
+    -fx-text-fill: #eeeeee;
+    -fx-font-size: 42pt;
+}
+
+#personPanel #tags .label {
+    -fx-font-family: "Calibri";
+    -fx-font-size: 20pt;
+}
+
+#personPanel #address, #personPanel #email, #personPanel #phone, #personPanel #birthday {
+    -fx-font-size: 18pt;
+}
+
+#personPanel #address, #personPanel #email, #personPanel #phone, #personPanel #birthday {
+    -fx-font-size: 18pt;
+    -fx-label-padding: 0 0 0 42;
+    -fx-background-position: 10 5;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 32px;
+}
+
+#personPanel #address {
+    -fx-background-image: url("../images/AddressIcon.png");
+}
+
+#personPanel #email {
+    -fx-background-image: url("../images/EmailIcon.png");
+}
+
+#personPanel #phone {
+    -fx-background-image: url("../images/PhoneIcon.png");
+}
+
+#personPanel #birthday {
+    -fx-background-image: url("../images/BirthdayIcon.png");
+}
+/* End: Person Panel */
+
+/* Start: Command Box */
+.result-display {
+    -fx-font-family: "Courier New";
+    -fx-font-size: 14pt;
+    -fx-text-fill: #000000;
+}
+
+.text-field {
+    -fx-font-family: "Courier New";
+    -fx-font-size: 14pt;
+}
+/* End: Command Box */
+
+/* Start: Status Bar */
+.status-bar {
+    -fx-background-color: #e0e0e0;
+}
+
+.status-bar .label {
+    -fx-font-size: 12pt;
+    -fx-text-fill: #333333;
+}
+/* End: Status Bar */
+```
+###### \resources\view\DarkTheme.css
+``` css
+
+/* Start: Default Settings */
+.root {
+    -fx-font-family: "Calibri Light";
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14pt;
+}
+
+.background {
+    -fx-background-color: #333333;
+    background-color: #333333; /* Used in the default.html file */
+}
+
+.scroll-bar {
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #515151;
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 1 1 1 1;
+}
+
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+}
+
+.scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
+    -fx-padding: 0 8 0 8;
+}
+
+.split-pane-divider {
+    -fx-background-color: transparent;
+}
+
+#tags {
+    -fx-font-family: "Calibri";
+    -fx-font-weight: bold;
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+#tags .label {
+    -fx-text-fill: #ffffff;
+    -fx-padding: 1 5 1 5;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+#mainWindow .split-pane {
+    -fx-background-color: #333333;
+    -fx-background-image: url("../images/DarkThemeBackground.png") no-repeat center center;
+}
+
+#mainWindow .VBox {
+    -fx-border-width: 5px;
+}
+
+/* End: Default Settings */
+
+/* Start: Menu Bar */
+.menu-bar {
+    -fx-background-color: #43484f;
+    -fx-border-color: #35393f;
+    -fx-border-width: 0 0 1 0;
+}
+
+.menu-bar .menu {
+    -fx-background-color: #43484f;
+}
+
+.menu-bar .menu:hover {
+    -fx-background-color: #35393f;
+}
+
+.menu-bar .menu .label {
+    -fx-text-fill: #ffffff;
+}
+
+.menu-bar .menu-item {
+    -fx-background-color: #ffffff;
+}
+
+.menu-bar .menu-item:hover {
+    -fx-background-color: #f2f2f2;
+}
+
+.menu-bar .menu-item .label {
+    -fx-text-fill: #000000;
+}
+/* End: Menu Bar */
+
+/* Start: Person List Card */
+#personList {
+    -fx-background-color: #333333;
+}
+
+#personListView {
+    -fx-background-color: transparent #383838 transparent #383838;
+}
+
+#cardPane #name, #id {
+    -fx-font-size: 18pt;
+    -fx-text-fill: #EEEEEE;
+}
+
+#cardPane #tags .label {
+    -fx-font-size: 13pt;
+}
+
+.list-view {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.list-cell {
+    -fx-background-color: #333333;
+    -fx-label-padding: 0 0 0 0;
+    -fx-graphic-text-gap: 0;
+    -fx-padding: 0 0 0 0;
+}
+
+.list-cell:filled:even {
+    -fx-background-color: #3c3e3f;
+}
+
+.list-cell:filled:odd {
+    -fx-background-color: #515658;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #424d5f;
+    -fx-border-color: #3e7b91;
+    -fx-border-width: 1px;
+}
+
+/* End: Person List Card */
+
+/* Start: Person Panel */
+#personPanelPlaceholder {
+    -fx-background-color: transparent;
+}
+
+#primaryDetails {
+    -fx-background-color: #3c3e3f;
+}
+
+#secondaryDetails {
+    -fx-font-family: "Calibri Light";
+    -fx-background-color: #515658;
+}
+
+#personPanel #name {
+    -fx-text-fill: #eeeeee;
+    -fx-font-size: 42pt;
+}
+
+#personPanel #tags .label {
+    -fx-font-family: "Calibri";
+    -fx-font-size: 20pt;
+}
+
+#personPanel #address, #personPanel #email, #personPanel #phone, #personPanel #birthday {
+    -fx-text-fill: #eeeeee;
+    -fx-font-size: 18pt;
+}
+
+#personPanel #address, #personPanel #email, #personPanel #phone, #personPanel #birthday {
+    -fx-font-size: 18pt;
+    -fx-label-padding: 0 0 0 42;
+    -fx-background-position: 10 5;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 32px;
+}
+
+#personPanel #address {
+    -fx-background-image: url("../images/AddressIcon.png");
+}
+
+#personPanel #email {
+    -fx-background-image: url("../images/EmailIcon.png");
+}
+
+#personPanel #phone {
+    -fx-background-image: url("../images/PhoneIcon.png");
+}
+
+#personPanel #birthday {
+    -fx-background-image: url("../images/BirthdayIcon.png");
+}
+/* End: Person Panel */
+
+/* Start: Command Box */
+.result-display {
+    -fx-font-family: "Courier New";
+    -fx-background-color: transparent;
+    -fx-font-size: 14pt;
+    -fx-text-fill: #eeeeee;
+}
+
+.text-field {
+    -fx-background-color: #444444;
+    -fx-font-family: "Courier New";
+    -fx-font-size: 14pt;
+}
+
+.text-area {
+    -fx-background-color: #444444;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
+}
+
+#commandTextField {
+    -fx-text-fill: #eeeeee;
+}
+
+.pane-with-border {
+    -fx-background-color: #333333;
+    -fx-border-color: #333333;
+    -fx-border-top-width: 1px;
+}
+/* End: Command Box */
+
+/* Start: Status Bar */
+.status-bar {
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+
+.status-bar .label {
+    -fx-font-size: 12pt;
+    -fx-text-fill: #EEEEEE;
+}
+/* End: Status Bar */
+```
+###### \resources\view\GreenTheme.css
+``` css
+
+/* Start: Default Settings */
+.root {
+    -fx-font-family: "Calibri Light";
+    -fx-text-fill: #333333;
+    -fx-font-size: 14pt;
+}
+
+.background {
+    -fx-background-color: #f7f5f4;
+    background-color: #ffffff; /* Used in the default.html file */
+}
+
+.scroll-bar {
+    -fx-background-color: #e2ffe3;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #08910d;
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 1 1 1 1;
+}
+
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+}
+
+.scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
+    -fx-padding: 0 8 0 8;
+}
+
+.split-pane-divider {
+    -fx-background-color: transparent;
+}
+
+#tags {
+    -fx-font-family: "Calibri";
+    -fx-font-weight: bold;
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+#tags .label {
+    -fx-text-fill: #ffffff;
+    -fx-padding: 1 5 1 5;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+#mainWindow .split-pane {
+    -fx-background-color: #f7f5f4;
+    -fx-background-image: url("../images/LightThemeBackground.png") no-repeat center center;
+}
+
+#mainWindow .VBox {
+    -fx-border-width: 5px;
+}
+/* End: Default Settings */
+
+/* Start: Menu Bar */
+.menu-bar {
+    -fx-background-color: #009607;
+    -fx-border-color: #007c06;
+    -fx-border-width: 0 0 1 0;
+}
+
+.menu-bar .menu {
+    -fx-background-color: #009607;
+}
+
+.menu-bar .menu:hover {
+    -fx-background-color: #007c06;
+}
+
+.menu-bar .menu .label {
+    -fx-text-fill: #eeeeee;
+}
+
+.menu-bar .menu-item {
+    -fx-background-color: #ffffff;
+}
+
+.menu-bar .menu-item:hover {
+    -fx-background-color: #f2f2f2;
+}
+
+.menu-bar .menu-item .label {
+    -fx-text-fill: #333333;
+}
+/* End: Menu Bar */
+
+/* Start: Person List Card */
+#personList {
+    -fx-background-color: #f7f5f4;
+}
+
+#personListView, #personListPanelPlaceholder {
+    -fx-background-color: #f7f5f4;
+}
+
+#cardPane #name, #id {
+    -fx-font-size: 18pt;
+    -fx-text-fill: #333333;
+}
+
+#cardPane #tags .label {
+    -fx-font-size: 13pt;
+}
+
+.list-view {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.list-cell {
+    -fx-background-color: #f7f5f4;
+    -fx-label-padding: 0 0 0 0;
+    -fx-graphic-text-gap: 0;
+    -fx-padding: 0 0 0 0;
+}
+
+.list-cell:filled:even {
+    -fx-background-color: #c6ffc8;
+}
+
+.list-cell:filled:odd {
+    -fx-background-color: #dbffdc;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #76bc79;
+    -fx-border-color: #5b9e5e;
+    -fx-border-width: 1px;
+}
+
+/* End: Person List Card */
+
+/* Start: Person Panel */
+#personPanelPlaceholder {
+    -fx-background-color: transparent;
+}
+
+#primaryDetails {
+    -fx-background-color: #297c2c;
+}
+
+#secondaryDetails {
+    -fx-font-family: "Calibri Light";
+    -fx-background-color: #f2f2f2;
+}
+
+#personPanel #name {
+    -fx-text-fill: #eeeeee;
+    -fx-font-size: 42pt;
+}
+
+#personPanel #tags .label {
+    -fx-font-family: "Calibri";
+    -fx-font-size: 20pt;
+}
+
+#personPanel #address, #personPanel #email, #personPanel #phone, #personPanel #birthday {
+    -fx-font-size: 18pt;
+}
+
+#personPanel #address, #personPanel #email, #personPanel #phone, #personPanel #birthday {
+    -fx-font-size: 18pt;
+    -fx-label-padding: 0 0 0 42;
+    -fx-background-position: 10 5;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 32px;
+}
+
+#personPanel #address {
+    -fx-background-image: url("../images/AddressIcon.png");
+}
+
+#personPanel #email {
+    -fx-background-image: url("../images/EmailIcon.png");
+}
+
+#personPanel #phone {
+    -fx-background-image: url("../images/PhoneIcon.png");
+}
+
+#personPanel #birthday {
+    -fx-background-image: url("../images/BirthdayIcon.png");
+}
+/* End: Person Panel */
+
+/* Start: Command Box */
+.result-display {
+    -fx-font-family: "Courier New";
+    -fx-font-size: 14pt;
+    -fx-text-fill: #000000;
+}
+
+.text-field {
+    -fx-font-family: "Courier New";
+    -fx-font-size: 14pt;
+}
+/* End: Command Box */
+
+/* Start: Status Bar */
+.status-bar {
+    -fx-background-color: #e0e0e0;
+}
+
+.status-bar .label {
+    -fx-font-size: 12pt;
+    -fx-text-fill: #333333;
+}
+/* End: Status Bar */
+```
+###### \resources\view\LightTheme.css
+``` css
+
+/* Start: Default Settings */
+.root {
+    -fx-font-family: "Calibri Light";
+    -fx-text-fill: #333333;
+    -fx-font-size: 14pt;
+}
+
+.background {
+    -fx-background-color: #f7f5f4;
+    background-color: #ffffff; /* Used in the default.html file */
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #a5a5a5;
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 1 1 1 1;
+}
+
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+}
+
+.scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
+    -fx-padding: 0 8 0 8;
+}
+
+.split-pane-divider {
+    -fx-background-color: transparent;
+}
+
+#tags {
+    -fx-font-family: "Calibri";
+    -fx-font-weight: bold;
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+#tags .label {
+    -fx-text-fill: #ffffff;
+    -fx-padding: 1 5 1 5;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+#mainWindow .split-pane {
+    -fx-background-color: #f7f5f4;
+    -fx-background-image: url("../images/LightThemeBackground.png") no-repeat center center;
+}
+
+#mainWindow .VBox {
+    -fx-border-width: 5px;
+}
+/* End: Default Settings */
+
+/* Start: Menu Bar */
+.menu-bar {
+    -fx-background-color: #e0e0e0;
+    -fx-border-color: #d0d0d0;
+    -fx-border-width: 0 0 1 0;
+}
+
+.menu-bar .menu {
+    -fx-background-color: #e0e0e0;
+}
+
+.menu-bar .menu:hover {
+    -fx-background-color: #d0d0d0;
+}
+
+.menu-bar .menu .label {
+    -fx-text-fill: #333333;
+}
+
+.menu-bar .menu-item {
+    -fx-background-color: #ffffff;
+}
+
+.menu-bar .menu-item:hover {
+    -fx-background-color: #f2f2f2;
+}
+
+.menu-bar .menu-item .label {
+    -fx-text-fill: #333333;
+}
+/* End: Menu Bar */
+
+/* Start: Person List Card */
+#personList {
+    -fx-background-color: #f7f5f4;
+}
+
+#personListView, #personListPanelPlaceholder {
+    -fx-background-color: #f7f5f4;
+}
+
+#cardPane #name, #id {
+    -fx-font-size: 18pt;
+    -fx-text-fill: #333333;
+}
+
+#cardPane #tags .label {
+    -fx-font-size: 13pt;
+}
+
+.list-view {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.list-cell {
+    -fx-background-color: #f7f5f4;
+    -fx-label-padding: 0 0 0 0;
+    -fx-graphic-text-gap: 0;
+    -fx-padding: 0 0 0 0;
+}
+
+.list-cell:filled:even {
+    -fx-background-color: #e2e2e2;
+}
+
+.list-cell:filled:odd {
+    -fx-background-color: #f2f2f2;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #c4d4ed;
+    -fx-border-color: #a9c1e8;
+    -fx-border-width: 1px;
+}
+
+/* End: Person List Card */
+
+/* Start: Person Panel */
+#personPanelPlaceholder {
+    -fx-background-color: transparent;
+}
+
+#primaryDetails {
+    -fx-background-color: #e2e2e2;
+}
+
+#secondaryDetails {
+    -fx-font-family: "Calibri Light";
+    -fx-background-color: #f2f2f2;
+}
+
+#personPanel #name {
+    -fx-font-size: 42pt;
+}
+
+#personPanel #tags .label {
+    -fx-font-family: "Calibri";
+    -fx-font-size: 20pt;
+}
+
+#personPanel #address, #personPanel #email, #personPanel #phone, #personPanel #birthday {
+    -fx-font-size: 18pt;
+    -fx-label-padding: 0 0 0 42;
+    -fx-background-position: 10 5;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 32px;
+}
+
+#personPanel #address {
+    -fx-background-image: url("../images/AddressIcon.png");
+}
+
+#personPanel #email {
+    -fx-background-image: url("../images/EmailIcon.png");
+}
+
+#personPanel #phone {
+    -fx-background-image: url("../images/PhoneIcon.png");
+}
+
+#personPanel #birthday {
+    -fx-background-image: url("../images/BirthdayIcon.png");
+}
+/* End: Person Panel */
+
+/* Start: Command Box */
+.result-display {
+    -fx-font-family: "Courier New";
+    -fx-font-size: 14pt;
+    -fx-text-fill: #000000;
+}
+
+.text-field {
+    -fx-font-family: "Courier New";
+    -fx-font-size: 14pt;
+}
+/* End: Command Box */
+
+/* Start: Status Bar */
+.status-bar {
+    -fx-background-color: #e0e0e0;
+}
+
+.status-bar .label {
+    -fx-font-size: 12pt;
+    -fx-text-fill: #333333;
+}
+/* End: Status Bar */
+```
 ###### \resources\view\PersonListCard.fxml
 ``` fxml
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
@@ -457,123 +1369,325 @@ public class TagColours {
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
         </columnConstraints>
-        <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
+        <VBox alignment="CENTER_LEFT" minHeight="80.0" GridPane.columnIndex="0">
             <padding>
-                <Insets top="5" right="5" bottom="5" left="15" />
+                <Insets bottom="5" left="15" right="5" top="5" />
             </padding>
-            <HBox spacing="5" alignment="CENTER_LEFT">
-                <Label fx:id="id" styleClass="cell_big_label">
+            <HBox alignment="CENTER_LEFT" spacing="5">
+                <Label fx:id="id" styleClass="index">
                     <minWidth>
                     <!-- Ensures that the label text is never truncated -->
                         <Region fx:constant="USE_PREF_SIZE" />
                     </minWidth>
                 </Label>
-                <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
+                <Label fx:id="name" text="\$first" />
             </HBox>
             <FlowPane fx:id="tags" />
         </VBox>
+      <rowConstraints>
+         <RowConstraints />
+      </rowConstraints>
     </GridPane>
 </HBox>
 ```
 ###### \resources\view\PersonPanel.fxml
 ``` fxml
-<SplitPane fx:id="personPanel" dividerPositions="0.35" orientation="VERTICAL" prefHeight="310.0" prefWidth="900.0"
-           xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
-    <items>
-        <AnchorPane fx:id="primaryDetails">
-            <children>
-            <HBox prefHeight="150.0" prefWidth="898.0">
-               <children>
-                  <ImageView fx:id="avatar" fitHeight="150.0" fitWidth="150.0" onMouseClicked="#avatarPrompt"
-                             pickOnBounds="true" preserveRatio="true">
-                     <cursor>
-                        <Cursor fx:constant="OPEN_HAND" />
-                     </cursor>
-                  </ImageView>
-                  <Region prefHeight="150.0" prefWidth="20.0" />
-                      <VBox prefHeight="150.0" prefWidth="729.0">
+<AnchorPane fx:id="personPanel" prefHeight="296.0" prefWidth="975.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <Pane prefHeight="200.0" prefWidth="200.0">
+          <children>
+              <AnchorPane fx:id="primaryDetails" prefHeight="200.0" prefWidth="975.0">
+                  <children>
+                      <HBox prefHeight="200.0" prefWidth="975.0">
                           <children>
-                              <Label fx:id="name" prefHeight="28.0" prefWidth="756.0" wrapText="true">
+                              <ImageView fx:id="avatar" fitHeight="150.0" fitWidth="170.0" onMouseClicked="#avatarPrompt" pickOnBounds="true" preserveRatio="true">
+                                  <cursor>
+                                      <Cursor fx:constant="OPEN_HAND" />
+                                  </cursor>
+                                  <HBox.margin>
+                                      <Insets bottom="0.0" left="10.0" right="10.0" top="10.0" />
+                                  </HBox.margin>
+                              </ImageView>
+                              <Region prefHeight="150.0" prefWidth="20.0" />
+                              <VBox prefHeight="195.0" prefWidth="975.0">
+                                  <children>
+                                      <Label fx:id="name" prefHeight="28.0" prefWidth="975.0" wrapText="true">
+                                          <padding>
+                                            <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                                          </padding>
+                                      </Label>
+                                      <FlowPane fx:id="tags" alignment="CENTER_LEFT">
+                                          <padding>
+                                              <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                                          </padding>
+                                      </FlowPane>
+                                  </children>
                                   <padding>
-                                      <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                                      <Insets bottom="0.0" left="10.0" right="10.0" top="10.0" />
                                   </padding>
-                              </Label>
-                              <FlowPane fx:id="tags" alignment="CENTER_LEFT">
-                                  <padding>
-                                      <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
-                                  </padding>
-                                  </FlowPane>
+                              </VBox>
                           </children>
-                      </VBox>
-               </children>
+                      </HBox>
+                  </children>
+              </AnchorPane>
+          </children>
+    </Pane>
+    <AnchorPane fx:id="secondaryDetails" layoutY="170.0" prefHeight="220.0" prefWidth="975.0">
+        <children>
+            <HBox layoutY="-1.0" prefHeight="220.0" prefWidth="975.0">
+                <children>
+                    <VBox prefHeight="150.0" prefWidth="960.0">
+                        <children>
+                            <Region prefHeight="27.0" prefWidth="960.0" />
+                            <Label fx:id="address" prefHeight="50.0" prefWidth="975.0" wrapText="true">
+                                <padding>
+                                    <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                                </padding>
+                            </Label>
+                            <Region prefHeight="20.0" prefWidth="49.0" />
+                            <Label fx:id="email" prefHeight="50.0" prefWidth="975.0" wrapText="true">
+                                <padding>
+                                    <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                                </padding>
+                            </Label>
+                            <Region prefHeight="20.0" prefWidth="49.0" />
+                            <Label fx:id="phone" prefHeight="50.0" prefWidth="975.0" wrapText="true">
+                                <padding>
+                                    <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                                </padding>
+                            </Label>
+                            <Region prefHeight="20.0" prefWidth="49.0" />
+                            <Label fx:id="birthday" prefHeight="50.0" prefWidth="975.0" wrapText="true">
+                                <padding>
+                                    <Insets bottom="20.0" left="10.0" right="5.0" top="5.0" />
+                                </padding>
+                            </Label>
+                        </children>
+                    </VBox>
+                </children>
             </HBox>
-            </children>
-        </AnchorPane>
+        </children>
+    </AnchorPane>
+   <effect>
+      <DropShadow color="#333333" height="18.0" radius="8.5" width="18.0" />
+   </effect>
+</AnchorPane>
+```
+###### \resources\view\RedTheme.css
+``` css
 
-        <AnchorPane fx:id="secondaryDetails">
-            <children>
-            <HBox prefHeight="181.0" prefWidth="898.0">
-               <children>
-                  <VBox prefHeight="200.0" prefWidth="37.0">
-                     <children>
-                        <Region prefHeight="20.0" prefWidth="49.0" />
-                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/addressWhite.png" />
-                           </image>
-                        </ImageView>
-                        <Region prefHeight="20.0" prefWidth="49.0" />
-                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/emailWhite.png" />
-                           </image>
-                        </ImageView>
-                        <Region prefHeight="20.0" prefWidth="49.0" />
-                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/phoneWhite.png" />
-                           </image>
-                        </ImageView>
-                        <Region prefHeight="20.0" prefWidth="49.0" />
-                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/birthdayWhite.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </VBox>
-                      <VBox prefHeight="150.0" prefWidth="900.0">
-                          <children>
-                        <Region prefHeight="27.0" prefWidth="849.0" />
-                              <Label fx:id="address" prefHeight="50.0" prefWidth="850.0" wrapText="true">
-                                  <padding>
-                                      <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
-                                  </padding>
-                              </Label>
-                        <Region prefHeight="20.0" prefWidth="49.0" />
-                              <Label fx:id="email" prefHeight="50.0" prefWidth="851.0" wrapText="true">
-                                  <padding>
-                                      <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
-                                  </padding>
-                              </Label>
-                        <Region prefHeight="20.0" prefWidth="49.0" />
-                              <Label fx:id="phone" prefHeight="50.0" prefWidth="847.0" wrapText="true">
-                                  <padding>
-                                      <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
-                                  </padding>
-                              </Label>
-                        <Region prefHeight="20.0" prefWidth="49.0" />
-                              <Label fx:id="birthday" prefHeight="50.0" prefWidth="848.0" wrapText="true">
-                                  <padding>
-                                      <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
-                                  </padding>
-                              </Label>
-                          </children>
-                      </VBox>
-               </children>
-            </HBox>
-            </children>
-        </AnchorPane>
-    </items>
-</SplitPane>
+/* Start: Default Settings */
+.root {
+    -fx-font-family: "Calibri Light";
+    -fx-text-fill: #333333;
+    -fx-font-size: 14pt;
+}
+
+.background {
+    -fx-background-color: #f7f5f4;
+    background-color: #ffffff; /* Used in the default.html file */
+}
+
+.scroll-bar {
+    -fx-background-color: #fff4f4;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #ff8c8c;
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 1 1 1 1;
+}
+
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+}
+
+.scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
+    -fx-padding: 0 8 0 8;
+}
+
+.split-pane-divider {
+    -fx-background-color: transparent;
+}
+
+#tags {
+    -fx-font-family: "Calibri";
+    -fx-font-weight: bold;
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+#tags .label {
+    -fx-text-fill: #ffffff;
+    -fx-padding: 1 5 1 5;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+#mainWindow .split-pane {
+    -fx-background-color: #f7f5f4;
+    -fx-background-image: url("../images/LightThemeBackground.png") no-repeat center center;
+}
+
+#mainWindow .VBox {
+    -fx-border-width: 5px;
+}
+/* End: Default Settings */
+
+/* Start: Menu Bar */
+.menu-bar {
+    -fx-background-color: #b52735;
+    -fx-border-color: #aa0114;
+    -fx-border-width: 0 0 1 0;
+}
+
+.menu-bar .menu {
+    -fx-background-color: #b52735;
+}
+
+.menu-bar .menu:hover {
+    -fx-background-color: #aa0114;
+}
+
+.menu-bar .menu .label {
+    -fx-text-fill: #eeeeee;
+}
+
+.menu-bar .menu-item {
+    -fx-background-color: #ffffff;
+}
+
+.menu-bar .menu-item:hover {
+    -fx-background-color: #f2f2f2;
+}
+
+.menu-bar .menu-item .label {
+    -fx-text-fill: #333333;
+}
+/* End: Menu Bar */
+
+/* Start: Person List Card */
+#personList {
+    -fx-background-color: #f7f5f4;
+}
+
+#personListView, #personListPanelPlaceholder {
+    -fx-background-color: #f7f5f4;
+}
+
+#cardPane #name, #id {
+    -fx-font-size: 18pt;
+    -fx-text-fill: #333333;
+}
+
+#cardPane #tags .label {
+    -fx-font-size: 13pt;
+}
+
+.list-view {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.list-cell {
+    -fx-background-color: #f7f5f4;
+    -fx-label-padding: 0 0 0 0;
+    -fx-graphic-text-gap: 0;
+    -fx-padding: 0 0 0 0;
+}
+
+.list-cell:filled:even {
+    -fx-background-color: #ffeaea;
+}
+
+.list-cell:filled:odd {
+    -fx-background-color: #fff4f4;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #ffe2e2;
+    -fx-border-color: #ffd3d3;
+    -fx-border-width: 1px;
+}
+
+/* End: Person List Card */
+
+/* Start: Person Panel */
+#personPanelPlaceholder {
+    -fx-background-color: transparent;
+}
+
+#primaryDetails {
+    -fx-background-color: #c13434;
+}
+
+#secondaryDetails {
+    -fx-font-family: "Calibri Light";
+    -fx-background-color: #f2f2f2;
+}
+
+#personPanel #name {
+    -fx-text-fill: #eeeeee;
+    -fx-font-size: 42pt;
+}
+
+#personPanel #tags .label {
+    -fx-font-family: "Calibri";
+    -fx-font-size: 20pt;
+}
+
+#personPanel #address, #personPanel #email, #personPanel #phone, #personPanel #birthday {
+    -fx-font-size: 18pt;
+}
+
+#personPanel #address, #personPanel #email, #personPanel #phone, #personPanel #birthday {
+    -fx-font-size: 18pt;
+    -fx-label-padding: 0 0 0 42;
+    -fx-background-position: 10 5;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 32px;
+}
+
+#personPanel #address {
+    -fx-background-image: url("../images/AddressIcon.png");
+}
+
+#personPanel #email {
+    -fx-background-image: url("../images/EmailIcon.png");
+}
+
+#personPanel #phone {
+    -fx-background-image: url("../images/PhoneIcon.png");
+}
+
+#personPanel #birthday {
+    -fx-background-image: url("../images/BirthdayIcon.png");
+}
+/* End: Person Panel */
+
+/* Start: Command Box */
+.result-display {
+    -fx-font-family: "Courier New";
+    -fx-font-size: 14pt;
+    -fx-text-fill: #000000;
+}
+
+.text-field {
+    -fx-font-family: "Courier New";
+    -fx-font-size: 14pt;
+}
+/* End: Command Box */
+
+/* Start: Status Bar */
+.status-bar {
+    -fx-background-color: #e0e0e0;
+}
+
+.status-bar .label {
+    -fx-font-size: 12pt;
+    -fx-text-fill: #333333;
+}
+/* End: Status Bar */
 ```

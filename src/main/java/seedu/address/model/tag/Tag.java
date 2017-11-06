@@ -5,7 +5,6 @@ import static java.util.Objects.requireNonNull;
 import java.util.Random;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.ui.TagColours;
 
 
 /**

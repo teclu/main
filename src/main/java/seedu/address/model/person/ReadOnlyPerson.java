@@ -49,17 +49,17 @@ public interface ReadOnlyPerson {
         final StringBuilder builder = new StringBuilder();
         builder.append("Name: ")
                 .append(getName())
-                .append(" | Phone: ")
+                .append("\nPhone: ")
                 .append(getPhone())
-                .append(" | Email: ")
+                .append("\nEmail: ")
                 .append(getEmail())
-                .append(" | Address: ")
+                .append("\nAddress: ")
                 .append(getAddress())
-                .append(" | Birthday: ")
+                .append("\nBirthday: ")
                 .append(getBirthday())
-                .append(" | Avatar: ")
+                .append("\nAvatar: ")
                 .append(getAvatar())
-                .append(" | Tags: ");
+                .append("\nTags: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }

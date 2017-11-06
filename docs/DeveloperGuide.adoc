@@ -1,4 +1,4 @@
-= K.N.S. AddressBook - Developer Guide
+= K.N.S. AddressBook v1.5.0rc - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -529,7 +529,7 @@ easily taken from Google's Material Design. +
 **Cons:** Bad idea design-wise because it violates the link:#tradic-colour-scheme[Triadic Colour Scheme]. It could make the application look less professional and unattractive.
 // end::personpanel[]
 
-//tag::avatar[]
+// tag::avatar[]
 === Avatar
 
 The Avatar class is a new contact detail that displays a display picture obtained
@@ -640,11 +640,12 @@ to missing files. +
 **Alternative 2 (current choice):** Save the pictures outside of the `.jar` file, inside the `data/` folder. +
 **Pros:** Users will be able to directly access downloaded pictures and manipulate them as they please. +
 **Cons:** If users are not careful (e.g. permanently.delete a picture by mistake), the contact's avatar may get
-overrided by the default placeholder.
+replaced by the default placeholder.
 
 ---
 
-// end::Avatar[]
+// end::avatar[]
+
 
 //tag::partialfind[]
 === Partial Find
