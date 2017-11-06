@@ -61,6 +61,7 @@ public class PersonListPanel extends UiPart<Region> {
     private void scrollTo(int index) {
         Platform.runLater(() -> {
             personListView.scrollTo(index);
+            personListView.getSelectionModel().clearSelection();
             personListView.getSelectionModel().clearAndSelect(index);
         });
     }

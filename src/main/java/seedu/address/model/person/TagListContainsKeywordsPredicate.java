@@ -42,6 +42,6 @@ public class TagListContainsKeywordsPredicate extends FieldContainsKeywordsPredi
 
     @Override
     public Comparator<ReadOnlyPerson> sortOrderComparator() {
-        return (person1, person2) -> (0); //no sorting for tag
+        return defaultSortOrder; //no sorting for tag
     }
 }
