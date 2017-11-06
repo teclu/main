@@ -68,6 +68,7 @@ public class AddTagCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+        showFirstPersonOnly(expectedModel);
 
         assertCommandSuccess(addTagCommand, model, expectedMessage, expectedModel);
     }

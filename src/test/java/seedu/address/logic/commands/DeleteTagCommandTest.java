@@ -68,6 +68,7 @@ public class DeleteTagCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+        showFirstPersonOnly(expectedModel);
 
         assertCommandSuccess(deleteTagCommand, model, expectedMessage, expectedModel);
     }
