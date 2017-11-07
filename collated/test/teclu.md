@@ -21,7 +21,7 @@ public class PersonPanelHandle extends NodeHandle<Node> {
     private Label avatar;
     private List<Label> tagLabels;
 
-    public PersonPanelHandle(Node personPanelNode) {	
+    public PersonPanelHandle(Node personPanelNode) {
         super(personPanelNode);
 
         this.name = getChildNode(NAME_FIELD_ID);
@@ -128,6 +128,53 @@ public class AvatarTest {
         }
         return this;
     }
+```
+###### \java\seedu\address\ui\HelpWindowTest.java
+``` java
+public class HelpWindowTest extends GuiUnitTest {
+
+    private HelpWindow helpWindow;
+    private HelpWindowHandle helpWindowHandle;
+
+    @Before
+    public void setUp() throws Exception {
+        guiRobot.interact(() -> helpWindow = new HelpWindow());
+        Stage helpWindowStage = FxToolkit.setupStage((stage) -> stage.setScene(helpWindow.getRoot().getScene()));
+        FxToolkit.showStage();
+        helpWindowHandle = new HelpWindowHandle(helpWindowStage);
+    }
+
+    @Test
+    public void display() {
+        URL expectedHelpPage = HelpWindow.class.getResource(USERGUIDE_FILE_PATH);
+        assertEquals(expectedHelpPage, helpWindowHandle.getLoadedUrl());
+    }
+}
+```
+###### \java\seedu\address\ui\MainWindowTest.java
+``` java
+public class MainWindowTest extends AddressBookGuiTest {
+
+    @Test
+    public void currentThemeDisplayed() {
+        // Use menu button
+        mainWindowHandle.getMainMenu().changeToDarkThemeUsingMenu();
+        assertEquals(MainWindow.getCurrentTheme(), "view/DarkTheme.css");
+        mainWindowHandle.getMainMenu().changeToRedThemeUsingMenu();
+        assertEquals(MainWindow.getCurrentTheme(), "view/RedTheme.css");
+        mainWindowHandle.getMainMenu().changeToBlueThemeUsingMenu();
+        assertEquals(MainWindow.getCurrentTheme(), "view/BlueTheme.css");
+        mainWindowHandle.getMainMenu().changeToGreenThemeUsingMenu();
+        assertEquals(MainWindow.getCurrentTheme(), "view/GreenTheme.css");
+        mainWindowHandle.getMainMenu().changeToLightThemeUsingMenu();
+        assertEquals(MainWindow.getCurrentTheme(), "view/LightTheme.css");
+
+        // To show final colour change
+        mainWindowHandle.getMainMenu().changeToDarkThemeUsingMenu();
+        assertEquals(MainWindow.getCurrentTheme(), "view/DarkTheme.css");
+
+    }
+}
 ```
 ###### \java\seedu\address\ui\PersonPanelTest.java
 ``` java

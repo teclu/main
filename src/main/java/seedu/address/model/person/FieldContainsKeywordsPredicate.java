@@ -10,8 +10,10 @@ import java.util.function.Predicate;
  *  Represents a predicate for a field of a ReadOnlyPerson with the ability to test an instance of a ReadOnlyPerson.
  */
 public abstract class FieldContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+    protected static Comparator<ReadOnlyPerson> defaultSortOrder = null;
     protected List<String> keywords;
     protected String fieldToSearch;
+
 
     /**
      * Returns an immutable List of keywords that is used to evaluate a ReadOnlyPerson.

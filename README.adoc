@@ -1,4 +1,4 @@
-= K.N.S. AddressBook v1.4.0
+= K.N.S. AddressBook v1.5.0rc
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
@@ -8,11 +8,11 @@ https://coveralls.io/github/CS2103AUG2017-W11-B3/main?branch=master[image:https:
 https://www.codacy.com/app/damith/addressbook-level4?utm_source=github.com&utm_medium=referral&utm_content=se-edu/addressbook-level4&utm_campaign=Badge_Grade[image:https://api.codacy.com/project/badge/Grade/fc0b7775cf7f4fdeaf08776f3d8e364a[Codacy Badge]]
 
 ifdef::env-github[]
-image::docs/images/Ui.png[width="600"]
+image::docs/images/Ui.png[width="681"]
 endif::[]
 
 ifndef::env-github[]
-image::images/Ui.png[width="600"]
+image::images/Ui.png[width="681"]
 endif::[]
 
 K.N.S. AddressBook is a free Java desktop application available on Windows and Mac OS X operating systems. It is
@@ -32,10 +32,8 @@ Even if you aren't a freelancer, you're always welcome to try out our applicatio
 
 == Acknowledgements
 
-* Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by _Marco Jakob_.
-
 * Original source code was taken from the https://github.com/nus-cs2103-AY1718S1/addressbook-level4/[AddressBook-Level4 project], which was created by the https://github.com/se-edu[SE-EDU initiative].
 
-* Icons found in the PersonPanel were taken from https://material.io/[Google's Material Design].
+* Backgrounds and Icons used in the Person Panel were made by https://lukemcdonald.com/[Luke McDonald] and http://www.paomedia.com/[Arnaud Chesne] respectively.
 
 == Licence : link:LICENSE[MIT]

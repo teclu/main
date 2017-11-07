@@ -1,14 +1,15 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
@@ -29,6 +30,7 @@ import seedu.address.model.tag.Tag;
 public class DeleteTagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "deletetag";
+    public static final String COMMAND_ALIAS = "dt";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes a person's tag in the address book. "
             + "Parameters: INDEX (must be a positive integer) "
@@ -75,7 +77,8 @@ public class DeleteTagCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
+
         return new CommandResult(String.format(MESSAGE_DELETE_TAG_SUCCESS, editedPerson));
     }
     /**

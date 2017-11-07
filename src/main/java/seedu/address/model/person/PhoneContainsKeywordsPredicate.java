@@ -22,7 +22,7 @@ public class PhoneContainsKeywordsPredicate extends FieldContainsKeywordsPredica
     @Override
     public boolean test(ReadOnlyPerson person) {
         return keywords.stream().anyMatch(keyword -> StringUtil
-                .containsWordIgnoreCase(person.getPhone().value, keyword));
+                .containsWordPartialIgnoreCase(person.getPhone().value, keyword));
     }
 
     @Override
@@ -34,6 +34,6 @@ public class PhoneContainsKeywordsPredicate extends FieldContainsKeywordsPredica
 
     @Override
     public Comparator<ReadOnlyPerson> sortOrderComparator() {
-        return (person1, person2) -> (0); //no sorting for phone
+        return defaultSortOrder; //no sorting for phone
     }
 }
