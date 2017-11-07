@@ -22,8 +22,8 @@ public class SortCommandParser implements Parser<SortCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the SortCommand
-     * and returns an SortCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
+     * @return SortCommand object for execution.
      */
     public SortCommand parse(String args) throws ParseException {
         requireNonNull(args);
