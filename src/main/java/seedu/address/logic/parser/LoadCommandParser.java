@@ -7,6 +7,7 @@ import static seedu.address.logic.commands.LoadCommand.MESSAGE_USAGE;
 import seedu.address.logic.commands.LoadCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author k-l-a
 /**
  * Parses input arguments and create a new LoadCommand Object.
  */
