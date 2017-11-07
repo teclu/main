@@ -34,6 +34,6 @@ public class PhoneContainsKeywordsPredicate extends FieldContainsKeywordsPredica
 
     @Override
     public Comparator<ReadOnlyPerson> sortOrderComparator() {
-        return (person1, person2) -> (0); //no sorting for phone
+        return defaultSortOrder; //no sorting for phone
     }
 }
