@@ -257,6 +257,7 @@ Examples :
  * `f John` is equivalent with above example.
  * `find Betsy Tim John` +
  Returns any person having names `Betsy`, `Tim`, or `John` or that starts with them (e.g. `Timothy`)
+// tag::findbytag[]
 
 ==== By tag
 To find by tag, you can use the prefix `t/`. +
@@ -271,6 +272,7 @@ Returns any person with the tag `family`
 * `f t/ friends family colleague` +
 Returns any person with at least one of the tags `friends`, `family`, or `colleague`.
 
+// end::findbytag[]
 ==== By any field
 
 To find by other fields, you can use their respective prefixes. (`p/` for phone, `e/` for email, `b/` for birthday,
@@ -289,6 +291,7 @@ Returns any person with birthday containing `16/02`.
 * `find e/ johndoe` +
 Returns any person with email containing `johndoe`.
 
+// tag::partialfind[]
 ==== Partial matching
 `Since v1.2` +
 The Find command accepts partial matches by default. +
@@ -309,6 +312,7 @@ Matches `Leonard` but not `Leo`
 * `find t/ frien` +
 Matches any person with a tag that contains `frien`, e.g. `Friends` or `BestFriends`
 
+// end::partialfind[]
 ==== By multiple fields and keywords
 `In development for v2.0`
 
