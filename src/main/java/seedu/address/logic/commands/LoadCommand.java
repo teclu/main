@@ -32,6 +32,8 @@ public class LoadCommand extends UndoableCommand {
             ReadOnlyAddressBook addressBook = addressBookStorage.readAddressBook().get();
             model.resetData(addressBook);
         } catch (Exception e) {
+            // TODO : Improve error messages
+            // currently any failure results in a FILE_NOT_FOUND message.
             return new CommandResult(String.format(MESSAGE_FILE_NOT_FOUND, filePathToLoad));
         }
 
