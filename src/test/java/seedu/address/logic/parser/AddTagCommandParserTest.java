@@ -58,16 +58,14 @@ public class AddTagCommandParserTest {
     }
 
     @Test
-    public void parse_tooManyArgumentSpecified_failure() throws Exception {
-        // argument > 2
-        assertParseFailure(parser, "1 " + VALID_TAG + " " + VALID_TAG_2, MESSAGE_INVALID_FORMAT);
-    }
-
-    @Test
     public void parse_validArgument_success() throws Exception {
         Index index = INDEX_FIRST_PERSON;
         Set<Tag> tagToAdd = ParserUtil.parseTags(Arrays.asList(VALID_TAG));
         AddTagCommand expectedCommand = new AddTagCommand(index, tagToAdd);
         assertParseSuccess(parser, "1 " + VALID_TAG, expectedCommand);
+        
+        Set<Tag> twoTagsToAdd = ParserUtil.parseTags(Arrays.asList(VALID_TAG, VALID_TAG_2));
+        AddTagCommand secondExpectedCommand = new AddTagCommand(index, twoTagsToAdd);
+        assertParseSuccess(parser, "1 " + VALID_TAG + " " + VALID_TAG_2, secondExpectedCommand);
     }
 }
