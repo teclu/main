@@ -16,4 +16,22 @@ public class LoadCommand extends UndoableCommand {
     public static final String MESSAGE_LOAD_SUCCESS = "Load successful! File loaded from %1$s";
     public static final String MESSAGE_FILE_NOT_FOUND = "File not found at %1$s";
 
+    public final String filePathToLoad;
+
+    public LoadCommand(String filePath) {
+        this.filePathToLoad = filePath;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        try {
+            XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(filePathToLoad);
+            ReadOnlyAddressBook addressBook = addressBookStorage.readAddressBook().get();
+            model.resetData(addressBook);
+        } catch (Exception e) {
+            return new CommandResult(String.format(MESSAGE_FILE_NOT_FOUND, filePathToLoad));
+        }
+
+        return new CommandResult(String.format(MESSAGE_LOAD_SUCCESS, filePathToLoad));
+    }
 }
