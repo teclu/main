@@ -1,6 +1,9 @@
 package seedu.address.logic.commands;
 
-public class LoadCommand {
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.storage.XmlAddressBookStorage;
+
 /**
  * Loads the address book on the given filepath
  */
