@@ -23,6 +23,20 @@ public class ExportCommand extends Command {
     }
 
     @Override
+    public CommandResult execute() throws CommandException {
+        try {
+            XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(filePathToExport);
+            ReadOnlyAddressBook addressBook = model.getAddressBook();
+            addressBookStorage.saveAddressBook(addressBook);
+        } catch (Exception e) {
+            // TODO : Improve error messages
+            return new CommandResult(String.format(MESSAGE_EXPORT_FAILURE, filePathToExport));
+        }
+
+        return new CommandResult(String.format(MESSAGE_EXPORT_SUCCESS, filePathToExport));
+    }
+
+    @Override
     public boolean equals(Object other) {
         return other == this
                 || (other instanceof ExportCommand
