@@ -63,7 +63,7 @@ public class AddTagCommandParserTest {
         Set<Tag> tagToAdd = ParserUtil.parseTags(Arrays.asList(VALID_TAG));
         AddTagCommand expectedCommand = new AddTagCommand(index, tagToAdd);
         assertParseSuccess(parser, "1 " + VALID_TAG, expectedCommand);
-        
+
         Set<Tag> twoTagsToAdd = ParserUtil.parseTags(Arrays.asList(VALID_TAG, VALID_TAG_2));
         AddTagCommand secondExpectedCommand = new AddTagCommand(index, twoTagsToAdd);
         assertParseSuccess(parser, "1 " + VALID_TAG + " " + VALID_TAG_2, secondExpectedCommand);
