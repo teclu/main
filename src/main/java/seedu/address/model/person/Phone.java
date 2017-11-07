@@ -10,7 +10,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Phone {
 
-    public static final String DEFAULT_VALUE = "No Phone Number";
+    public static final String DEFAULT_VALUE = "-";
     public static final String MESSAGE_PHONE_CONSTRAINTS =
             "Phone numbers can only contain numbers, and should be at least 3 digits long";
     public static final String PHONE_VALIDATION_REGEX = "\\d{3,}";
@@ -42,7 +42,7 @@ public class Phone {
      * @return
      */
     public boolean isNotDefault() {
-        return !value.equals(DEFAULT_VALUE);
+        return DEFAULT_VALUE.equals(value);
     }
 
     @Override

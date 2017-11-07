@@ -9,7 +9,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
  */
 public class Address {
-    public static final String DEFAULT_VALUE = "No Address";
+    public static final String DEFAULT_VALUE = "-";
     public static final String MESSAGE_ADDRESS_CONSTRAINTS =
             "Person addresses can take any values, and it should not be blank";
 
@@ -46,7 +46,7 @@ public class Address {
      * @return
      */
     public boolean isNotDefault() {
-        return !value.equals(DEFAULT_VALUE);
+        return DEFAULT_VALUE.equals(value);
     }
 
     @Override

@@ -12,7 +12,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 public class Birthday {
 
-    public static final String DEFAULT_VALUE = "No Birthday";
+    public static final String DEFAULT_VALUE = "-";
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
             "Birthday should contain 8 digit number, first 2 digit for day (01-30), second 2 digit for month (01-12),"
