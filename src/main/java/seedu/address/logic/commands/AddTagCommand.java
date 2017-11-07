@@ -26,18 +26,18 @@ import seedu.address.model.tag.Tag;
 
 //@@author nadhira15
 /**
- * Adds a tag to a person in the address book.
+ * Adds tag(s) to a person in the address book.
  */
 public class AddTagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "addtag";
     public static final String COMMAND_ALIAS = "at";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a tag to a person in the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add tag(s) to a person in the address book. "
             + "Parameters: INDEX (must be a positive integer) "
             + "[TAG] \n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + "neighbours";
+            + "neighbours owesMoney";
 
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Tag: %2$s";
     public static final String MESSAGE_ADD_TAG_SUCCESS = "Tag added!";
