@@ -18,7 +18,7 @@ public class ImportCommand extends UndoableCommand {
             + "Parameters: FILEPATH\n"
             + "Example: import data/addressbook-backup.xml";
 
-    public static final String MESSAGE_LOAD_SUCCESS = "Import successful! Data imported from %1$s";
+    public static final String MESSAGE_IMPORT_SUCCESS = "Import successful! Data imported from %1$s";
     public static final String MESSAGE_FILE_NOT_FOUND = "File not found at %1$s";
 
     public final String filePathToImport;
@@ -39,6 +39,13 @@ public class ImportCommand extends UndoableCommand {
             return new CommandResult(String.format(MESSAGE_FILE_NOT_FOUND, filePathToImport));
         }
 
-        return new CommandResult(String.format(MESSAGE_LOAD_SUCCESS, filePathToImport));
+        return new CommandResult(String.format(MESSAGE_IMPORT_SUCCESS, filePathToImport));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this
+                || (other instanceof ImportCommand
+                && this.filePathToImport.equals(((ImportCommand) other).filePathToImport));
     }
 }
