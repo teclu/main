@@ -1,6 +1,12 @@
 package seedu.address.logic.commands;
 
-public class ExportCommand {
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.storage.XmlAddressBookStorage;
+
+/**
+ * Exports the contents of the address book to the data folder with the given filename.
+ */
 public class ExportCommand extends Command {
 
     public static final String COMMAND_WORD = "export";
