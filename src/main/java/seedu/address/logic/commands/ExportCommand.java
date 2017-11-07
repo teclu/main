@@ -16,4 +16,16 @@ public class ExportCommand extends Command {
 
     public static final String EXPORT_FILEPATH = "data/";
 
+    public final String filePathToExport;
+
+    public ExportCommand(String fileName) {
+        this.filePathToExport = EXPORT_FILEPATH + fileName;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this
+                || (other instanceof ExportCommand
+                && this.filePathToExport.equals(((ExportCommand) other).filePathToExport));
+    }
 }
