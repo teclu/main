@@ -58,16 +58,14 @@ public class DeleteTagCommandParserTest {
     }
 
     @Test
-    public void parse_tooManyArgumentSpecified_failure() throws Exception {
-        // argument > 2
-        assertParseFailure(parser, "1 " + VALID_TAG + " " + VALID_TAG_2, MESSAGE_INVALID_FORMAT);
-    }
-
-    @Test
     public void parse_validArgument_success() throws Exception {
         Index index = INDEX_FIRST_PERSON;
         Set<Tag> tagToDelete = ParserUtil.parseTags(Arrays.asList(VALID_TAG));
         DeleteTagCommand expectedCommand = new DeleteTagCommand(index, tagToDelete);
         assertParseSuccess(parser, "1 " + VALID_TAG, expectedCommand);
+
+        Set<Tag> tagsToDelete = ParserUtil.parseTags(Arrays.asList(VALID_TAG, VALID_TAG_2));
+        DeleteTagCommand secondExpectedCommand = new DeleteTagCommand(index, tagsToDelete);
+        assertParseSuccess(parser, "1 " + VALID_TAG + " " + VALID_TAG_2, secondExpectedCommand);
     }
 }
