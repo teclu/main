@@ -26,7 +26,11 @@ include::../UserGuide.adoc[tag=partialfind]
 
 ==== Justification
 
-
+Most people will likely not fully remember their contact details, so a partial find of some kind would be very beneficial
+to have in the find command. Even if they do, a partial find can still be useful in reducing the actual number of characters
+someone has to type, because they can type the keywords up to a point where they're sure that it won't match most contacts
+other than the one they're looking for. So, given that partial finding is more convenient for everyone, I decided that it
+was more appropriate than exclusive matching.
 
 ==== Implementation
 
