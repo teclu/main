@@ -17,8 +17,8 @@ public class ExportCommandParser implements Parser<ExportCommand> {
 
     /**
      * Parses the given (@code String) in the context of a ExportCommand.
-     * @param args
      * @return ExportCommand Object for execution
+     * @throws ParseException if the user input does not conform the expected format
      */
     public ExportCommand parse(String args) throws ParseException {
         requireNonNull(args);

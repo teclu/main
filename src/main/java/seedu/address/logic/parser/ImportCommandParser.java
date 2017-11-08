@@ -15,8 +15,8 @@ public class ImportCommandParser implements Parser<ImportCommand> {
 
     /**
      * Parses the given (@code String) in the context of a ImportCommand.
-     * @param args
      * @return ImportCommand Object for execution
+     * @throws ParseException if the user input does not conform the expected format
      */
     public ImportCommand parse(String args) throws ParseException {
         requireNonNull(args);
