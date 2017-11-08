@@ -18,7 +18,7 @@ Software Engineering* in AY2017/8 Semester 1.
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.html[tag=partialfind]
+include::../UserGuide.adoc[tag=partialfind]
 
 #End of Extract#
 
