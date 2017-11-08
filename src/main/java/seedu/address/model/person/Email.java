@@ -9,7 +9,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Guarantees: immutable; is valid as declared in {@link #isValidEmail(String)}
  */
 public class Email {
-    public static final String DEFAULT_VALUE = "No Email";
+    public static final String DEFAULT_VALUE = "-";
     public static final String MESSAGE_EMAIL_CONSTRAINTS =
             "Person emails should be 2 alphanumeric/period strings separated by '@'";
     public static final String EMAIL_VALIDATION_REGEX = "[\\w\\.]+@[\\w\\.]+";
@@ -42,7 +42,7 @@ public class Email {
      * @return
      */
     public boolean isNotDefault() {
-        return !value.equals(DEFAULT_VALUE);
+        return !DEFAULT_VALUE.equals(value);
     }
 
     @Override

@@ -36,6 +36,7 @@ public class AddTagCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+        showFirstPersonOnly(expectedModel);
 
         assertCommandSuccess(addTagCommand, model, expectedMessage, expectedModel);
     }
@@ -145,6 +146,7 @@ public class DeleteTagCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
+        showFirstPersonOnly(expectedModel);
 
         assertCommandSuccess(deleteTagCommand, model, expectedMessage, expectedModel);
     }
@@ -394,17 +396,15 @@ public class AddTagCommandParserTest {
     }
 
     @Test
-    public void parse_tooManyArgumentSpecified_failure() throws Exception {
-        // argument > 2
-        assertParseFailure(parser, "1 " + VALID_TAG + " " + VALID_TAG_2, MESSAGE_INVALID_FORMAT);
-    }
-
-    @Test
     public void parse_validArgument_success() throws Exception {
         Index index = INDEX_FIRST_PERSON;
         Set<Tag> tagToAdd = ParserUtil.parseTags(Arrays.asList(VALID_TAG));
         AddTagCommand expectedCommand = new AddTagCommand(index, tagToAdd);
         assertParseSuccess(parser, "1 " + VALID_TAG, expectedCommand);
+        
+        Set<Tag> twoTagsToAdd = ParserUtil.parseTags(Arrays.asList(VALID_TAG, VALID_TAG_2));
+        AddTagCommand secondExpectedCommand = new AddTagCommand(index, twoTagsToAdd);
+        assertParseSuccess(parser, "1 " + VALID_TAG + " " + VALID_TAG_2, secondExpectedCommand);
     }
 }
 ```
@@ -453,17 +453,15 @@ public class DeleteTagCommandParserTest {
     }
 
     @Test
-    public void parse_tooManyArgumentSpecified_failure() throws Exception {
-        // argument > 2
-        assertParseFailure(parser, "1 " + VALID_TAG + " " + VALID_TAG_2, MESSAGE_INVALID_FORMAT);
-    }
-
-    @Test
     public void parse_validArgument_success() throws Exception {
         Index index = INDEX_FIRST_PERSON;
         Set<Tag> tagToDelete = ParserUtil.parseTags(Arrays.asList(VALID_TAG));
         DeleteTagCommand expectedCommand = new DeleteTagCommand(index, tagToDelete);
         assertParseSuccess(parser, "1 " + VALID_TAG, expectedCommand);
+
+        Set<Tag> tagsToDelete = ParserUtil.parseTags(Arrays.asList(VALID_TAG, VALID_TAG_2));
+        DeleteTagCommand secondExpectedCommand = new DeleteTagCommand(index, tagsToDelete);
+        assertParseSuccess(parser, "1 " + VALID_TAG + " " + VALID_TAG_2, secondExpectedCommand);
     }
 }
 ```
