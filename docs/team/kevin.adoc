@@ -1,0 +1,80 @@
+= Kevin Leonardo - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: K.N.S. AddressBook
+K.N.S. AddressBook is a Java desktop address book application created by *Team W11-B3* during the course of *CS2103T
+Software Engineering* in AY2017/8 Semester 1.
+
+*Code Contributed*:
+ [https://github.com/CS2103AUG2017-W11-B3/main/blob/master/collated/main/k-l-a.md[Functional Code]]
+ [https://github.com/CS2103AUG2017-W11-B3/main/blob/master/collated/test/k-l-a.md[Test Code]]
+
+=== Enhancement Added: Partial Finding
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=partialfind]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=partialfind]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Find by Tag
+
+==== External behavior
+
+
+==== Justification
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=findbytag]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Boolean Searching
+
+==== Justification
+
+Given the target audience of our product, it is plausible that they would need to find people who matches certain
+criteria without having a specific person in mind. For example, they might need to find everyone who are clients but not
+currently overseas. In current form, there is no way for them to do this easily. +
+Boolean searching will allow them to search using AND and NOT keywords to enable a much easier searching experience.
+
+=== Other Contributions
+
+* *Modified `add` to accept missing prefixes other than name*
+** Each missing prefix will be shown with a default value to indicate their absence
+** Pull Request :
+
+
+* *Set up various project tools, such as :*
+** Appveyor and Coveralls configuration for github repo.
+** Github-pages website :
+
