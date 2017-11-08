@@ -1,14 +1,15 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
@@ -25,18 +26,18 @@ import seedu.address.model.tag.Tag;
 
 //@@author nadhira15
 /**
- * Adds a tag to a person in the address book.
+ * Adds tag(s) to a person in the address book.
  */
 public class AddTagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "addtag";
     public static final String COMMAND_ALIAS = "at";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a tag to a person in the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add tag(s) to a person in the address book. "
             + "Parameters: INDEX (must be a positive integer) "
             + "[TAG] \n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + "neighbours";
+            + "neighbours owesMoney";
 
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Tag: %2$s";
     public static final String MESSAGE_ADD_TAG_SUCCESS = "Tag added!";
@@ -77,7 +78,7 @@ public class AddTagCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
         return new CommandResult(String.format(MESSAGE_ADD_TAG_SUCCESS, editedPerson));
     }
     /**

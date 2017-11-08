@@ -2,18 +2,18 @@
 ###### \java\seedu\address\logic\commands\AddTagCommand.java
 ``` java
 /**
- * Adds a tag to a person in the address book.
+ * Adds tag(s) to a person in the address book.
  */
 public class AddTagCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "addtag";
     public static final String COMMAND_ALIAS = "at";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a tag to a person in the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add tag(s) to a person in the address book. "
             + "Parameters: INDEX (must be a positive integer) "
             + "[TAG] \n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + "neighbours";
+            + "neighbours owesMoney";
 
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Tag: %2$s";
     public static final String MESSAGE_ADD_TAG_SUCCESS = "Tag added!";
@@ -131,7 +131,7 @@ public class AddTagCommand extends UndoableCommand {
 ###### \java\seedu\address\logic\commands\DeleteTagCommand.java
 ``` java
 /**
- * Deletes a person's tag in the address book.
+ * Deletes a person's tag(s) in the address book.
  */
 public class DeleteTagCommand extends UndoableCommand {
 
@@ -142,7 +142,7 @@ public class DeleteTagCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) "
             + "[TAG] \n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + "neighbours";
+            + "neighbours owesMoney";
 
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Tag: %2$s";
     public static final String MESSAGE_DELETE_TAG_SUCCESS = "Tag deleted!";
@@ -294,8 +294,10 @@ public class AddTagCommandParser implements Parser<AddTagCommand> {
         }
 
         String[] arguments = trimmedArgs.split("\\s+");
+        List<String> argsList = Arrays.asList(arguments);
 
-        if (arguments.length != 2) {
+        // when there's only 1 arguments (can be index or anything), throw exception
+        if (arguments.length == 1) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagCommand.MESSAGE_USAGE));
         }
@@ -307,7 +309,7 @@ public class AddTagCommandParser implements Parser<AddTagCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagCommand.MESSAGE_USAGE));
         }
 
-        List<String> tagList = Arrays.asList(arguments[1]);
+        List<String> tagList = argsList.subList(1, argsList.size());
         Set<Tag> tagToAdd;
 
         try {
@@ -359,8 +361,10 @@ public class DeleteTagCommandParser implements Parser<DeleteTagCommand> {
         }
 
         String[] arguments = trimmedArgs.split("\\s+");
+        List<String> argsList = Arrays.asList(arguments);
 
-        if (arguments.length != 2) {
+        // when there's only 1 arguments (can be index or anything), throw exception
+        if (arguments.length == 1) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteTagCommand.MESSAGE_USAGE));
         }
@@ -372,7 +376,7 @@ public class DeleteTagCommandParser implements Parser<DeleteTagCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteTagCommand.MESSAGE_USAGE));
         }
 
-        List<String> tagList = Arrays.asList(arguments[1]);
+        List<String> tagList = argsList.subList(1, argsList.size());
         Set<Tag> tagToDelete;
 
         try {

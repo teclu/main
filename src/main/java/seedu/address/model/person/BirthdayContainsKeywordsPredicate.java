@@ -34,6 +34,6 @@ public class BirthdayContainsKeywordsPredicate extends FieldContainsKeywordsPred
 
     @Override
     public Comparator<ReadOnlyPerson> sortOrderComparator() {
-        return (person1, person2) -> (0); //no sorting for birthday
+        return defaultSortOrder; //no sorting for birthday
     }
 }
