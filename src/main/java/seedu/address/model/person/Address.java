@@ -46,7 +46,7 @@ public class Address {
      * @return
      */
     public boolean isNotDefault() {
-        return DEFAULT_VALUE.equals(value);
+        return !DEFAULT_VALUE.equals(value);
     }
 
     @Override

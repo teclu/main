@@ -42,7 +42,7 @@ public class Email {
      * @return
      */
     public boolean isNotDefault() {
-        return !value.equals(DEFAULT_VALUE);
+        return !DEFAULT_VALUE.equals(value);
     }
 
     @Override
