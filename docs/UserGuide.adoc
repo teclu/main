@@ -73,11 +73,13 @@ K.N.S. AddressBook suits your style.
 * *Custom Themes*: For the more tech-savvy users, we plan to let you change the colours of K.N.S. AddressBook via
 import of link:cascading-style-sheets[Cascading Style Sheets] (CSS).
 
+// tag::findbyallfield1[]
 === Find by All Field
 
 You can find your contact by using any field as the search query. For example, you can type in a phone number as the search query, and the contact in your address book who has that phone number will appear in the search result.
 
 Find by all field supports find by name, phone number, email, address, birthday, and tags.
+// end::findbyallfield1[]
 
 === Saving the data
 
@@ -194,6 +196,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `e 2 n/Betsy Crower v/http://example.com/profile.png t/` +
 Edits the name of the 2nd person to be `Betsy Crower`, change the avatar and clears all existing tags.
 
+// tag::adddeletetagcommand[]
 === Adding a tag : `addtag` or `at`
 
 `Since v1.2`
@@ -230,6 +233,7 @@ Examples:
 
 * `deletetag 1 owesMoney` +
 Deletes the `owesMoney` tag from the 1st person on the list.
+
 * `deletetag 3 friends highSchool` +
 Deletes the `friends` tag and `highSchool` tag from the 3rd person on the list.
 
@@ -269,6 +273,7 @@ Returns any person with the tag `family`
 * `f t/ friends family colleague` +
 Returns any person with at least one of the tags `friends`, `family`, or `colleague`.
 
+// tag::findbyallfield2[]
 ==== By any field
 
 To find by other fields, you can use their respective prefixes. (`p/` for phone, `e/` for email, `b/` for birthday,
@@ -286,6 +291,7 @@ Returns any person with address containing `Jurong` (case-insensitive) in it.
 Returns any person with birthday containing `16/02`.
 * `find e/ johndoe` +
 Returns any person with email containing `johndoe`.
+// end::findbyallfield2[]
 
 ==== Partial matching
 `Since v1.2` +
