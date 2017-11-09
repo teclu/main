@@ -16,12 +16,15 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -185,12 +188,29 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.setMinWidth(MIN_WIDTH);
     }
 
-    @FXML
-    private void setToDarkTheme() {
-        mainWindow.getStylesheets().remove(currentTheme);
-        prefs.setAddressBookTheme("DarkTheme.css");
-        currentTheme = "view/" + prefs.getAddressBookTheme();
-        mainWindow.getStylesheets().add(currentTheme);
+    //@@author teclu
+    @Subscribe
+    public void handleChangeThemeRequestEvent(ChangeThemeRequestEvent event) throws CommandException {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        switch (event.theme) {
+        case "light":
+            setToLightTheme();
+            break;
+        case "dark":
+            setToDarkTheme();
+            break;
+        case "red":
+            setToRedTheme();
+            break;
+        case "blue":
+            setToBlueTheme();
+            break;
+        case "green":
+            setToGreenTheme();
+            break;
+        default:
+        }
     }
 
     @FXML
@@ -199,6 +219,16 @@ public class MainWindow extends UiPart<Region> {
         prefs.setAddressBookTheme("LightTheme.css");
         currentTheme = "view/" + prefs.getAddressBookTheme();
         mainWindow.getStylesheets().add(currentTheme);
+        EventsCenter.getInstance().post(new ChangeThemeRequestEvent("Light"));
+    }
+
+    @FXML
+    private void setToDarkTheme() {
+        mainWindow.getStylesheets().remove(currentTheme);
+        prefs.setAddressBookTheme("DarkTheme.css");
+        currentTheme = "view/" + prefs.getAddressBookTheme();
+        mainWindow.getStylesheets().add(currentTheme);
+        EventsCenter.getInstance().post(new ChangeThemeRequestEvent("Dark"));
     }
 
     @FXML
@@ -207,6 +237,7 @@ public class MainWindow extends UiPart<Region> {
         prefs.setAddressBookTheme("RedTheme.css");
         currentTheme = "view/" + prefs.getAddressBookTheme();
         mainWindow.getStylesheets().add(currentTheme);
+        EventsCenter.getInstance().post(new ChangeThemeRequestEvent("Red"));
     }
 
     @FXML
@@ -215,6 +246,7 @@ public class MainWindow extends UiPart<Region> {
         prefs.setAddressBookTheme("BlueTheme.css");
         currentTheme = "view/" + prefs.getAddressBookTheme();
         mainWindow.getStylesheets().add(currentTheme);
+        EventsCenter.getInstance().post(new ChangeThemeRequestEvent("Blue"));
     }
 
     @FXML
@@ -223,7 +255,9 @@ public class MainWindow extends UiPart<Region> {
         prefs.setAddressBookTheme("GreenTheme.css");
         currentTheme = "view/" + prefs.getAddressBookTheme();
         mainWindow.getStylesheets().add(currentTheme);
+        EventsCenter.getInstance().post(new ChangeThemeRequestEvent("Green"));
     }
+    //@@author
 
     /**
      * Returns the current size and the position of the main Window.
