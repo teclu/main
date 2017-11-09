@@ -61,6 +61,101 @@
         return earliestIndex;
     }
 ```
+###### \java\seedu\address\logic\commands\ExportCommand.java
+``` java
+/**
+ * Exports the contents of the address book to the data folder with the given filename.
+ */
+public class ExportCommand extends Command {
+
+    public static final String COMMAND_WORD = "export";
+    public static final String COMMAND_ALIAS = "ex";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Exports the contents of the address book to the data folder with the given filename.\n"
+            + "Parameters: FILENAME.xml\n"
+            + "Example: export backup.xml";
+
+    public static final String MESSAGE_EXPORT_SUCCESS = "Export successful! Data exported to %1$s";
+    public static final String MESSAGE_EXPORT_FAILURE = "Error writing to file at %1$s";
+
+    public static final String EXPORT_FILEPATH = "data/";
+
+    public final String filePathToExport;
+
+    public ExportCommand(String fileName) {
+        this.filePathToExport = EXPORT_FILEPATH + fileName;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        try {
+            XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(filePathToExport);
+            ReadOnlyAddressBook addressBook = model.getAddressBook();
+            addressBookStorage.saveAddressBook(addressBook);
+        } catch (Exception e) {
+            // TODO : Improve error messages
+            return new CommandResult(String.format(MESSAGE_EXPORT_FAILURE, filePathToExport));
+        }
+
+        return new CommandResult(String.format(MESSAGE_EXPORT_SUCCESS, filePathToExport));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this
+                || (other instanceof ExportCommand
+                && this.filePathToExport.equals(((ExportCommand) other).filePathToExport));
+    }
+}
+```
+###### \java\seedu\address\logic\commands\ImportCommand.java
+``` java
+/**
+ * Imports the contents of the address book file on the given filepath
+ */
+public class ImportCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "import";
+    public static final String COMMAND_ALIAS = "i";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Imports the contents of the address book on the given filepath, overwriting current data.\n"
+            + "Parameters: FILEPATH\n"
+            + "Example: import data/addressbook-backup.xml";
+
+    public static final String MESSAGE_IMPORT_SUCCESS = "Import successful! Data imported from %1$s";
+    public static final String MESSAGE_FILE_NOT_FOUND = "File not found at %1$s";
+
+    public final String filePathToImport;
+
+    public ImportCommand(String filePath) {
+        this.filePathToImport = filePath;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        try {
+            XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(filePathToImport);
+            ReadOnlyAddressBook addressBook = addressBookStorage.readAddressBook().get();
+            model.resetData(addressBook);
+        } catch (Exception e) {
+            // TODO : Improve error messages
+            // currently any failure results in a FILE_NOT_FOUND message.
+            return new CommandResult(String.format(MESSAGE_FILE_NOT_FOUND, filePathToImport));
+        }
+
+        return new CommandResult(String.format(MESSAGE_IMPORT_SUCCESS, filePathToImport));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this
+                || (other instanceof ImportCommand
+                && this.filePathToImport.equals(((ImportCommand) other).filePathToImport));
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\SortCommand.java
 ``` java
 /**
@@ -144,11 +239,37 @@ public class SortCommand extends Command {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\ExportCommandParser.java
+``` java
+/**
+ * Parses input arguments and create a ExportCommand Object
+ */
+public class ExportCommandParser implements Parser<ExportCommand> {
+
+    public static final String EXPORT_FILE_EXTENSION = ".xml";
+
+    /**
+     * Parses the given (@code String) in the context of a ExportCommand.
+     * @return ExportCommand Object for execution
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ExportCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+
+        String trimmedArgs = args.trim();
+        if (!trimmedArgs.endsWith(EXPORT_FILE_EXTENSION)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+        }
+
+        return new ExportCommand(trimmedArgs);
+    }
+}
+```
 ###### \java\seedu\address\logic\parser\FindCommandParser.java
 ``` java
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
-     * and returns an FindCommand object for execution.
+     * @return FindCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public FindCommand parse(String args) throws ParseException {
@@ -206,6 +327,30 @@ public class SortCommand extends Command {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\ImportCommandParser.java
+``` java
+/**
+ * Parses input arguments and create a new ImportCommand Object.
+ */
+public class ImportCommandParser implements Parser<ImportCommand> {
+
+    /**
+     * Parses the given (@code String) in the context of a ImportCommand.
+     * @return ImportCommand Object for execution
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ImportCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+        }
+
+        return new ImportCommand(trimmedArgs);
+    }
+}
+```
 ###### \java\seedu\address\logic\parser\SortCommandParser.java
 ``` java
 /**
@@ -215,7 +360,7 @@ public class SortCommandParser implements Parser<SortCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the SortCommand
-     * and returns an SortCommand object for execution.
+     * @return SortCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public SortCommand parse(String args) throws ParseException {
@@ -282,8 +427,10 @@ public class SortCommandParser implements Parser<SortCommand> {
  *  Represents a predicate for a field of a ReadOnlyPerson with the ability to test an instance of a ReadOnlyPerson.
  */
 public abstract class FieldContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+    protected static Comparator<ReadOnlyPerson> defaultSortOrder = null;
     protected List<String> keywords;
     protected String fieldToSearch;
+
 
     /**
      * Returns an immutable List of keywords that is used to evaluate a ReadOnlyPerson.
@@ -351,7 +498,20 @@ public class TagListContainsKeywordsPredicate extends FieldContainsKeywordsPredi
 
     @Override
     public Comparator<ReadOnlyPerson> sortOrderComparator() {
-        return (person1, person2) -> (0); //no sorting for tag
+        return defaultSortOrder; //no sorting for tag
+    }
+}
+```
+###### \java\seedu\address\storage\StorageManager.java
+``` java
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        String filePath = addressBookStorage.getAddressBookFilePath() + "-backup.xml";
+        try {
+            saveAddressBook(addressBook, filePath);
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
     }
 }
 ```
