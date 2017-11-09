@@ -810,10 +810,10 @@ address of their contact.
 === Add Tag and Delete Tag
 
 Add tag and delete tag mechanism is facilitated by the `addtag` command and `deletetag` command, or their equivalent
-aliases `at` and `dt`, which is useful for adding and deleting a tag in a person's tag list. On previous versions
+aliases `at` and `dt`, which is useful for adding and deleting tags in a person's tag list. On previous versions
 before Add and Delete tag feature was introduced, users are able to change a person's tag list by using `edit` command.
-Using `edit` command to add and delete a tag is quite cumbersome as users need to retype all the current tags that they
-didn't want to edit. `addtag` command and `deletetag` command enables user to add and delete a tag using only a single
+Using `edit` command to add and delete tags is quite cumbersome as users need to retype all the current tags that they
+didn't want to edit. `addtag` command and `deletetag` command enables user to add and delete tags using only a single
 command, without retyping all the current tags.
 
 ==== Java Implementation
@@ -882,11 +882,10 @@ public DeleteTagCommand(Index index, Set<Tag> deletedTag) {
 **Alternative 1 (current choice):** Implementing a new command `addtag` and `deletetag` instead of using the existing
 Edit command.  +
 **Pros:** Users can add and delete a single tag only by typing the new tag that they want to assign or remove from
-a contact.  +
-**Cons:** Currently `addtag` and `deletetag` could only add and delete a single tag every time it is executed (_future
-enhancement will enable `addtag` and `deletetag` to add and delete more than 1 tag when executed_). +
-**Alternative 2:** Use existing Edit command to add or delete a single tag from a person in the address book. +
-**Pros:** Less command to remember. +
+a contact. `addtag` and `deletetag` supports adding and deleting several tags at a single execution. +
+**Cons:** More commands to remember. +
+**Alternative 2:** Use existing Edit command to add or delete tags from a person in the address book. +
+**Pros:** Less commands to remember. +
 **Cons:** Users need to retype all existing tags they want to keep when they are using `edit` command. Users might
 mistype existing tags or not typing a complete set of existing tags while using `edit` command.
 
