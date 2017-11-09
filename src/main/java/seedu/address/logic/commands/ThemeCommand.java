@@ -24,7 +24,7 @@ public class ThemeCommand extends Command {
     private final String theme;
 
     public ThemeCommand(String theme) {
-        this.theme = (theme.trim()).toLowerCase();;
+        this.theme = (theme.trim()).toLowerCase();
     }
 
     @Override
