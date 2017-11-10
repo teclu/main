@@ -237,6 +237,8 @@ Deletes the `owesMoney` tag from the 1st person on the list.
 * `deletetag 3 friends highSchool` +
 Deletes the `friends` tag and `highSchool` tag from the 3rd person on the list.
 
+// end::adddeletetagcommand[]
+
 === Locating persons: `find` or `f`
 Finds persons whose names or tags, indicated by an optional prefix, contain any of the given keywords. Defaults to find by name. +
 Format: `find [PREFIX] KEYWORD [MORE_KEYWORDS]` or `f [PREFIX] KEYWORD [MORE_KEYWORDS]`
