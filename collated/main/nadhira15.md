@@ -54,7 +54,7 @@ public class AddTagCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
         return new CommandResult(String.format(MESSAGE_ADD_TAG_SUCCESS, editedPerson));
     }
     /**
@@ -183,7 +183,8 @@ public class DeleteTagCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
+
         return new CommandResult(String.format(MESSAGE_DELETE_TAG_SUCCESS, editedPerson));
     }
     /**
@@ -439,7 +440,7 @@ public class AddressContainsKeywordsPredicate extends FieldContainsKeywordsPredi
 
     @Override
     public Comparator<ReadOnlyPerson> sortOrderComparator() {
-        return (person1, person2) -> (0); //no sorting for address
+        return defaultSortOrder; //no sorting for address
     }
 }
 ```
@@ -452,7 +453,7 @@ public class AddressContainsKeywordsPredicate extends FieldContainsKeywordsPredi
 
 public class Birthday {
 
-    public static final String DEFAULT_VALUE = "No Birthday";
+    public static final String DEFAULT_VALUE = "-";
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
             "Birthday should contain 8 digit number, first 2 digit for day (01-30), second 2 digit for month (01-12),"
@@ -486,7 +487,7 @@ public class Birthday {
      * @return
      */
     public boolean isNotDefault() {
-        return !value.equals(DEFAULT_VALUE);
+        return !DEFAULT_VALUE.equals(value);
     }
 
     @Override
@@ -536,7 +537,7 @@ public class BirthdayContainsKeywordsPredicate extends FieldContainsKeywordsPred
 
     @Override
     public Comparator<ReadOnlyPerson> sortOrderComparator() {
-        return (person1, person2) -> (0); //no sorting for birthday
+        return defaultSortOrder; //no sorting for birthday
     }
 }
 ```
@@ -568,7 +569,7 @@ public class EmailContainsKeywordsPredicate extends FieldContainsKeywordsPredica
 
     @Override
     public Comparator<ReadOnlyPerson> sortOrderComparator() {
-        return (person1, person2) -> (0); //no sorting for email
+        return defaultSortOrder; //no sorting for email
     }
 }
 ```
@@ -616,7 +617,7 @@ public class PhoneContainsKeywordsPredicate extends FieldContainsKeywordsPredica
 
     @Override
     public Comparator<ReadOnlyPerson> sortOrderComparator() {
-        return (person1, person2) -> (0); //no sorting for phone
+        return defaultSortOrder; //no sorting for phone
     }
 }
 ```
