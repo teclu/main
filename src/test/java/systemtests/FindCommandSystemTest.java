@@ -2,9 +2,13 @@ package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
+import static seedu.address.testutil.TypicalPersons.ELLE;
+import static seedu.address.testutil.TypicalPersons.FIONA;
+import static seedu.address.testutil.TypicalPersons.GEORGE;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
@@ -42,6 +46,46 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         ModelHelper.setFilteredList(expectedModel, CARL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
+
+        //@@author nadhira15
+
+        /* Case: find person with phone query -> 1 person found */
+        command = FindCommand.COMMAND_WORD + " p/ " + CARL.getPhone().value;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find person with partial phone query -> 1 person found */
+        command = FindCommand.COMMAND_WORD + " p/ 3525";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find person with partial address query -> 1 person found */
+        command = FindCommand.COMMAND_WORD + " a/ wall";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find person with email query -> 1 person found */
+        command = FindCommand.COMMAND_WORD + " e/ " + CARL.getEmail().value;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find person with partial email query -> 1 person found */
+        command = FindCommand.COMMAND_WORD + " e/ hein";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find person with birthday query -> 1 person found */
+        command = FindCommand.COMMAND_WORD + " b/ " + CARL.getBirthday().value;
+        ModelHelper.setFilteredList(expectedModel, ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+        
+        /* Case: find person with partial birthday query -> 1 person found */
+        command = FindCommand.COMMAND_WORD + " b/ 01/01";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        //@@author
 
         /* Case: find multiple persons in address book, 2 keywords -> 2 persons found */
         command = FindCommand.COMMAND_WORD + " Benson Daniel";
