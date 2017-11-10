@@ -8,21 +8,23 @@ import static org.junit.Assert.fail;
 import org.junit.Rule;
 import org.junit.Test;
 
+import guitests.AddressBookGuiTest;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
 //@@author teclu
-public class ThemeCommandTest {
+public class ThemeCommandTest extends AddressBookGuiTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
-    private String[] listThemes = { "light", "dark", "red", "blue", "green" };
+    private String[] listThemes = { "Light", "Dark", "Red", "Blue", "Green" };
 
     @Test
     public void execute_validTheme_success() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 4; i >= 0; i--) {
             assertExecutionSuccess(listThemes[i]);
         }
     }
