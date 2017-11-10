@@ -27,7 +27,12 @@ include::../UserGuide.adoc[tag=findbyallfield2]
 
 ==== Justification
 
-(justification)
+Previously, the `find` command only enables users to search their contacts with name query. Hence, users who only
+remember some part of their contact details but do not remember their contact's name would find it troublesome when
+searching for their contacts, as they couldn't find their contacts with the contact details that they remember.
+Together with Kevin, we enable the `find` command to accept all field as the query. Kevin implemented the find by tag
+feature, and I implemented find by phone, email, address, and birthday. This feature will help users to find their
+contacts faster and hassle-free.
 
 ==== Implementation
 
@@ -55,7 +60,13 @@ include::../UserGuide.adoc[tag=adddeletetagcommand]
 
 ==== Justification
 
-(justification)
+Previously, to add or delete a single tag from their contacts, the user can use `edit` command. This `edit` command is
+quite troublesome when user only wants to add or delete some tags from a certain contact's tag list, as the user needs
+to retype all current tags that they wish to keep. Problems may arise when they wrongly retype the tags that they
+wish to keep, or when they forgot to retype it at all. As such, I developed the add tag and delete tag commands, that
+are useful for adding and deleting tags from a contact's tag list, without retyping all the current tags that were not
+changed. Add tag and delete tag also supports add and deleting multiple tags in a single command. This feature will
+help users to add and delete tags faster.
 
 ==== Implementation
 
@@ -72,9 +83,30 @@ include::../DeveloperGuide.adoc[tag=adddeletetagcommand]
 
 ==== Justification
 
-(justification)
+Some users may have a list of frequently contacted contacts, and in the current version of K.N.S. Address Book, users
+need to search their contacts using the `find` command every time they want to see the contact details of these
+frequently contacted people. Favourite feature will enable users to set these frequently contacted people as their
+favourite contacts, and these contacts will always appear at the top of the contact list and the search result. This
+feature will help users to find their frequently contacted contacts easily, without using the `find` command to search
+for these contacts.
 
 === Other contributions
+
+* Birthday Field
+** Add a birthday field to enable users to store birthday details of their contacts in K.N.S Address Book. This feature
+is also useful for Stanley's proposed enhancement, birthday countdown & reminder feature. I also modify add and edit command
+to support the input of birthday details.
+** PR : https://github.com/CS2103AUG2017-W11-B3/main/pull/8[#8], https://github.com/CS2103AUG2017-W11-B3/main/pull/16[#16]
+
+* Shorthand Alias
+** Add shorthand equivalent alias for commands. This feature is useful to increase speed and efficiency while using K.N.S
+Address Book, as users are able to type command with only 1 or 2 alphabets instead of typing the whole word. This feature
+is mainly for professional K.N.S. Address Book users who already memorized the command list.
+** PR : https://github.com/CS2103AUG2017-W11-B3/main/pull/5[#5], https://github.com/CS2103AUG2017-W11-B3/main/pull/51[#51]
+
+* System Tests
+** Add several system tests to increase test coverage.
+** PR :
 
 * Reported bugs in team T17-B4 OneBook Address Book
 ** Issue : https://github.com/CS2103AUG2017-T17-B4/main/issues/84[#84]
