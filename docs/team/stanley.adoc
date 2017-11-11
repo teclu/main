@@ -5,42 +5,12 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 == Project: K.N.S. AddressBook
 K.N.S. AddressBook is a Java desktop address book application created by *Team W11-B3* during the course of *CS2103T
-Software Engineering* in AY2017/8 Semester 1.
+Software Engineering* in AY2017/8 Semester 1. This portfolio page will show you the contributions I have made to our
+project.
 
 *Code Contributed*:
  [https://github.com/CS2103AUG2017-W11-B3/main/blob/master/collated/main/teclu.md[Functional Code]]
  [https://github.com/CS2103AUG2017-W11-B3/main/blob/master/collated/test/teclu.md[Test Code]]
-
-=== Enhancement Added: Person Panel
-
-==== External behavior
-
----
-#Start of Extract [from: User Guide]#
-
-include::../UserGuide.adoc[tag=personpanel]
-
-#End of Extract#
-
----
-
-==== Justification
-
-Previously, the `Person Card` was the only thing that showed all the details of a contact. It was too small to fit all
-of the text. Aesthetically, this is not good because information should not be crammed into a small area. Thus, I
-created a `Person Panel` which shows all the contact's details in one page in order to improve aesthetic design and
-readability.
-
-==== Implementation
-
----
-#Start of Extract [from: Developer Guide]#
-
-include::../DeveloperGuide.adoc[tag=personpanel]
-
-#End of Extract#
-
----
 
 === Enhancement Added: Avatar
 
@@ -77,19 +47,94 @@ include::../DeveloperGuide.adoc[tag=avatar]
 
 ---
 
+=== Enhancement Added: Person Panel
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=personpanel]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Previously, the `Person Card` was the only thing that showed all the details of a contact. It was too small to fit all
+of the text. Aesthetically, this is not good because information should not be crammed into a small area. Thus, I
+created a `Person Panel` which shows all the contact's details in one page in order to improve aesthetic design and
+readability.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=personpanel]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Theme Switcher
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=themeswitcher]
+
+#End of Extract#
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=themecommand]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Type bullshit here?
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=themeswitcher]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Notes For Contacts
+
+==== Justification
+
+The current version of K.N.S. AddressBook only displays the predetermined details of a contact. It would be useful for
+a freelancer to be able to note down other miscellaneous details about their clients within the application, so that
+they do not have to save these details elsewhere. For example, a freelancer may want to note down information about when
+and where they are meeting their client the next time.
+
 === Enhancement Proposed: Birthday Countdown & Reminders
 
 ==== Justification
 
-With the inclusion of a birthday field (_implemented by Nadhira_), it would be useful to the user if the AddressBook can inform
-him/her of a contact's upcoming birthday. To a freelancer, this can be very important because he/she would want to make themselves
-appear professional and thoughtful by wishing their clients happy birthday.
+With the inclusion of a birthday field (_implemented by Nadhira_), it would be useful to the user if the AddressBook can
+inform him/her of a contact's upcoming birthday. To a freelancer, this can be very important because he/she would want
+to make themselves appear professional and thoughtful by wishing their clients happy birthday.
 
 === Other Contributions
 
-* *Small Feature - Theme Switcher (and GUI Design Improvements)*
-** Redesigned the AddressBook and provided a theme switcher for users to set their viewing preferences.
-** User Guide: https://cs2103aug2017-w11-b3.github.io/main/UserGuide.html#theme-switcher[Theme Switcher]
+* *Small Feature - GUI Design Improvements*
+** Redesigned the AddressBook.
 ** Pull Request: https://github.com/CS2103AUG2017-W11-B3/main/pull/50[#50]
 
 * *Modified `add` and `edit` command to support `Avatars`*
