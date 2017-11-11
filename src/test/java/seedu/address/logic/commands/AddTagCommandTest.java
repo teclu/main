@@ -89,12 +89,12 @@ public class AddTagCommandTest {
 
         ReadOnlyPerson personInList = model.getAddressBook().getPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
         Set<Tag> tag = personInList.getTags();
-        
+
         AddTagCommand addTagCommand = prepareCommand(INDEX_FIRST_PERSON, tag);
 
         assertCommandFailure(addTagCommand, model, AddTagCommand.MESSAGE_DUPLICATE_TAG);
     }
-    
+
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
