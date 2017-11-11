@@ -104,10 +104,6 @@ Address Book, as users are able to type command with only 1 or 2 alphabets inste
 is mainly for professional K.N.S. Address Book users who already memorized the command list.
 ** PR : https://github.com/CS2103AUG2017-W11-B3/main/pull/5[#5], https://github.com/CS2103AUG2017-W11-B3/main/pull/51[#51]
 
-* System Tests
-** Add several system tests to increase test coverage.
-** PR :
-
 * Reported bugs in team T17-B4 OneBook Address Book
 ** Issue : https://github.com/CS2103AUG2017-T17-B4/main/issues/84[#84]
 ** Issue : https://github.com/CS2103AUG2017-T17-B4/main/issues/89[#89]
