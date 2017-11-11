@@ -79,7 +79,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         ModelHelper.setFilteredList(expectedModel, ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
-        
+
         /* Case: find person with partial birthday query -> 1 person found */
         command = FindCommand.COMMAND_WORD + " b/ 01/01";
         assertCommandSuccess(command, expectedModel);
