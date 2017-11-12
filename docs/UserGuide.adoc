@@ -488,9 +488,11 @@ Exported data is saved in the `data` folder, which should be in the same folder 
 If a file with the filename you entered already exists in the `data` folder, it _**will be overwritten**_ without warning!
 
 Examples : +
-`export backup.xml` +
+
+* `export backup.xml` +
 Exports your data in the `data` folder as `backup.xml` +
-`ex copy` +
+
+* `ex copy` +
 Fails and will prompt you to add a `.xml` to the end of the file name.
 
 === Importing data : `import` or `i`
@@ -500,14 +502,16 @@ To import data from another application or your own backup data, you can use the
 where FILEPATH is the relative filepath of the data to be imported. (Usually in the `data` folder)
 
 [WARNING]
-When you import data, you cannot get your old data back once you close the application. (_you can still use `undo` if you haven't_) +
+When you import data, you cannot get your old data back once you close the application. +
+ (_you can still use `undo` if you haven't_) +
 It is recommended to backup using the `export` command first before importing.
 
 Examples : +
 
-`import data/backup.xml` +
+* `import data/backup.xml` +
 Imports the data in the file `backup.xml` in the `data` folder which should be located in the same folder as the application. +
-`i copy` +
+
+* `i copy` +
 Imports the data in the file `copy` which should be located at the same folder as the application. +
 
 // end::exim[]
