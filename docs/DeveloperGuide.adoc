@@ -834,25 +834,20 @@ method to return `true`. +
 
 
 
-Now, we introduce a slightly modified version to allow for partial matching as such :
+A slightly modified version of the previous method is created to allow for partial matching as such :
 [source, java]
 ----
  public static boolean containsWordPartialIgnoreCase(String sentence, String word) {
         //..check and prepare arguments..
-        for (String wordInSentence: wordsInPreppedSentence) {
-            if (wordInSentence.toLowerCase().contains(preppedWord.toLowerCase())) {
-                return true;
-            }
-        }
-        return false;
+        return sentence.contains(preppedWord);
     }
 ----
 
-By using the `contains` method, we now allow the query word to be a substring of the sentence word.
+By using the `contains` method, the query word can now be a substring of the sentence word.
+It also shortens the method, as there is no more need to check through word-by-word.
 
-
-We then replace the use of the previous method in the Predicate classes in model
-(_e.g.`NameContainsKeywordsPredicate`_) with the new method so that the Find command actually uses partial matching.
+Afterwards, the use of the previous method in the Predicate classes in model
+(_e.g._ `NameContainsKeywordsPredicate`) is replaced with the new method so that the Find command actually uses partial matching.
 
 
 ==== Design Considerations
