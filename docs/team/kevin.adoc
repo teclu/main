@@ -1,11 +1,11 @@
-= Kevin Leonardo - Project Portfolio
+= Kevin Leonardo Anantha - Project Portfolio
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
 == Project: K.N.S. AddressBook
 K.N.S. AddressBook is a Java desktop address book application created by *Team W11-B3* during the course of *CS2103T
-Software Engineering* in AY2017/8 Semester 1.
+Software Engineering* in AY2017/8 Semester 1. This Portfolio details my major contributions to the project, and lists our other minor contributions as well.
 
 *Code Contributed*:
  [https://github.com/CS2103AUG2017-W11-B3/main/blob/master/collated/main/k-l-a.md[Functional Code]]
