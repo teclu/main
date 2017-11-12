@@ -839,7 +839,7 @@ A slightly modified version of the previous method is created to allow for parti
 ----
  public static boolean containsWordPartialIgnoreCase(String sentence, String word) {
         //..check and prepare arguments..
-        return sentence.contains(preppedWord);
+        return preppedSentence.contains(preppedWord);
     }
 ----
 
