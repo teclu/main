@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.NoSuchElementException;
 
 import seedu.address.commons.exceptions.DataConversionException;
