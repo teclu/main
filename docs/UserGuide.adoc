@@ -494,6 +494,9 @@ To import data from another application or your own backup data, you can use the
 `import` or `i FILEPATH` +
 where FILEPATH is the relative filepath of the data to be imported. (Usually in the `data` folder)
 
+[NOTE]
+The data file to be imported does not have to be a `.xml` file, as long as the its contents are correctly formatted.
+
 [WARNING]
 When you import data, you cannot get your old data back once you close the application. +
  (_you can still use `undo` if you haven't_) +
