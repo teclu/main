@@ -1,7 +1,7 @@
 = K.N.S. AddressBook v1.5.0rc - Developer Guide
 :toc:
 :toc-title:
-:toc-placement: preamble
+:toc-placement!:
 :sectnums:
 :imagesDir: images
 :stylesDir: stylesheets
@@ -20,6 +20,11 @@ Hello there! If you came here by choice, then chances are that you are intereste
 the original source code (https://github.com/nus-cs2103-AY1718S1/addressbook-level4/[AddressBook-Level4 project])
 provided by the https://github.com/se-edu[SE-EDU initiative]. This developer guide provides information that will help
 you understand what features we have implemented, and how we have done so.
+
+
+== Table Of Contents
+
+toc::[]
 
 == Setting Up
 
@@ -265,7 +270,7 @@ This section describes some noteworthy details on how certain features are imple
 === Undo/Redo Mechanism
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing
-and redoing of commands that modifies the state of the address book (_e.g. `add`, `edit`_). Such commands will inherit
+and redoing of commands that modifies the state of the address book (_e.g._ `add`, `edit`). Such commands will inherit
 from `UndoableCommand`.
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead.
@@ -646,6 +651,158 @@ replaced by the default placeholder.
 
 // end::avatar[]
 
+//tag::importexport[]
+=== Import & Export Mechanism
+The import and export mechanism is implemented using the `XmlAddressBookStorage` class. It allows for the manual saving and loading of the
+address book data, aside from the default initial loading and automatic saving, by using the `export` and `import` command.
+
+
+Import only changes the address book's data, and does not change the user preference. Notably, it does not change
+the default file which the application automatically saves to, which is `addressbook.xml`. Instead, it overwrites the current data with
+the data in the given filepath, provided it is a valid address book data.
+
+The following shows the dependencies of both `ImportCommand` and `ExportCommand` :
+
+image::ImportExportAssocDiagram.png[width="800"]
+
+
+[NOTE]
+If the `XmlAddressBookStorage` fails to read or write to file, an `Exception` will be thrown.
+The same will happen if the file contains persons with illegal values. (e.g. empty name)
+
+Suppose the user has just initialized the application, and the `data` folder is empty.
+
+The user makes some changes to the data (e.g. using `clear` and `add` to clear away the sample and add their own contacts) which
+saves the data in the `data` folder as `addressbook.xml` automatically.
+
+Then, without altering the data any further, the user decides to save a manual backup using a `export backup.xml` command.
+This will create a `backup.xml` file in the `data` folder, which at this point is equivalent to the `addressbook.xml`.
+
+As the user continues to alter the data, the `addressbook.xml` file will keep changing, and will be different than the `backup.xml`
+file. +
+The user then decides that they want to return the addressbook to their backup version using a `import data/backup.xml` command. +
+This will overwrite the current data with the data in `backup.xml`, making it once again equivalent to `addressbook.xml`
+
+==== Sequence Diagram
+The sequence diagram for the command `export a.xml` is the following :
+
+
+
+
+image::ImportExportSequenceDiagram.png[width="800"]
+
+
+
+
+An `import` command would be similar, except that it creates a `XmlAddressBookStorage` object first, calls the `readAddressBook` method, and then
+calls the `resetData` method from the `Model` object.
+
+==== Design Considerations
+*Aspect*: How import works +
+*Alternative 1(current choice):* Overwrite the current address book with the data from the given file. +
+*Pros:* Easier implementation, data in the given file is preserved. +
+*Cons:* Loses the current address book data, which cannot be recovered if the address book is closed. (Can still be recovered with undo if it has not been closed since the import yet) +
+*Alternative 2:* Switch the file that the address book uses to the given file, and save all changes to that file +
+*Pros:* Allows for easier use of multiple saved files. The data in the current (before import) file is preserved. +
+*Cons:* Harder implementation, does not provide an easy way to import backups, since all changes are saved to the given file. +
+
+---
+*Aspect*: Scope of data to export and import +
+*Alternative 1(current choice):* Exports and imports only the address book data, excluding pictures and user preferences. +
+*Pros:* Can use the current `XmlAddressBookStorage` class to read and write. Only read and write a single file. +
+*Cons:* Excluding pictures means user have to manually backup pictures, otherwise address book is incomplete (no avatar). +
+*Alternative 2:* Include pictures and/or user preferences +
+*Pros:* More complete data storage. +
+*Cons:* Higher probability of accidentally overwriting files if the user is not careful. +
+
+// end::importexport[]
+
+//tag::sort[]
+=== Sorting viewable list
+
+The `sort` command and auto-sorting of the `find` command is facilitated by a `SortedFilteredList` inside the `ModelManager` class. This list is created on top of
+the `FilteredList` that is used to filter the contact list. A Comparator called `defaultSortOrder` was also created to as a
+comparator to reset the sorted list to its default order. `ModelManager` was also modified to support updating the sorted list only,
+and to always reset to default order whenever the filtered list is updated.
+
+Commands that changes the viewable list without any sorting are implemented as :
+[source, java]
+----
+public class ListCommand extends Command {
+    @Override
+    public CommandResult execure() {
+        // ... some logic ...
+        model.updateFilteredList(some predicate);
+        // ... more logic ...
+    }
+----
+
+Whereas commands with sorting (e.g. `find`) is implemented as :
+[source, java]
+----
+public class FindCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... some logic ...
+        model.updateFilteredList(some predicate);
+        model.updateSortedFilteredList(some comparator);
+        // ... more logic ...
+    }
+----
+
+==== Auto-Sort of Find Command
+
+The `find` command, when matching by name, sorts its resulting list by the earliest position of a match with a given keyword. +
+This is implemented by creating a `earliestIndexOf` method in the `StringUtil` class, which takes in a sentence and a list of keywords, and
+returns the earliest starting index where a part of the sentence matches a keyword, or -1 if there are no match.
+
+
+As an example, suppose
+the address book contains three people :
+
+image::SortListUnsorted.png[width="200"]
+
+
+When a `find n/ i` command is executed, it will match all three of them (since all their names contains i),
+and show them in this order :
+
+image::SortListSorted.png[width="200"]
+
+as M__**i**__chael has i in the 2nd position, Al__**i**__cia has an i in the 3rd position, and Dan__**i**__el has an i in
+the 4th position.
+
+
+
+==== Design Considerations
+*Aspect:* Implementation of sorting +
+*Alternative 1 (current choice):* Sort the viewable list only by creating a `SortedFilteredList` +
+*Pros:* Preserves the original order without additional changes, sort without worrying about changing the data. +
+*Cons:* Harder to implement a permanent sort functionality. +
+*Alternative 2:* Sort the data directly +
+*Pros:* Easier to make a permanent sort.
+*Cons:* Cannot go back to original order without additional changes. Harder to sort temporarily.
+
+---
+
+*Aspect:* Type of sorting in `find` +
+*Alternative 1 (current choice):* Sort the resulting list of `find` by the earliest matching index. +
+*Pros:* Make searching with short keywords more effective since the desired result is likely at the top. +
+*Cons:* Can be unintuitive, especially since it's only done when finding by name. +
+*Alternative 2:* Show the resulting list in the default sort order. +
+*Pros:* More intuitive. No need for extra code. +
+*Cons:* Harder to find desired person when the result list is long. +
+
+---
+
+*Aspect:* Mechanism to create comparators +
+*Alternative 1 (current choice):* `sort` and `find` uses separate method to create Comparator +
+*Pros:* More flexible since each command can do a different kind of sorting. +
+*Cons:* A lot of similar logic is copied to implement the methods individually. +
+*Alternative 2:* Create a class or method that returns Comparators. +
+*Pros:* Only implement once. Each sorting method now just need to call this method. +
+*Cons:* Take longer to code. Need to allow access to private variables in predicate classes. +
+
+// end::sort[]
 
 //tag::partialfind[]
 === Partial Find
@@ -1214,36 +1371,6 @@ Use case resumes at step 2.
 +
 Use case resumes at step 2.
 
-[discrete]
-=== Use case: Enable PIN/Password protection
-
-*MSS*
-
-1.  User requests to enable PIN/Password
-2.  AddressBook asks for value to be set as PIN/Password
-3.  User gives requested value
-4.  AddressBook asks user to confirm the value by retyping it
-5.  User retypes previous value
-6.  AddressBook sets PIN/Password and shows feedback message.
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 3a. The value given is invalid/does not fulfill requirements
-+
-[none]
-** 3a1. AddressBook shows an error message.
-+
-Use case resumes at step 2
-
-* 5a. The value given does not match previous value
-+
-[none]
-** 5a1. AddressBook shows an error message.
-+
-Use case resumes at step 2.
 
 {More to be added}
 
