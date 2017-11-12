@@ -403,13 +403,6 @@ Sorts the resulting list from the `find` command by name, in ascending order. +
 (i.e. the list is now a list of people who has a tag matching `friends`, sorted alphabetically by name.)
 
 // end::sort[]
-=== Set favourite contacts `In development for v2.0`
-
-Favourite contacts will appear on the top of the contact list.
-
-=== Contacting a person `In development for v2.0`
-
-Directly calls or emails the person(s) identified by index number or otherwise.
 
 === Listing entered commands : `history` or `h`
 
@@ -526,6 +519,15 @@ To clear all entries from your address book, you can type: +
 
 To exit the program, you can use the command:  +
 `exit`
+
+=== Set favourite contacts `In development for v2.0`
+
+Favourite contacts will appear on the top of the contact list.
+
+=== Contacting a person `In development for v2.0`
+
+Directly calls or emails the person(s) identified by index number or otherwise.
+
 
 == Command Cheat sheet
 
