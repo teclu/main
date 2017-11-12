@@ -1,7 +1,7 @@
 = K.N.S. AddressBook v1.5.0rc - User Guide
 :toc:
 :toc-title:
-:toc-placement!: preamble
+:toc-placement!:
 :sectnums:
 :imagesDir: images
 :stylesDir: stylesheets
@@ -140,19 +140,19 @@ can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}`
 (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is
-also acceptable.
+.
 ====
 
 === Viewing help : `help`
 
-Format: `help`
+If you're ever in need of help, or just curious to learn more about K.N.S you can use : +
+`help` +
+which will open up a help window that contains the guide you're currently reading!
 
 === Adding a person: `add` or `a`
 
-Adds a person to the address book +
-
-Format: `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [v/AVATAR] [t/TAG]...` or `a n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [v/AVATAR] [t/TAG]...`
+To add a person to K.N.S, you can use the command : +
+`add` or `a` `n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [v/AVATAR] [t/TAG]...`
 
 
 [TIP]
@@ -173,13 +173,14 @@ Examples:
 
 === Listing all persons : `list` or `l`
 
-Shows a list of all persons in the address book. +
-Format: `list` or `l`
+To show all persons in your address book, simply enter : +
+`list` or `l` +
+
 
 === Editing a person : `edit` or `e`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...` or `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [v/AVATAR] [t/TAG]...`
+To edit an existing person in your address book, you can use the command : +
+`edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...` or `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [v/AVATAR] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -238,20 +239,27 @@ Deletes the `owesMoney` tag from the 1st person on the list.
 Deletes the `friends` tag and `highSchool` tag from the 3rd person on the list.
 
 === Locating persons: `find` or `f`
-Finds persons whose names or tags, indicated by an optional prefix, contain any of the given keywords. Defaults to find by name. +
-Format: `find [PREFIX] KEYWORD [MORE_KEYWORDS]` or `f [PREFIX] KEYWORD [MORE_KEYWORDS]`
 
+To locate a person within your address book, you can use :  +
+`find [PREFIX] KEYWORD [MORE_KEYWORDS]` or `f [PREFIX] KEYWORD [MORE_KEYWORDS]` +
+where prefix indicates the field to search (e.g. name) and keyword is the keyword to match with.
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Partial words will be matched e.g. `Han` can match `Hans` +
   See link:#partial-matching[Partial Matching] section for more details.
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-* When finding by name, the result will auto sort according to the position of the match. e.g. `find Bo` will list `Bo Alex` before `Holbo` and `Holbo` before `Alexander Bo`
 ****
 ==== By name
 
 To find by name, you can either use the prefix `n/` or no prefix at all. +
+
+// tag::n[]
+
+[NOTE]
+When finding by name, the result will auto sort according to the position of the match. e.g. `find Bo` will list `Bo Alex` before `Holbo` and `Holbo` before `Alexander Bo`
+
+// end::n[]
 Examples :
 
  * `find n/ John` +
@@ -301,7 +309,7 @@ Returns any person with email containing `johndoe`.
 // tag::partialfind[]
 ==== Partial matching
 `Since v1.2` +
-The Find command accepts partial matches by default. +
+You don't have to type the full keyword in order to find a desired person, the `find` command accepts partial matches by default. +
 Keywords *will match* entries if they are contained within those entries.
 [NOTE]
 However, vice-versa does not apply!
@@ -329,8 +337,8 @@ Matches any person with a tag that contains `frien`, e.g. `Friends` or `BestFrie
 
 === Deleting a person : `delete` or `d`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX` or `d INDEX`
+To remove a person from your address book, you can use : +
+`delete INDEX` or `d INDEX`
 
 ****
 * Deletes the person at the specified `INDEX`.
@@ -367,10 +375,14 @@ Selects the 2nd person in the address book.
 `s 1` +
 Selects the 1st person in the results of the `find` command.
 
+// tag::sort[]
 === Sorting your contact list : `sort`
 
-Sorts the current list lexicographically by the given prefix, in the given order. If no prefix is given then shows default order. +
-Format : `sort [PREFIX] [ORDER]`
+If you want to view your current list in a better way, you can use the `sort` command to
+sort the current list lexicographically by the given prefix, in the given order. +
+
+To sort the current list, you can use : +
+`sort [PREFIX] [ORDER]`
 
 ****
 * Only the current list is sorted, there is currently no lasting sort on the whole address book. +
@@ -387,8 +399,9 @@ Sorts the list in reverse order of insertion (i.e. the previous list is now reve
 * `find t/ friends` +
 `sort n/` +
 Sorts the resulting list from the `find` command by name, in ascending order. +
-(i.e. the list is now a list of people who has a tag matching `friends` alphabetically by name.)
+(i.e. the list is now a list of people who has a tag matching `friends`, sorted alphabetically by name.)
 
+// end::sort[]
 === Set favourite contacts `In development for v2.0`
 
 Favourite contacts will appear on the top of the contact list.
@@ -399,8 +412,8 @@ Directly calls or emails the person(s) identified by index number or otherwise.
 
 === Listing entered commands : `history` or `h`
 
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history` or `h`
+To view all the commands that you have entered in reverse chronological order, use : +
+`history` or `h`
 
 [NOTE]
 ====
@@ -457,17 +470,59 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `r` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::exim[]
+
+=== Saving/Backing up your data : `export` or `ex`
+
+While K.N.S provides automatic data saving, you can still manually back up your data using the `export` command.
+
+To export your data, you should type : +
+`export` or `ex` `FILENAME.xml` +
+where FILENAME is the name you want to give to the exported data.
+[NOTE]
+Exported data is saved in the `data` folder, which should be in the same folder as the application file, by default.
+
+
+[WARNING]
+If a file with the filename you entered already exists in the `data` folder, it _**will be overwritten**_ without warning!
+
+Examples : +
+`export backup.xml` +
+Exports your data in the `data` folder as `backup.xml` +
+`ex copy` +
+Fails and will prompt you to add a `.xml` to the end of the file name.
+
+=== Importing data : `import` or `i`
+
+To import data from another application or your own backup data, you can use the `import` command with the format : +
+`import` or `i FILEPATH` +
+where FILEPATH is the relative filepath of the data to be imported. (Usually in the `data` folder)
+
+[WARNING]
+When you import data, you cannot get your old data back once you close the application. (_you can still use `undo` if you haven't_) +
+It is recommended to backup using the `export` command first before importing.
+
+Examples : +
+
+`import data/backup.xml` +
+Imports the data in the file `backup.xml` in the `data` folder which should be located in the same folder as the application. +
+`i copy` +
+Imports the data in the file `copy` which should be located at the same folder as the application. +
+
+// end::exim[]
+
 === Clearing all entries : `clear` or `c`
 
-Clears all entries from the address book. +
-Format: `clear` or `c`
+To clear all entries from your address book, you can type: +
+`clear` or `c`
+
 
 === Exiting the program : `exit`
 
-Exits the program. +
-Format: `exit`
+To exit the program, you can use the command:  +
+`exit`
 
-== Command Cheatsheet
+== Command Cheat sheet
 
 If you're in a hurry or just looking for a quick and simple overview, you're in the right place! Here you can find the list of commands and how to use them :
 [format="csv"]
@@ -488,6 +543,8 @@ Sort, sort   , sort [PREFIX] [ORDER], sort n/ asc
 History, history | h, history, history
 Undo, undo | u, undo, u
 Redo, redo | r, redo, r
+Export Data, export | ex, export FILENAME.xml, ex backup.xml
+Import Data, import | i, import FILEPATH, import data/backup.xml
 |===========================
 
 == F.A.Q.
