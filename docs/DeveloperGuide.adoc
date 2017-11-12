@@ -663,7 +663,7 @@ the data in the given filepath, provided it is a valid address book data.
 
 The following shows the dependencies of both `ImportCommand` and `ExportCommand` :
 
-image::ImportExportAssocDiagram.png[width="800"]
+image::ImportExportAssocDiagram.png[width="600"]
 
 
 [NOTE]
