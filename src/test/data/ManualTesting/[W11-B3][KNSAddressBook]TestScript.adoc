@@ -33,7 +33,32 @@ toc::[]
 
 === Add
 
-To be filled in.
+* **Adding without any parameters:**
+.. Type `add` in the command box. 
+.. You should see `Invalid command format! ...`, with instructions on how to use the command.
+
+* **Adding with only the name parameter:**
+.. Type `add n/Damith Rajapakse` in the command box.
+.. You should see `New person added: Name: Damith C Rajapakse ...`; the fields for phone, email, address and birthday should have a "_-_", the field for avatar should be "_No Avatar_", and the field for tags should be empty.
+
+* **Adding with the name parameter and only some parameters:**
+.. Type `add n/Aaron Tan p/91234567 b/01/01/1995` in the command box.
+[TIP]
+You may try this out with other valid parameters.
+..  You should see `New person added: Name: Aaron Tan ...`; the fields for email and address should have a "_-_", the field for avatar should be "_No Avatar_", and the field for tags should be empty.
+
+* **Adding with the name parameter and the avatar parameter:**
+[NOTE]
+You will need internet connectivity for this!
+
+.. Type `add n/Terence Chok v/https://i.imgur.com/jNNT4LE.jpg` into the command box.
+[TIP]
+Alternatively, you can use a valid `.JPG` or `.PNG` image filepath found in your computer for the avatar field. This does not require internet connectivity.
+.. You should see `New person added: Name: Terence Chok ...`; the fields for phone, email, address and birthday should have a "_-_", the field for avatar should have the file path for the image (_which is stored in the data folder_), and the field for tags should be empty.
+
+* **Adding with all parameters**
+.. Type `add n/Stanley Tay p/91234567 e/stanley@example.com a/1 Computing Drive b/28/03/1995 v/https://i.imgur.com/jNNT4LE.jpg t/TestSubject` into the command box.
+.. You should see `New person added: Name: Stanley Tay ...`; all of the fields should not be empty.
 
 === Edit
 
