@@ -118,11 +118,107 @@ You can also use the theme switcher found in the menu bar to verify these change
 
 === Add/Delete Tag
 
-To be filled in.
+* **Adding a tag without parameter**
+.. Type `addtag` in the command box.
+.. You should see `Invalid command format! ...`, with instructions on how to use the command.
+
+* **Deleting a tag without parameter**
+.. Type `deletetag` in the command box.
+.. You should see `Invalid command format! ...`, with instructions on how to use the command.
+
+* **Adding 1 tag**
+.. Type `addtag 1 Project` in the command box.
+.. You should see a `Project` tag has been added to person number 1.
+
+* **Deleting 1 tag**
+.. Type `deletetag 1 Project` in the command box.
+.. You should see a `Project` tag has been removed from person number 1.
+
+* **Adding 1 tag using shorthand alias**
+.. Type `at 1 Project` in the command box.
+.. You should see a `Project` tag has been added to person number 1.
+
+* **Deleting 1 tag using shorthand alias**
+.. Type `dt 1 Project` in the command box.
+.. You should see a `Project` tag has been removed from person number 1.
+
+* **Adding more than 1 tag**
+.. Type `addtag 2 VIP Singapore` in the command box.
+.. You should see a `VIP` tag and a `Singapore` tag has been added to person number 2.
+
+* **Deleting more than 1 tag**
+.. Type `deletetag 2 VIP Singapore` in the command box.
+.. You should see a `VIP` tag and a `Singapore` has been removed from person number 2.
 
 === Find
 
-To be filled in.
+* **Find a person without parameter**
+.. Type `find` in the command box.
+.. You should see `Invalid command format! ...`, with instructions on how to use the command.
+
+* **Find a person without specifying any prefixes**
+.. Type `find dean` in the command box.
+.. You should see Dean James appears in the contact list.
+
+* **Find a person using shorthand alias without specifying any prefixes**
+.. Type `f dean` in the command box.
+.. You should see Dean James appears in the contact list.
+
+* **Find a person by their phone number as a query without specifying any prefixes**
+.. Type `find 91234567` in the command box.
+.. You should see no contact appears in the contact list.
+
+* **Find a person without specifying any prefixes in a filtered list**
+.. Type `find jacky` in the command box.
+.. You should see Jacky Mao appears in the contact list.
+
+* **Find a person by specifying name prefix **
+.. Type `find n/ dean` in the command box.
+.. You should see Dean James appears in the contact list.
+
+* **Find a person by specifying name prefix, with partial name query **
+.. Type `find n/ shin` in the command box.
+.. You should see Darshini N appears in the contact list.
+
+* **Find a person by specifying email prefix **
+.. Type `find e/ dj@example.com` in the command box.
+.. You should see Dean James appears in the contact list.
+
+* **Find a person by specifying email prefix, with partial email query **
+.. Type `find e/ dj` in the command box.
+.. You should see Dean James appears in the contact list.
+
+* **Find a person by specifying phone prefix **
+.. Type `find p/ 89991234` in the command box.
+.. You should see Fong Wei Zheng appears in the contact list.
+
+* **Find a person by specifying phone prefix, with partial phone query **
+.. Type `find p/ 8999` in the command box.
+.. You should see Fong Wei Zheng appears in the contact list.
+
+* **Find a person by specifying address prefix **
+.. Type `find a/ college` in the command box.
+.. You should see Kevin Leonardo and Nadhira Salsabila appear in the contact list.
+
+* **Find a person by specifying address prefix, with partial address query **
+.. Type `find a/ coll` in the command box.
+.. You should see Kevin Leonardo and Nadhira Salsabila appear in the contact list.
+
+* **Find a person by specifying birthday prefix **
+.. Type `find b/ 14/10/1987` in the command box.
+.. You should see Ang Jing Zhe appears in the contact list.
+
+* **Find a person by specifying birthday prefix, with partial birthday query **
+.. Type `find b/ 14/10` in the command box.
+.. You should see Ang Jing Zhe appears in the contact list.
+
+* **Find a person by specifying tag prefix **
+.. Type `find t/ musician` in the command box.
+.. You should see Charlie Lim appears in the contact list.
+
+* **Find a person by specifying tag prefix, with partial tag query **
+.. Type `find t/ music` in the command box.
+.. You should see Charlie Lim appears in the contact list.
 
 === Import/Export
 
