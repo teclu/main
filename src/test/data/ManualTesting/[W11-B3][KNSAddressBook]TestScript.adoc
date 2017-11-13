@@ -167,7 +167,7 @@ You can use the alias `l` in place of `list`.
 [NOTE]
 Typing `list` in the command box twice in succession will still generate the message `Listed all persons`; this is **not a bug** and it has been implemented like this in the source code from AddressBook-Level4.
 
-. Use any of the following commands to change the order of the `PersonList`: `find`, `import` and `sort`.
+. Use any of the following commands to change the order of the `PersonList`: `find` and `sort`.
 . Type `list` and press kbd:[Enter]. You should see that `PersonList` shows all the contacts arranged in chronological order (_i.e. least to most recently added contact_), and the message `Listed all persons`.
 
 === Undo/Redo
@@ -175,7 +175,7 @@ Typing `list` in the command box twice in succession will still generate the mes
 [TIP]
 You can use the alias `u` in place of `undo`, and `r` in place of `redo`.
 
-* The following commands are undoable: `add`, `edit`, `delete`, `select`, `clear`, `addtag`, `deletetag`, `import` and `export`.
+* The following commands are undoable: `add`, `edit`, `delete`, `select`, `clear`, `addtag`, `deletetag`, and `import`.
 * You may verify these checks when doing the other tests found in this test script.
 
 === Exit
