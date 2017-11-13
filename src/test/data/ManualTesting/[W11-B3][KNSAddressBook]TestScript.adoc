@@ -289,34 +289,34 @@ You can use the alias `u` in place of `undo`, and `r` in place of `redo`.
 .. Type `find t/ music` in the command box and press kbd:[Enter].
 .. You should see "_Charlie Lim_" appear in the contact list.
 
-* **Find a person by specifying a prefix, without space between keyword and prefix**
+* **Find a person by specifying a prefix, without space between keyword and prefix:**
 .. Type `find t/musician` in the command box and press kbd:[Enter].
 .. You should see "_Charlie Lim_" appear in the contact list.
 
 === Import/Export
 
-* **Export without any parameters **
+* **Export without any parameters:**
 .. Type `export` in the command box and press kbd:[Enter].
 .. You should see a `Invalid command format!...` message, with instructions on how to use the command.
 
-* **Export to a filename without .xml extension **
+* **Export to a filename without .xml extension:**
 .. Type `export backup` in the command box and press kbd:[Enter].
 .. You should see the message `Please end your file name with .xml` and nothing else should change.
 
-* **Export to a valid filename **
+* **Export to a valid filename:**
 .. Type `ex backup.xml` in the command box and press kbd:[Enter].
 .. You should see the message `Export successful! Data exported to data/backup.xml`.
 .. You can check the data folder to validate that backup.xml exists.
 
-* **Import without any parameters **
+* **Import without any parameters:**
 .. Type `import` in the command box and press kbd:[Enter].
 .. You should see a `Invalid command format!...` message, with instructions on how to use the command.
 
-* **Import missing file **
+* **Import missing file:**
 .. Type `i data/missing.xml` in the command box and press kbd:[Enter].
 .. You should see `File not found at data/missing.xml, Import Failed!` and no other changes.
 
-* **Import valid file **
+* **Import valid file:**
 [NOTE]
 Please ensure that you have done the **Export to a valid filename ** test before proceeding with this test.
 
@@ -328,26 +328,26 @@ Please ensure that you have done the **Export to a valid filename ** test before
 
 === Sort
 
-* **Sort with invalid parameters**
+* **Sort with invalid parameters:**
 .. Type `sort invalid param` in the command box and press kbd:[Enter].
 .. You should see a `Invalid command format!...` message, with instructions on how to use the command.
 
-* **Sort by name ascendingly, without specifying order parameter**
+* **Sort by name ascendingly, without specifying order parameter:**
 .. Type `sort n/` in the command box and press kbd:[Enter].
 .. You should see a `Sorted current list by n/ in asc order.` message.
 .. You should also see the current list sorted by name in alphabetical order.
 
-* **Sort by phone ascendingly**
+* **Sort by phone ascendingly:**
 .. Type `sort p/ asc` in the command box and press kbd:[Enter].
 .. You should see a `Sorted current list by p/ in asc order.` message.
 .. You should also see the current list sorted by phone ascendingly, with persons with the smallest leading number listed first.
 
-* **Sort by default descendingly**
+* **Sort by default descendingly:**
 .. Type `sort des` in the command box and press kbd:[Enter].
 .. You should see a `Sorted current list by default in des order.` message.
 .. You should also see the current list sorted by the reverse default order. (i.e. Reverse of the order they would be in after a `list` command)
 
-* **Sort without any parameters**
+* **Sort without any parameters:**
 .. Type `sort` in the command box and press kbd:[Enter].
 .. You should see a `Sorted current list by default in asc order.` message.
 .. You should also see the current list sorted by the default order. (i.e. Exact reverse of previous test case)
