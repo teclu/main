@@ -67,8 +67,8 @@ Alternatively, you can use a valid `.JPG` or `.PNG` image filepath found in your
 .. You should see `New person added: Name: Terence Chok ...`; the fields for phone, email, address and birthday should have a "_-_", the field for avatar should have the file path for the image (_which is stored in the data folder_), and the field for tags should be empty.
 
 * **Adding with all parameters:**
-.. Type `add n/Stanley Tay p/91234567 e/stanley@example.com a/1 Computing Drive b/28/03/1995 v/https://i.imgur.com/jNNT4LE.jpg t/TestSubject` into the command box and press kbd:[Enter].
-.. You should see `New person added: Name: Stanley Tay ...`; all of the fields should not be empty.
+.. Type `add n/Ben Ten p/98765432 e/ben10@example.com a/42 Omni Road b/12/12/1992 v/https://i.imgur.com/jNNT4LE.jpg t/TestSubject` into the command box and press kbd:[Enter].
+.. You should see `New person added: Name: Ben Ten ...`; all of the fields should not be empty.
 
 === Edit
 
