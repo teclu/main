@@ -161,7 +161,8 @@ The input arguments are **case-insensitive**, so `theme DARK` and `theme GrEeN` 
 . Repeat step 2 with the themes `Red`, `Blue`, and `Green`.
 [NOTE]
 You can also use the theme switcher found in the menu bar to verify these changes.
-. Type `theme Light` and press kbd:[Enter]; do this twice (_you may use any other theme_). You should see the error message `Theme is already set to Light!`
+. Type `theme Light` in the command box and press kbd:[Enter]; do this twice (_you may use any other theme_). You should see the error message `Theme is already set to Light!`
+. Type `theme FakeTheme` in the command box and press kbd:[Enter]. You should see `The theme entered does not exist`.
 
 === List
 
