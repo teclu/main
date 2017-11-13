@@ -36,7 +36,7 @@ toc::[]
 == Basic Commands
 
 [TIP]
-You may want to view our https://github.com/CS2103AUG2017-W11-B3/main/blob/master/docs/UserGuide.adoc#command-cheat-sheet[Command Cheat Sheet]. It shows all the commands available in the application! 
+You may want to view our https://github.com/CS2103AUG2017-W11-B3/main/blob/master/docs/UserGuide.adoc#command-cheat-sheet[Command Cheat Sheet]. It shows all the commands available in the application!
 
 === Add
 
