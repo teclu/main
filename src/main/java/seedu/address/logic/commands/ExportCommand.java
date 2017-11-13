@@ -21,12 +21,17 @@ public class ExportCommand extends Command {
     public static final String MESSAGE_EXPORT_SUCCESS = "Export successful! Data exported to %1$s";
     public static final String MESSAGE_EXPORT_FAILURE = "Error writing to file at %1$s";
 
-    public static final String EXPORT_FILEPATH = "data/";
+    public static final String DEFAULT_EXPORT_FILEPATH = "data/";
 
     public final String filePathToExport;
 
+
     public ExportCommand(String fileName) {
-        this.filePathToExport = EXPORT_FILEPATH + fileName;
+        this(DEFAULT_EXPORT_FILEPATH, fileName);
+    }
+
+    public ExportCommand(String exportFilepath, String fileName) {
+        this.filePathToExport = exportFilepath + fileName;
     }
 
     @Override
@@ -36,7 +41,7 @@ public class ExportCommand extends Command {
             XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(filePathToExport);
             addressBookStorage.saveAddressBook(addressBook);
         } catch (Exception e) {
-            return new CommandResult(String.format(MESSAGE_EXPORT_FAILURE, filePathToExport));
+            throw new CommandException(String.format(MESSAGE_EXPORT_FAILURE, filePathToExport));
         }
 
         return new CommandResult(String.format(MESSAGE_EXPORT_SUCCESS, filePathToExport));
