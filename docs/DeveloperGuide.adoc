@@ -819,7 +819,6 @@ the 4th position.
 *Cons:* Take longer to code. Need to allow access to private variables in predicate classes. +
 
 // end::sort[]
-=======
 
 // tag::birthday[]
 
