@@ -446,12 +446,6 @@ Examples:
 * `t GrEeN`
 // end::themecommand[]
 
-=== Set favourite contacts `In development for v2.0`
-Favourite contacts will appear on the top of the contact list.
-
-=== Contacting a person `In development for v2.0`
-Directly calls or emails the person(s) identified by index number or otherwise.
-
 === Listing entered commands: `history` or `h`
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history` or `h`
