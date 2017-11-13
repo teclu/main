@@ -52,7 +52,7 @@ public class Avatar {
                 this.image = ImageIO.read(this.url);
 
                 if (!isSavedInData(url)) {
-                    String outputName = "/data/" + this.url.hashCode() + ".png";
+                    String outputName = "/data/" + this.image.hashCode() + ".png";
                     File outputImage = new File(System.getProperty("user.dir") + outputName);
 
                     File parentDirectory = outputImage.getParentFile();

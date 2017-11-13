@@ -101,7 +101,11 @@ include::../UserGuide.adoc[tag=themecommand]
 
 ==== Justification
 
-Type bullshit here?
+Previously, there was only the dark theme in place for the application. We felt that some of the users may not like this
+default colour scheme, and may not like that they cannot personalise the application's appearance to their liking. Thus,
+in order to make the application more attractive visually, we have decided to add more themes for users to choose from.
+It is important for users to have more choices in how their address book looks like, because it gives them a sense of
+ownership and allows them to express themselves in someway.
 
 ==== Implementation
 

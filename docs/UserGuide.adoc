@@ -123,6 +123,9 @@ Here, you can type a valid `command` to get things done.
 * **Status Bar**: The total number of contacts you have saved, the last updated
 timing, and the data path is shown here.
 
+[NOTE]
+The default window size of K.N.S. AddressBook is 1336 by 178. The window's size cannot be changed or maximised!
+
 === Warming Up
 . There are 20 example contacts that are already pre-loaded for you to get familiarised with the features and commands
 found in K.N.S. AddressBook. Clicking on any individual contact card will `select` it, showing you the contact's details
@@ -501,7 +504,7 @@ List, "list | l", list, list
 View Help, help, help, help
 Select, "select | s", select INDEX, select 2
 Sort, sort   , sort [PREFIX] [ORDER], sort n/ asc
-Change Theme, "theme | t", theme Light, t Dark
+Change Theme, "theme | t", theme COLOUR, t Dark
 History, history | h, history, history
 Undo, undo | u, undo, u
 Redo, redo | r, redo, r
