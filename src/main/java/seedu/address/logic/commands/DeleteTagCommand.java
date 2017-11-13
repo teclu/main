@@ -34,13 +34,13 @@ public class DeleteTagCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes a person's tag in the address book. "
             + "Parameters: INDEX (must be a positive integer) "
-            + "[TAG] \n"
+            + "TAG [MORE_TAGS] \n"
             + "Example: " + COMMAND_WORD + " 1 "
             + "neighbours owesMoney";
 
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Tag: %2$s";
-    public static final String MESSAGE_DELETE_TAG_SUCCESS = "Tag deleted!";
-    public static final String MESSAGE_NOT_EXIST_TAG = "This tag does not exist for this person.";
+    public static final String MESSAGE_DELETE_TAG_SUCCESS = "Tag(s) deleted!";
+    public static final String MESSAGE_NOT_EXIST_TAG = "This tag(s) does not exist for this person.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person is already in the address book.";
 
     private final Index index;
