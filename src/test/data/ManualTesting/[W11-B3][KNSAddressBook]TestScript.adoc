@@ -49,7 +49,7 @@ You can use the alias `a` in place of `add`.
 
 * **Adding with only the name parameter:**
 .. Type `add n/Damith Rajapakse` in the command box and press kbd:[Enter].
-.. You should see `New person added: Name: Damith C Rajapakse ...`; the fields for phone, email, address and birthday should have a "_-_", the field for avatar should be "_No Avatar_", and the field for tags should be empty.
+.. You should see `New person added: Name: Damith Rajapakse ...`; the fields for phone, email, address and birthday should have a "_-_", the field for avatar should be "_No Avatar_", and the field for tags should be empty.
 
 * **Adding with the name parameter and only some parameters:**
 .. Type `add n/Aaron Tan p/91234567 b/01/01/1995` in the command box and press kbd:[Enter].
