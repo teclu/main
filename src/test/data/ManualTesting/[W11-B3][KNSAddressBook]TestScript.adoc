@@ -116,7 +116,7 @@ You can use the alias `d` in place of `delete`.
 . Select the first contact in the `PersonList`.
 . Type `delete 1` in the command box and press kbd:[Enter].
 . You should see the contact removed, and his details should no longer appear in the `PersonPanel`.
-. You should also see the message `Deleted Person: Name: Alex Zheng...`.
+. You should also see the message `Deleted Person: Name: Stanley Tay...` (_assuming that you are following the instructions in order_).
 
 === Select
 
