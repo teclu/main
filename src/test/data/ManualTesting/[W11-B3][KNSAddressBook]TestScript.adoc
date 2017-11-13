@@ -23,7 +23,7 @@ toc::[]
 == Setting Up
 . Ensure that you have downloaded the following files from IVLE:
 * **Jar Executable**: `[W11-B3][KNSAddressBook].jar`
-* **ample Data**: `[W11-B3][KNSAddressBook]SampleData.xml`
+* **Sample Data**: `[W11-B3][KNSAddressBook]SampleData.xml`
 * **User Guide**: `[W11-B3][KNSAddressBook]UserGuide.pdf`
 * **Developer Guide**: `[W11-B3][KNSAddressBook]UserGuide.pdf`
 * **3 Portfolios**: `[W11-B3][Kevin Leonardo Anantha]Portfolio.pdf`, `[W11-B3][Nadhira Salsabila]Portfolio.pdf` and `[W11-B3][Tay Wan Feng Stanley]Portfolio.pdf`
