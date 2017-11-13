@@ -41,15 +41,23 @@ To be filled in.
 
 === Delete
 
-To be filled in.
+. Select the first contact in the `PersonList`.
+. Type `delete 1` in the command box.
+. You should see the contact removed, and his details should no longer appear in the `PersonPanel`.
+. You should also see the message `Deleted Person: Name: Alex Zheng...`.
 
 === Select
 
-To be filled in.
+. Type `select 1` in the command box.
+. You should see the selection for the first contact in the `PersonList`, and his details should show in the `PersonPanel`.
+. You should also see the message `Selected Person: 1`.
 
 === Clear
 
-To be filled in.
+. Type `clear` in the command box.
+. You should see all the contacts in the `PersonList` disappear, and the message `Address book has been cleared!`.
+[TIP]
+Type `undo` to bring back all the cleared contacts.
 
 === Help
 
@@ -69,7 +77,8 @@ You can also use the theme switcher found in the menu bar to verify these change
 
 === Undo/Redo
 
-To be filled in.
+* The following commands are undoable: `add`, `edit`, `delete`, `select`, `clear`, `addtag`, `deletetag`, `import` and `export`.
+* You may verify these checks when doing the other tests found in this test script.
 
 === Exit
 
