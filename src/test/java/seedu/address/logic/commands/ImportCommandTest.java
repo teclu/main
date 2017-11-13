@@ -17,6 +17,7 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.storage.XmlAddressBookStorage;
 
+//@@author k-l-a
 public class ImportCommandTest {
 
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/ImportExportCommandTest/");

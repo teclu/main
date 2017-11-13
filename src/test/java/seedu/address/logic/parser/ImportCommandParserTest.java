@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.ImportCommand;
 
+//@@author k-l-a
 public class ImportCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT = String
             .format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE);

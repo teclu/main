@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.ExportCommand;
 
+//@@author k-l-a
 public class ExportCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT = String
             .format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE);
