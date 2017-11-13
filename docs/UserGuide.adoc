@@ -170,18 +170,16 @@ There are 16 commands that you can use in K.N.S. AddressBook. Do take note of th
 insteade also acceptable.
 ====
 
-=== Viewing Help : `help`
+=== Viewing Help: `help`
 Launches a small window that displays the user guide for your reference.
 
-If you're ever in need of help, or just curious to learn more about K.N.S you can use : +
-`help` +
-which will open up a help window that contains the guide you're currently reading!
-
+If you're ever in need of help, or just curious to learn more about K.N.S you can use : `help` +
+This command will open up a help window that contains the guide you're currently reading!
 
 === Adding a person: `add` or `a`
-Adds a person to the address book +
+Adds a person to the address book. +
 
-To add a person to K.N.S, you can use the command : +
+To add a person to K.N.S, you can use the following command: +
 `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [v/AVATAR] [t/TAG]...` or `a n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [v/AVATAR] [t/TAG]...`
 
 [TIP]
@@ -198,14 +196,14 @@ Examples:
 * `a n/Charlie Chopin t/boss e/charliec@example.com a/Madysun Triangle Park p/98765432 b/02/03/2000 v/C:\Users\Charlie\Pictures\cc.png` +
 * `add n/Johnny`
 
-=== Listing all persons : `list` or `l`
+=== Listing all persons: `list` or `l`
 Shows a list of all persons in the address book. +
 
 To show all persons in your address book, simply enter : +
 `list` or `l` +
 
 
-=== Editing a person : `edit` or `e`
+=== Editing a person: `edit` or `e`
 Edits an existing person in the address book. +
 
 To edit an existing person in your address book, you can use the command : +
@@ -229,6 +227,7 @@ Edits the name of the 2nd person to be `Betsy Crower`, change the avatar and cle
 // tag::adddeletetagcommand[]
 === Adding a Tag : `addtag` or `at`
 Adds tag(s) to an existing person in the address book. +
+
 Format: `addtag INDEX TAG [MORE_TAGS]`
 
 ****
@@ -247,6 +246,7 @@ Adds a `friends` tag and a `highSchool` tag for the 3rd person on the list.
 
 === Deleting a Tag : `deletetag` or `dt`
 Deletes given tag from an existing person in the address book. +
+
 Format: `deletetag INDEX TAG [MORE_TAGS]`
 
 ****
@@ -268,9 +268,10 @@ Deletes the `friends` tag and `highSchool` tag from the 3rd person on the list.
 
 === Locating persons: `find` or `f`
 
-To locate a person within your address book, you can use :  +
+To locate a person within your address book, you can use: +
 `find [PREFIX] KEYWORD [MORE_KEYWORDS]` or `f [PREFIX] KEYWORD [MORE_KEYWORDS]` +
 where prefix indicates the field to search (e.g. name) and keyword is the keyword to match with.
+
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
@@ -361,10 +362,9 @@ Matches any person with a tag that contains `frien`, e.g. `Friends` or `BestFrie
 `In development for v2.0`
 
 
-=== Deleting a person : `delete` or `d`
+=== Deleting a person: `delete` or `d`
 
-To remove a person from your address book, you can use : +
-`delete INDEX` or `d INDEX`
+To remove a person from your address book, you can use: `delete INDEX` or `d INDEX` +
 
 ****
 * Deletes the person at the specified `INDEX`.
@@ -381,8 +381,9 @@ Deletes the 2nd person in the address book.
 `d 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a Person : `select` or `s`
+=== Selecting a Person: `select` or `s`
 Selects the person identified by the index number used in the last person listing. +
+
 Format: `select INDEX` or `s INDEX`
 
 ****
@@ -401,14 +402,12 @@ Selects the 2nd person in the address book.
 Selects the 1st person in the results of the `find` command.
 
 // tag::sort[]
-=== Sorting your contact list : `sort`
+=== Sorting your contact list: `sort`
 
 If you want to view your current list in a better way, you can use the `sort` command to
 sort the current list lexicographically by the given prefix, in the given order. +
 
-To sort the current list, you can use : +
-`sort [PREFIX] [ORDER]`
-
+To sort the current list, you can use : `sort [PREFIX] [ORDER]` +
 
 ****
 * Only the current list is sorted, there is currently no lasting sort on the whole address book. +
@@ -453,7 +452,7 @@ Favourite contacts will appear on the top of the contact list.
 === Contacting a person `In development for v2.0`
 Directly calls or emails the person(s) identified by index number or otherwise.
 
-=== Listing entered commands : `history` or `h`
+=== Listing entered commands: `history` or `h`
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history` or `h`
 
@@ -463,7 +462,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo` or `u`
+=== Undoing previous command: `undo` or `u`
 Restores the address book to the state before the previous _undoable_ command was executed. +
 Format: `undo` or `u`
 
@@ -512,12 +511,12 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 // tag::exim[]
 
-=== Saving/Backing up your data : `export` or `ex`
+=== Saving/Backing up your data: `export` or `ex`
 Exports current address book data to a file with the specified filename in the data folder. +
 
 While K.N.S provides automatic data saving, you can still manually back up your data using the `export` command.
 
-To export your data, you should type : +
+To export your data, you should type: +
 `export` or `ex` `FILENAME.xml` +
 where FILENAME is the name you want to give to the exported data.
 
@@ -529,7 +528,7 @@ Exported data is saved in the `data` folder, which should be in the same folder 
 [WARNING]
 If a file with the filename you entered already exists in the `data` folder, it _**will be overwritten**_ without warning!
 
-Examples : +
+Examples: +
 
 * `export backup.xml` +
 Exports your data in the `data` folder as `backup.xml` +
@@ -537,10 +536,10 @@ Exports your data in the `data` folder as `backup.xml` +
 * `ex copy` +
 Fails and will prompt you to add a `.xml` to the end of the file name.
 
-=== Importing data : `import` or `i`
+=== Importing data: `import` or `i`
 Imports data from the file in the given filepath, and overwrite current address book data. +
 
-To import data from another application or your own backup data, you can use the `import` command with the format : +
+To import data from another application or your own backup data, you can use the `import` command with the format: +
 `import` or `i FILEPATH` +
 where FILEPATH is the relative filepath of the data to be imported. (Usually in the `data` folder)
 
@@ -552,7 +551,7 @@ When you import data, you cannot get your old data back once you close the appli
  (_you can still use `undo` if you haven't_) +
 It is recommended to backup using the `export` command first before importing.
 
-Examples : +
+Examples: +
 
 * `import data/backup.xml` +
 Imports the data in the file `backup.xml` in the `data` folder which should be located in the same folder as the application. +
@@ -562,18 +561,17 @@ Imports the data in the file `copy` which should be located at the same folder a
 
 // end::exim[]
 
-=== Clearing all entries : `clear` or `c`
+=== Clearing all entries: `clear` or `c`
 Clears all entries from the address book. +
 
 To clear all entries from your address book, you can type: +
 `clear` or `c`
 
 
-=== Exiting the program : `exit`
+=== Exiting the program: `exit`
 Exits the program. +
 
-To exit the program, you can use the command:  +
-`exit`
+To exit the program, you can use the command: `exit` +
 
 === Set favourite contacts `In development for v2.0`
 
@@ -585,7 +583,7 @@ Directly calls or emails the person(s) identified by index number or otherwise.
 
 == Command Cheat sheet
 
-If you're in a hurry or just looking for a quick and simple overview, you're in the right place! Here you can find the list of commands and how to use them :
+If you're in a hurry or just looking for a quick and simple overview, you're in the right place! Here you can find the list of commands and how to use them:
 [format="csv"]
 [options="header",cols="1s,^4m,10m,1m"]
 |===========================
