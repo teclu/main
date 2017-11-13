@@ -47,6 +47,13 @@ public class SortCommandParserTest {
     }
 
     @Test
+    public void parse_invalidArgs_failure() {
+        //more than 2 arguments
+        assertParseFailure(parser, PREFIX_PHONE.getPrefix() + " " + ARGUMENT_DESCENDING_WORD
+                + " some other uselessarguments", MESSAGE_INVALID_FORMAT);
+    }
+
+    @Test
     public void parse_validArgs_success() {
         //no arguments
         assertParseSuccess(parser, "", new SortCommand(ARGUMENT_DEFAULT_ORDER, ARGUMENT_ASCENDING_WORD));
@@ -62,9 +69,5 @@ public class SortCommandParserTest {
         //valid prefix and order
         assertParseSuccess(parser, PREFIX_NAME.getPrefix() + " " + ARGUMENT_ASCENDING_WORD,
                 new SortCommand(PREFIX_NAME.getPrefix(), ARGUMENT_ASCENDING_WORD));
-
-        //more than 2 arguments, only take the first 2 and ignore the rest
-        assertParseSuccess(parser, PREFIX_PHONE.getPrefix() + " " + ARGUMENT_DESCENDING_WORD
-                + " some other uselessarguments", new SortCommand(PREFIX_PHONE.getPrefix(), ARGUMENT_DESCENDING_WORD));
     }
 }

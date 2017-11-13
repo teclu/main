@@ -19,7 +19,7 @@ public class ImportCommand extends UndoableCommand {
     public static final String COMMAND_ALIAS = "i";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Imports the contents of the address book on the given filepath, overwriting current data.\n"
+            + ": Imports the contents of the address book data on the given filepath, overwriting current data.\n"
             + "Parameters: FILEPATH\n"
             + "Example: import data/addressbook-backup.xml";
 

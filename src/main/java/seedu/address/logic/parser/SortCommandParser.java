@@ -33,14 +33,17 @@ public class SortCommandParser implements Parser<SortCommand> {
             return new SortCommand(ARGUMENT_DEFAULT_ORDER, ARGUMENT_ASCENDING_WORD);
         } else if (isSortArgument(trimmedArgs)) {
             return new SortCommand(ARGUMENT_DEFAULT_ORDER, trimmedArgs);
+        } else if (isSortablePrefix(trimmedArgs)) {
+            return new SortCommand(trimmedArgs, ARGUMENT_ASCENDING_WORD);
         }
 
         String[] splitArgs = trimmedArgs.split("\\s+");
-        String prefix = splitArgs[0];
-        String order = ARGUMENT_ASCENDING_WORD;
-        if (splitArgs.length > 1) {
-            order = splitArgs[1];
+        if (splitArgs.length != 2) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
+
+        String prefix = splitArgs[0];
+        String order = splitArgs[1];
         if (isSortablePrefix(prefix) && isSortArgument(order)) {
             return new SortCommand(prefix, order);
         } else {
