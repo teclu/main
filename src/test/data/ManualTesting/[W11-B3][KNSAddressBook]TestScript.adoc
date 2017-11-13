@@ -25,7 +25,7 @@ toc::[]
 * **Jar Executable**: `[W11-B3][KNSAddressBook].jar`
 * **Sample Data**: `[W11-B3][KNSAddressBook]SampleData.xml`
 * **User Guide**: `[W11-B3][KNSAddressBook]UserGuide.pdf`
-* **Developer Guide**: `[W11-B3][KNSAddressBook]UserGuide.pdf`
+* **Developer Guide**: `[W11-B3][KNSAddressBook]DeveloperGuide.pdf`
 * **3 Portfolios**: `[W11-B3][Kevin Leonardo Anantha]Portfolio.pdf`, `[W11-B3][Nadhira Salsabila]Portfolio.pdf` and `[W11-B3][Tay Wan Feng Stanley]Portfolio.pdf`
 . Create a new folder called "_KNS_" and place the `.jar` file inside.
 . Inside "_KNS_", create a new folder called "_data_" and place the `.xml` file inside.
