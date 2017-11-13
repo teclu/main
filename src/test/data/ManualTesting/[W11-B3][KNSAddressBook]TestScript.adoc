@@ -34,7 +34,7 @@ toc::[]
 === Add
 
 * **Adding without any parameters:**
-.. Type `add` in the command box. 
+.. Type `add` in the command box.
 .. You should see `Invalid command format! ...`, with instructions on how to use the command.
 
 * **Adding with only the name parameter:**
