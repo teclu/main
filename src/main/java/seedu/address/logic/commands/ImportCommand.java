@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.storage.XmlAddressBookStorage;
 
@@ -18,7 +19,7 @@ public class ImportCommand extends UndoableCommand {
     public static final String COMMAND_ALIAS = "i";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Imports the contents of the address book on the given filepath, overwriting current data.\n"
+            + ": Imports the contents of the address book data on the given filepath, overwriting current data.\n"
             + "Parameters: FILEPATH\n"
             + "Example: import data/addressbook-backup.xml";
 
@@ -44,6 +45,7 @@ public class ImportCommand extends UndoableCommand {
             } else {
                 throw new IOException();
             }
+            model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
         } catch (IOException io) {
             throw new CommandException(String.format(MESSAGE_FILE_NOT_FOUND, filePathToImport));
         } catch (DataConversionException dc) {
