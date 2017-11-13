@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.ImportCommand.MESSAGE_IMPORT_SUCCESS;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
+
 import seedu.address.commons.util.FileUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -20,9 +21,9 @@ public class ImportCommandTest {
 
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/ImportExportCommandTest/");
     private static final String EMPTY_FILE_PATH = TEST_DATA_FOLDER + "empty.xml";
-    private static final String MISSING_FILE_PATH =TEST_DATA_FOLDER + "missing.xml";
+    private static final String MISSING_FILE_PATH = TEST_DATA_FOLDER + "missing.xml";
     private static final String ILLEGAL_ADDRESSBOOK_PATH = TEST_DATA_FOLDER + "illegalAddressBook.xml";
-    private static final String VALID_ADDRESSBOOK_PATH =TEST_DATA_FOLDER + "validAddressBook.xml";
+    private static final String VALID_ADDRESSBOOK_PATH = TEST_DATA_FOLDER + "validAddressBook.xml";
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -73,12 +74,15 @@ public class ImportCommandTest {
     public void execute_validFilePath_success() throws Exception {
         ImportCommand command = prepareCommand(VALID_ADDRESSBOOK_PATH);
         String expectedMessage = String.format(MESSAGE_IMPORT_SUCCESS, VALID_ADDRESSBOOK_PATH);
-        Model expectedModel = new ModelManager(new XmlAddressBookStorage(VALID_ADDRESSBOOK_PATH).readAddressBook().get(), new UserPrefs());
+        Model expectedModel = new ModelManager(new XmlAddressBookStorage(VALID_ADDRESSBOOK_PATH)
+                .readAddressBook().get(), new UserPrefs());
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
 
     }
 
-
+    /**
+     * Prepares an ImportCommand for testing based on the given filepath.
+     */
     public ImportCommand prepareCommand(String filepath) {
         ImportCommand importCommand = new ImportCommand(filepath);
         importCommand.setData(model, new CommandHistory(), new UndoRedoStack());

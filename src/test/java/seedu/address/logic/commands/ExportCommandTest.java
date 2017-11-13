@@ -71,11 +71,14 @@ public class ExportCommandTest {
         assertCommandSuccess(command, model, expectedMessage, model);
 
         //check if exported file is equal to current model
-        Model expectedExportedModel = new ModelManager( new XmlAddressBookStorage(exportFilePath)
+        Model expectedExportedModel = new ModelManager(new XmlAddressBookStorage(exportFilePath)
                 .readAddressBook().get(), new UserPrefs());
         assertTrue(model.equals(expectedExportedModel));
     }
 
+    /**
+     * Prepares an ExportCommand for testing based on given filename.
+     */
     public ExportCommand prepareCommand(String filename) {
         ExportCommand exportCommand = new ExportCommand(TEST_DATA_FOLDER, filename);
         exportCommand.setData(model, new CommandHistory(), new UndoRedoStack());

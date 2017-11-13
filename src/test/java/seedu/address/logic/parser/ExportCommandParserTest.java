@@ -7,12 +7,12 @@ import static seedu.address.logic.parser.ExportCommandParser.EXPORT_FILE_EXTENSI
 import static seedu.address.logic.parser.ExportCommandParser.MESSAGE_INVALID_EXTENSION;
 
 import org.junit.Test;
+
 import seedu.address.logic.commands.ExportCommand;
-import seedu.address.logic.commands.ImportCommand;
 
 public class ExportCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT = String
-            .format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE);
+            .format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE);
     private static final String MESSAGE_BAD_EXTENSION = String.format(MESSAGE_INVALID_EXTENSION, EXPORT_FILE_EXTENSION);
 
     private ExportCommandParser parser = new ExportCommandParser();
