@@ -340,7 +340,7 @@ Please ensure that you have done the **Export to a valid filename ** test before
 * **Sort by phone ascendingly:**
 .. Type `sort p/ asc` in the command box and press kbd:[Enter].
 .. You should see a `Sorted current list by p/ in asc order.` message.
-.. You should also see the current list sorted by phone ascendingly, with persons with the smallest leading number listed first.
+.. You should also see the current list sorted by phone ascendingly, with persons without phone numbers listed first.
 
 * **Sort by default descendingly:**
 .. Type `sort des` in the command box and press kbd:[Enter].
