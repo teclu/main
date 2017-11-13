@@ -1,4 +1,4 @@
-= K.N.S. AddressBook v1.5.0rc - User Guide
+= K.N.S. AddressBook v1.5.0 - User Guide
 :toc:
 :toc-title:
 :toc-placement!: preamble
@@ -220,7 +220,7 @@ Edits the name of the 2nd person to be `Betsy Crower`, change the avatar and cle
 // tag::adddeletetagcommand[]
 === Adding a Tag : `addtag` or `at`
 Adds tag(s) to an existing person in the address book. +
-Format: `addtag INDEX TAG...`
+Format: `addtag INDEX TAG [MORE_TAGS]`
 
 ****
 * Adds the given tag(s) to the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -238,7 +238,7 @@ Adds a `friends` tag and a `highSchool` tag for the 3rd person on the list.
 
 === Deleting a Tag : `deletetag` or `dt`
 Deletes given tag from an existing person in the address book. +
-Format: `deletetag INDEX TAG...`
+Format: `deletetag INDEX TAG [MORE_TAGS]`
 
 ****
 * Deletes given tag(s) from the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -255,7 +255,9 @@ Deletes the `owesMoney` tag from the 1st person on the list.
 * `deletetag 3 friends highSchool` +
 Deletes the `friends` tag and `highSchool` tag from the 3rd person on the list.
 
-=== Locating Persons: `find` or `f`
+// end::adddeletetagcommand[]
+
+=== Locating persons: `find` or `f`
 Finds persons whose names or tags, indicated by an optional prefix, contain any of the given keywords. Defaults to find by name. +
 Format: `find [PREFIX] KEYWORD [MORE_KEYWORDS]` or `f [PREFIX] KEYWORD [MORE_KEYWORDS]`
 
@@ -497,8 +499,8 @@ Add,"add | a",a n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [v/AV
 Clear,"clear | c", clear, clear
 Delete, "delete | d", delete INDEX, delete 3
 Edit, "edit | e", e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [v/AVATAR] [t/TAG]..., edit 2 n/James Lee
-Add Tag, "addtag | at", at INDEX TAG..., addtag 2 friends highSchool
-Delete Tag, "deletag | dt", dt INDEX TAG..., deletetag 2 friends highSchool
+Add Tag, "addtag | at", at INDEX TAG [MORE_TAGS], addtag 2 friends highSchool
+Delete Tag, "deletag | dt", dt INDEX TAG [MORE_TAGS], deletetag 2 friends highSchool
 Find, "find | f", find [PREFIX] KEYWORD [MORE_KEYWORDS], find n/ James Jake
 List, "list | l", list, list
 View Help, help, help, help

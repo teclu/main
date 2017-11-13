@@ -9,7 +9,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 == Project Team
 
-=== Kevin Leonardo
+=== Kevin Leonardo Anantha
 image::k-l-a.jpg[width="150", align="left"]
 {empty}[https://github.com/k-l-a[github]][https://cs2103aug2017-w11-b3.github.io/main/team/kevin.html[project portfolio]]
 
