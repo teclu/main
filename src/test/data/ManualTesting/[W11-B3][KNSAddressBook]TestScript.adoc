@@ -1,1 +1,86 @@
+= K.N.S. AddressBook v1.5.0 - Test Script
+:toc:
+:toc-title:
+:toc-placement!: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+:repoURL: https://github.com/CS2103AUG2017-W11-B3/main/
+
+By: `Team W11-B3`      Since: `Sep 2017`      Licence: `MIT`
+
+== Introduction
+This document will help you get started on manually testing K.N.S. AddressBook. 
+
+== Table of Contents
+toc::[]
+
+== Setting Up
+. Ensure that you have downloaded the following files from IVLE:
+.. `[W11-B3][KNSAddressBook].jar`
+.. `[W11-B3][KNSAddressBook]SampleData.xml`
+. Create a new folder called "_KNS_" and place the `.jar` file inside.
+. Inside "_KNS_", create a new folder called "_data_" and place the `.xml` file inside.
+. Rename the `.xml` file to `addressbook.xml`.
+. Execute the `.jar` file to launch K.N.S. AddressBook.
+
+== Basic Commands
+
+=== Add
+
+To be filled in.
+
+=== Edit
+
+To be filled in.
+
+=== Delete
+
+To be filled in.
+
+=== Select
+
+To be filled in.
+
+=== Clear
+
+To be filled in.
+
+=== Help
+
+To be filled in.
+
+=== Theme
+
+=== Undo/Redo
+
+To be filled in.
+
+=== Exit
+
+== Advanced Commands
+
+=== Add/Delete Tag
+
+To be filled in.
+
+=== Find
+
+To be filled in.
+
+=== Import/Export
+
+To be filled in.
+
+=== List
+
+To be filled in.
+
+=== Sort
+
 To be filled in.
