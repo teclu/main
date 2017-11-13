@@ -14,6 +14,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class ExportCommandParser implements Parser<ExportCommand> {
 
     public static final String EXPORT_FILE_EXTENSION = ".xml";
+    public static final String MESSAGE_INVALID_EXTENSION = "Please end your file name with %1$s";
 
     /**
      * Parses the given (@code String) in the context of a ExportCommand.
@@ -24,8 +25,10 @@ public class ExportCommandParser implements Parser<ExportCommand> {
         requireNonNull(args);
 
         String trimmedArgs = args.trim();
-        if (!trimmedArgs.endsWith(EXPORT_FILE_EXTENSION)) {
+        if (trimmedArgs.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+        } else if (!trimmedArgs.endsWith(EXPORT_FILE_EXTENSION)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_EXTENSION, EXPORT_FILE_EXTENSION));
         }
 
         return new ExportCommand(trimmedArgs);

@@ -1,4 +1,24 @@
 # teclu
+###### \java\seedu\address\commons\events\ui\ChangeThemeRequestEvent.java
+``` java
+/**
+ * Indicates a request for theme change.
+ */
+public class ChangeThemeRequestEvent extends BaseEvent {
+
+    public final String theme;
+
+    public ChangeThemeRequestEvent(String theme) {
+        this.theme = theme;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().toString();
+    }
+
+}
+```
 ###### \java\seedu\address\commons\util\AvatarUtil.java
 ``` java
 /**
@@ -40,6 +60,60 @@ public class AvatarUtil {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\ThemeCommand.java
+``` java
+/**
+ * Changes the theme of the Address Book.
+ */
+public class ThemeCommand extends Command {
+
+    public static final String COMMAND_WORD = "theme";
+    public static final String COMMAND_ALIAS = "t";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Changes the theme of the address book.\n"
+            + "Parameters: THEME (must be either Light, Dark, Red, Blue or Green; case-insensitive)\n"
+            + "Examples: theme Light, theme dark";
+
+    public static final String MESSAGE_THEME_SUCCESS = "Theme updated to: %1$s";
+
+    private final String theme;
+
+    public ThemeCommand(String theme) {
+        this.theme = formatThemeString(theme);
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        if (!isValidTheme(this.theme)) {
+            throw new CommandException(Messages.MESSAGE_INVALID_THEME);
+        }
+        if ((MainWindow.getCurrentTheme()).contains(this.theme)) {
+            throw new CommandException("Theme is already set to " + this.theme + "!");
+        }
+        EventsCenter.getInstance().post(new ChangeThemeRequestEvent(this.theme));
+        return new CommandResult(String.format(MESSAGE_THEME_SUCCESS, this.theme));
+    }
+
+    private boolean isValidTheme(String theme) {
+        return theme.equals("Light") || theme.equals("Dark") || theme.equals("Red")
+                || theme.equals("Blue") || theme.equals("Green");
+    }
+
+    private String formatThemeString(String theme) {
+        theme = (theme.trim()).toLowerCase();
+        return theme.substring(0, 1).toUpperCase() + theme.substring(1);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ThemeCommand // instanceof handles nulls
+                && this.theme.equals(((ThemeCommand) other).theme)); // state check
+    }
+
+}
+```
 ###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
@@ -50,6 +124,26 @@ public class AvatarUtil {
         requireNonNull(avatar);
         return avatar.isPresent() ? Optional.of(new Avatar(avatar.get())) : Optional.empty();
     }
+```
+###### \java\seedu\address\logic\parser\ThemeCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new ThemeCommand object.
+ */
+public class ThemeCommandParser implements Parser<ThemeCommand> {
+
+    /**
+     * Parses the given (@code String) in the context of a ThemeCommand.
+     * @return ThemeCommand Object for execution
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ThemeCommand parse(String userInput) throws ParseException {
+        if (userInput.length() == 0) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+        }
+        return new ThemeCommand(userInput);
+    }
+}
 ```
 ###### \java\seedu\address\model\person\avatar\Avatar.java
 ``` java
@@ -96,7 +190,7 @@ public class Avatar {
                 this.image = ImageIO.read(this.url);
 
                 if (!isSavedInData(url)) {
-                    String outputName = "/data/" + this.url.hashCode() + ".png";
+                    String outputName = "/data/" + this.image.hashCode() + ".png";
                     File outputImage = new File(System.getProperty("user.dir") + outputName);
 
                     File parentDirectory = outputImage.getParentFile();
@@ -297,6 +391,93 @@ public class AvatarWindow extends UiPart<Region> {
         }
     }
 }
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    @Subscribe
+    public void handleChangeThemeRequestEvent(ChangeThemeRequestEvent event) throws CommandException, ParseException {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        mainWindow.getStylesheets().remove(currentTheme);
+        prefs.setAddressBookTheme(event.theme + "Theme.css");
+        currentTheme = "view/" + prefs.getAddressBookTheme();
+        mainWindow.getStylesheets().add(currentTheme);
+    }
+
+    @FXML
+    private void setToLightTheme() {
+        if (checkSameTheme("Light")) {
+            return;
+        }
+        mainWindow.getStylesheets().remove(currentTheme);
+        prefs.setAddressBookTheme("LightTheme.css");
+        currentTheme = "view/" + prefs.getAddressBookTheme();
+        mainWindow.getStylesheets().add(currentTheme);
+        EventsCenter.getInstance().post(new ChangeThemeRequestEvent("Light"));
+        raise(new NewResultAvailableEvent("Theme updated to: Light", false));
+    }
+
+    @FXML
+    private void setToDarkTheme() {
+        if (checkSameTheme("Dark")) {
+            return;
+        }
+        mainWindow.getStylesheets().remove(currentTheme);
+        prefs.setAddressBookTheme("DarkTheme.css");
+        currentTheme = "view/" + prefs.getAddressBookTheme();
+        mainWindow.getStylesheets().add(currentTheme);
+        EventsCenter.getInstance().post(new ChangeThemeRequestEvent("Dark"));
+        raise(new NewResultAvailableEvent("Theme updated to: Dark", false));
+    }
+
+    @FXML
+    private void setToRedTheme() {
+        if (checkSameTheme("Red")) {
+            return;
+        }
+        mainWindow.getStylesheets().remove(currentTheme);
+        prefs.setAddressBookTheme("RedTheme.css");
+        currentTheme = "view/" + prefs.getAddressBookTheme();
+        mainWindow.getStylesheets().add(currentTheme);
+        EventsCenter.getInstance().post(new ChangeThemeRequestEvent("Red"));
+        raise(new NewResultAvailableEvent("Theme updated to: Red", false));
+    }
+
+    @FXML
+    private void setToBlueTheme() {
+        if (checkSameTheme("Blue")) {
+            return;
+        }
+        mainWindow.getStylesheets().remove(currentTheme);
+        prefs.setAddressBookTheme("BlueTheme.css");
+        currentTheme = "view/" + prefs.getAddressBookTheme();
+        mainWindow.getStylesheets().add(currentTheme);
+        EventsCenter.getInstance().post(new ChangeThemeRequestEvent("Blue"));
+        raise(new NewResultAvailableEvent("Theme updated to: Blue", false));
+    }
+
+    @FXML
+    private void setToGreenTheme() {
+        if (checkSameTheme("Green")) {
+            return;
+        }
+        mainWindow.getStylesheets().remove(currentTheme);
+        prefs.setAddressBookTheme("GreenTheme.css");
+        currentTheme = "view/" + prefs.getAddressBookTheme();
+        mainWindow.getStylesheets().add(currentTheme);
+        EventsCenter.getInstance().post(new ChangeThemeRequestEvent("Green"));
+        raise(new NewResultAvailableEvent("Theme updated to: Green", false));
+    }
+
+    /**
+     * Returns true if the theme to be set is already in place and raises an event to the user.
+     */
+    private boolean checkSameTheme(String theme) {
+        if (currentTheme.contains(theme)) {
+            raise(new NewResultAvailableEvent("Theme is already set to " + theme + "!", true));
+            return true;
+        }
+        return false;
+    }
 ```
 ###### \java\seedu\address\ui\PersonPanel.java
 ``` java

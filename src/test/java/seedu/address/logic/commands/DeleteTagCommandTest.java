@@ -36,6 +36,7 @@ import seedu.address.testutil.PersonBuilder;
 public class DeleteTagCommandTest {
 
     public static final String VALID_TAG = "friends";
+    public static final String VALID_TAG_2 = "neighbours";
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -71,6 +72,24 @@ public class DeleteTagCommandTest {
         showFirstPersonOnly(expectedModel);
 
         assertCommandSuccess(deleteTagCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_invalidTagUnfilteredList_failure() throws Exception {
+        Index indexFirstPerson = INDEX_FIRST_PERSON;
+        Set<Tag> tag = ParserUtil.parseTags(Arrays.asList(VALID_TAG_2));
+        DeleteTagCommand deleteTagCommand = prepareCommand(indexFirstPerson, tag);
+
+        assertCommandFailure(deleteTagCommand, model, DeleteTagCommand.MESSAGE_NOT_EXIST_TAG);
+    }
+
+    @Test
+    public void execute_invalidTagFilteredList_failure() throws Exception {
+        showFirstPersonOnly(model);
+        Set<Tag> tag = ParserUtil.parseTags(Arrays.asList(VALID_TAG_2));
+        DeleteTagCommand deleteTagCommand = prepareCommand(INDEX_FIRST_PERSON, tag);
+
+        assertCommandFailure(deleteTagCommand, model, DeleteTagCommand.MESSAGE_NOT_EXIST_TAG);
     }
 
     @Test

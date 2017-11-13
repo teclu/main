@@ -21,10 +21,12 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -190,72 +192,88 @@ public class MainWindow extends UiPart<Region> {
 
     //@@author teclu
     @Subscribe
-    public void handleChangeThemeRequestEvent(ChangeThemeRequestEvent event) throws CommandException {
+    public void handleChangeThemeRequestEvent(ChangeThemeRequestEvent event) throws CommandException, ParseException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-
-        switch (event.theme) {
-        case "light":
-            setToLightTheme();
-            break;
-        case "dark":
-            setToDarkTheme();
-            break;
-        case "red":
-            setToRedTheme();
-            break;
-        case "blue":
-            setToBlueTheme();
-            break;
-        case "green":
-            setToGreenTheme();
-            break;
-        default:
-        }
+        mainWindow.getStylesheets().remove(currentTheme);
+        prefs.setAddressBookTheme(event.theme + "Theme.css");
+        currentTheme = "view/" + prefs.getAddressBookTheme();
+        mainWindow.getStylesheets().add(currentTheme);
     }
 
     @FXML
     private void setToLightTheme() {
+        if (checkSameTheme("Light")) {
+            return;
+        }
         mainWindow.getStylesheets().remove(currentTheme);
         prefs.setAddressBookTheme("LightTheme.css");
         currentTheme = "view/" + prefs.getAddressBookTheme();
         mainWindow.getStylesheets().add(currentTheme);
         EventsCenter.getInstance().post(new ChangeThemeRequestEvent("Light"));
+        raise(new NewResultAvailableEvent("Theme updated to: Light", false));
     }
 
     @FXML
     private void setToDarkTheme() {
+        if (checkSameTheme("Dark")) {
+            return;
+        }
         mainWindow.getStylesheets().remove(currentTheme);
         prefs.setAddressBookTheme("DarkTheme.css");
         currentTheme = "view/" + prefs.getAddressBookTheme();
         mainWindow.getStylesheets().add(currentTheme);
         EventsCenter.getInstance().post(new ChangeThemeRequestEvent("Dark"));
+        raise(new NewResultAvailableEvent("Theme updated to: Dark", false));
     }
 
     @FXML
     private void setToRedTheme() {
+        if (checkSameTheme("Red")) {
+            return;
+        }
         mainWindow.getStylesheets().remove(currentTheme);
         prefs.setAddressBookTheme("RedTheme.css");
         currentTheme = "view/" + prefs.getAddressBookTheme();
         mainWindow.getStylesheets().add(currentTheme);
         EventsCenter.getInstance().post(new ChangeThemeRequestEvent("Red"));
+        raise(new NewResultAvailableEvent("Theme updated to: Red", false));
     }
 
     @FXML
     private void setToBlueTheme() {
+        if (checkSameTheme("Blue")) {
+            return;
+        }
         mainWindow.getStylesheets().remove(currentTheme);
         prefs.setAddressBookTheme("BlueTheme.css");
         currentTheme = "view/" + prefs.getAddressBookTheme();
         mainWindow.getStylesheets().add(currentTheme);
         EventsCenter.getInstance().post(new ChangeThemeRequestEvent("Blue"));
+        raise(new NewResultAvailableEvent("Theme updated to: Blue", false));
     }
 
     @FXML
     private void setToGreenTheme() {
+        if (checkSameTheme("Green")) {
+            return;
+        }
         mainWindow.getStylesheets().remove(currentTheme);
         prefs.setAddressBookTheme("GreenTheme.css");
         currentTheme = "view/" + prefs.getAddressBookTheme();
         mainWindow.getStylesheets().add(currentTheme);
         EventsCenter.getInstance().post(new ChangeThemeRequestEvent("Green"));
+        raise(new NewResultAvailableEvent("Theme updated to: Green", false));
+    }
+
+    /**
+     * Returns true if the theme to be set is already in place and raises an event to the user.
+     */
+    private boolean checkSameTheme(String theme) {
+        if (currentTheme.contains(theme)) {
+            raise(new NewResultAvailableEvent("Theme is already set to " + theme + "!", true));
+            return true;
+        }
+        return false;
     }
     //@@author
 

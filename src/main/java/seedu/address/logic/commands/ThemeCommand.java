@@ -4,6 +4,7 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.ui.MainWindow;
 
 //@@author teclu
 /**
@@ -24,7 +25,7 @@ public class ThemeCommand extends Command {
     private final String theme;
 
     public ThemeCommand(String theme) {
-        this.theme = (theme.trim()).toLowerCase();;
+        this.theme = formatThemeString(theme);
     }
 
     @Override
@@ -32,14 +33,21 @@ public class ThemeCommand extends Command {
         if (!isValidTheme(this.theme)) {
             throw new CommandException(Messages.MESSAGE_INVALID_THEME);
         }
-
+        if ((MainWindow.getCurrentTheme()).contains(this.theme)) {
+            throw new CommandException("Theme is already set to " + this.theme + "!");
+        }
         EventsCenter.getInstance().post(new ChangeThemeRequestEvent(this.theme));
         return new CommandResult(String.format(MESSAGE_THEME_SUCCESS, this.theme));
     }
 
     private boolean isValidTheme(String theme) {
-        return theme.equals("light") || theme.equals("dark") || theme.equals("red")
-                || theme.equals("blue") || theme.equals("green");
+        return theme.equals("Light") || theme.equals("Dark") || theme.equals("Red")
+                || theme.equals("Blue") || theme.equals("Green");
+    }
+
+    private String formatThemeString(String theme) {
+        theme = (theme.trim()).toLowerCase();
+        return theme.substring(0, 1).toUpperCase() + theme.substring(1);
     }
 
     @Override

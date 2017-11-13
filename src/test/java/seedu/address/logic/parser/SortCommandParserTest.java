@@ -4,7 +4,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.commands.SortCommand.ARGUMENT_ASCENDING_WORD;
 import static seedu.address.logic.commands.SortCommand.ARGUMENT_DEFAULT_ORDER;
 import static seedu.address.logic.commands.SortCommand.ARGUMENT_DESCENDING_WORD;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_AVATAR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -27,13 +26,10 @@ public class SortCommandParserTest {
         //not a prefix
         assertParseFailure(parser, "notAPrefix", MESSAGE_INVALID_FORMAT);
 
-        //a prefix, but not a sortable one
-        assertParseFailure(parser, PREFIX_AVATAR.getPrefix(), MESSAGE_INVALID_FORMAT);
-
         //valid order but bad prefix
         assertParseFailure(parser, "notAPrefix " + ARGUMENT_ASCENDING_WORD, MESSAGE_INVALID_FORMAT);
 
-        //no space
+        //no space between prefix and order
         assertParseFailure(parser, "n/asc", MESSAGE_INVALID_FORMAT);
 
         //prefix and order are in the wrong order
@@ -48,6 +44,13 @@ public class SortCommandParserTest {
         //two valid prefixes
         assertParseFailure(parser, PREFIX_NAME.getPrefix()
                 + " " + PREFIX_PHONE.getPrefix(), MESSAGE_INVALID_FORMAT);
+    }
+
+    @Test
+    public void parse_invalidArgs_failure() {
+        //more than 2 arguments
+        assertParseFailure(parser, PREFIX_PHONE.getPrefix() + " " + ARGUMENT_DESCENDING_WORD
+                + " some other uselessarguments", MESSAGE_INVALID_FORMAT);
     }
 
     @Test
@@ -66,9 +69,5 @@ public class SortCommandParserTest {
         //valid prefix and order
         assertParseSuccess(parser, PREFIX_NAME.getPrefix() + " " + ARGUMENT_ASCENDING_WORD,
                 new SortCommand(PREFIX_NAME.getPrefix(), ARGUMENT_ASCENDING_WORD));
-
-        //more than 2 arguments, only take the first 2 and ignore the rest
-        assertParseSuccess(parser, PREFIX_PHONE.getPrefix() + " " + ARGUMENT_DESCENDING_WORD
-                + " some other uselessarguments", new SortCommand(PREFIX_PHONE.getPrefix(), ARGUMENT_DESCENDING_WORD));
     }
 }

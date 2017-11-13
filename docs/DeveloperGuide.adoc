@@ -1,7 +1,7 @@
-= K.N.S. AddressBook v1.5.0rc - Developer Guide
+= K.N.S. AddressBook v1.5.0 - Developer Guide
 :toc:
 :toc-title:
-:toc-placement: preamble
+:toc-placement!:
 :sectnums:
 :imagesDir: images
 :stylesDir: stylesheets
@@ -20,6 +20,10 @@ Hello there! If you came here by choice, then chances are that you are intereste
 the original source code (https://github.com/nus-cs2103-AY1718S1/addressbook-level4/[AddressBook-Level4 project])
 provided by the https://github.com/se-edu[SE-EDU initiative]. This developer guide provides information that will help
 you understand what features we have implemented, and how we have done so.
+
+== Table Of Contents
+
+toc::[]
 
 == Setting Up
 
@@ -119,7 +123,7 @@ Lastly, if you plan to develop this as a separate product (_i.e. instead of cont
 The *_Architecture Diagram_* below explains the high-level design of the application:
 
 image::Architecture.png[width="600"]
-_Figure 3.1.1 : Architecture Diagram_
+_Figure 4.1.1: Architecture Diagram_
 
 ==== `Main` Component
 
@@ -134,19 +138,19 @@ for,
 link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those
 classes play important roles at the architecture level:
 
-* `EventsCenter` : This class (_written using
+* `EventsCenter`: This class (_written using
 https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]_) is used by components to
 communicate with other components using events (_i.e. a form of Event Driven design_)
-* `LogsCenter` : Used by most classes to write log messages to the application's log file.
+* `LogsCenter`: Used by most classes to write log messages to the application's log file.
 
 ==== The Other 4 Components
 
 The rest of the App consists of four components:
 
-* link:#ui-component[*`UI`*] : The user interface (_UI_) of the application.
-* link:#logic-component[*`Logic`*] : The command executor.
-* link:#model-component[*`Model`*] : Holds the data of the App in-memory.
-* link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
+* link:#ui-component[*`UI`*]: The user interface (_UI_) of the application.
+* link:#logic-component[*`Logic`*]: The command executor.
+* link:#model-component[*`Model`*]: Holds the data of the App in-memory.
+* link:#storage-component[*`Storage`*]: Reads data from, and writes data to, the hard disk.
 
 Each of the four components
 
@@ -161,7 +165,7 @@ The Sequence Diagram below shows how the components interact for the scenario wh
 `delete 1`:
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 3.2.1.1 : Component interactions for `delete 1` command (part 1)_
+_Figure 4.2.1.1: Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 `Model` simply raises a `AddressBookChangedEvent` when the Address Book data is changed, instead of asking the `Storage`
@@ -171,7 +175,7 @@ The diagram below shows how the `EventsCenter` reacts to that event, which event
 to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 3.2.1.2 : Component interactions for `delete 1` command (part 2)_
+_Figure 4.2.1.2: Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be
@@ -181,9 +185,9 @@ components.
 === UI Component
 
 image::UiClassDiagram.png[width="800"]
-_Figure 3.3.1 : Structure of the UI Component_
+_Figure 4.3.1: Structure of the UI Component_
 
-*API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
+*API*: link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`,
 `StatusBarFooter`, `BrowserPanel` etc. All of these parts, including the `MainWindow`, inherit from the abstract `UiPart` class.
@@ -202,13 +206,13 @@ The `UI` component,
 === Logic component
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 3.4.1 : Structure of the Logic Component_
+_Figure 4.4.1: Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 3.4.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand`
-and `Command` in Figure 3.4.1_
+_Figure 4.4.2: Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand`
+and `Command` in Figure 4.4.1_
 
-*API* :
+*API*:
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
 *  `Logic` uses the `AddressBookParser` class to parse the user command.
@@ -220,14 +224,14 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 API call:
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 3.4.0c : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 4.4.3: Interactions Inside the Logic Component for the `delete 1` Command_
 
 === Model Component
 
 image::ModelClassDiagram.png[width="800"]
-_Figure 3.5.1 : Structure of the Model Component_
+_Figure 4.5.1: Structure of the Model Component_
 
-*API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
+*API*: link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
 The `Model`,
 
@@ -240,9 +244,9 @@ so that the UI automatically updates when the data in the list change.
 === Storage Component
 
 image::StorageClassDiagram.png[width="800"]
-_Figure 3.6.1 : Structure of the Storage Component_
+_Figure 4.6.1: Structure of the Storage Component_
 
-*API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
+*API*: link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
 The `Storage` component,
 
@@ -265,14 +269,14 @@ This section describes some noteworthy details on how certain features are imple
 === Undo/Redo Mechanism
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing
-and redoing of commands that modifies the state of the address book (_e.g. `add`, `edit`_). Such commands will inherit
+and redoing of commands that modifies the state of the address book (_e.g._ `add`, `edit`). Such commands will inherit
 from `UndoableCommand`.
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead.
 The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 4.1.1 : Inheritance diagram for Undo/Redo command_
+_Figure 5.1.1: Inheritance diagram for Undo/Redo command_
 
 `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone,
 such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such
@@ -319,13 +323,13 @@ of the address book is saved before the `delete 5` command executes. The `delete
 `undoStack`. The current state is saved together with the command as shown:
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
-_Figure 4.1.2_
+_Figure 5.1.2_
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may
 execute `add n/David ...` to add a new person like so:
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
-_Figure 4.1.3_
+_Figure 5.1.3_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -336,7 +340,7 @@ We will pop the most recent command out of the `undoStack` and push it back to t
 address book to the state before the `add` command executed as shown:
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
-_Figure 4.1.4_
+_Figure 5.1.4_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when
@@ -347,7 +351,7 @@ popping the `undoStack`.
 The following link:#sequence-diagram[sequence diagram ]shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
-_Figure 4.1.1.1_
+_Figure 5.1.1.1_
 
 The redo does the exact opposite: pops from `redoStack`, push to `undoStack`, and restores the address book to the state
 after the command is executed.
@@ -361,18 +365,18 @@ time the `redoStack` is no longer empty. It will be purged as it no longer make 
 (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
-_Figure 4.1.1.2_
+_Figure 5.1.1.2_
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command`
 rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
-_Figure 4.1.1.3_
+_Figure 5.1.1.3_
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
-_Figure 4.1.1.4_
+_Figure 5.1.1.4_
 
 ==== Design Considerations
 
@@ -429,13 +433,14 @@ things. +
 // tag::personpanel[]
 === Person Panel
 
-The PersonPanel replaces the previous BrowserPanel, and is a crucial part of `MainWindow`.
+The `PersonPanel` replaces the previous `BrowserPanel`, and is a crucial part of `MainWindow`. It is an event-driven
+component that displays contact information depending on the user's actions
 
 ==== Java Implementation
 
 By taking advantage of the `java.util.logging package`, PersonPanel is able to display all of the details of a contact
-(_name, address, email, contact number, birthday, tags_) selected in `PersonCard`. This implementation can be seen from
-the following 2 code snippets:
+(_name, address, email, contact number, birthday, avatar, tags_) selected in `PersonCard`. This implementation can be
+seen from the following 2 code snippets:
 
 [source,java]
 ----
@@ -451,7 +456,8 @@ private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedE
 ----
 
 **Code Snippet 1 (`handlePersonPanelSelectionChangedEvent()`):** Whenever a contact is selected, an event will be
-triggered. The method will respond to the event by obtaining a PersonCard variable and ReadOnlyPerson variable (_which contains all the details of the contact_), and pass it into loadPersonPage().
+triggered. The method will respond to the event by obtaining a PersonCard variable and ReadOnlyPerson variable
+(_which contains all the details of the contact_), and pass it into loadPersonPage().
 
 [source,java]
 ----
@@ -476,12 +482,21 @@ extract the contact's details for display; the UI will be updated accordingly to
 [NOTE]
 Upon opening the application, no contact details will be displayed since no contact has been selected yet.
 
+To better illustrate the code snippets, let us look at the following sequence diagram when a user selects a contact
+found in `PersonListPanel`:
+
+image::SequenceDiagramSelectToPersonPanel.png[width="760"]
+_Figure 5.2.1.1: Sequence Diagram for Selection_
+
+When a contact in `PersonListPanel` is selected via `command` or mouse click, this will result in the `EventsCenter`
+returning a `ReadOnlyPerson` of the selected contact for display in the `PersonPanel`.
+
 ==== Layout Implementation
 
 The layout for PersonPanel is specified in `PersonPanel.fxml`. Visually, it can be broken down into 2 parts as shown:
 
 image::PersonPanelLayout.png[width="760"]
-_Figure 4.2.2.1: Visual breakdown of PersonPanel_
+_Figure 5.2.2.1: Visual Breakdown of PersonPanel_
 
 **Part 1 (primaryDetails):** This is subdivided into parts A and B. Part A contains the link:#avatar[avatar] picture of the contact.
 Clicking on the avatar picture will cause a new `AvatarWindow` to be generated, which allows users to change the current
@@ -522,46 +537,49 @@ contact's details. +
 **Aspect:** Addition of Icons for secondaryDetails. +
 **Alternative 1 (current choice):** Place icons on the left of each contact detail. +
 **Pros:** Quick to implement and makes it easier for user to differentiate between each contact detail. Icons can be
-easily taken from Google's Material Design. +
-**Cons:** If we were to include more contact details (_e.g. social media links_) in the future, then we would have to keep adding more icons; relevant icons may not be found on Google's Material Design.  +
+easily taken from Google's Material Design (_or any other design website_). +
+**Cons:** If we were to include more contact details (_e.g. social media links_) in the future, then we would have to
+keep adding more icons; relevant icons may not be found on Google's Material Design.  +
 **Alternative 2:** Use different colours for each contact detail. +
 **Pros:** Even more quick to implement since it only involves CSS changes. +
-**Cons:** Bad idea design-wise because it violates the link:#tradic-colour-scheme[Triadic Colour Scheme]. It could make the application look less professional and unattractive.
+**Cons:** Bad idea design-wise because it violates the link:#tradic-colour-scheme[Triadic Colour Scheme]. It could make
+the application look less professional and unattractive.
 // end::personpanel[]
 
 // tag::avatar[]
 === Avatar
 
-The Avatar class is a new contact detail that displays a display picture obtained
+The `Avatar` class is a new contact detail that displays a display picture obtained
 via a valid Uniform Resource Locator (URL) or a local directory path in your computer.
 If no display picture is assigned to the contact, then creates a default placeholder image.
-In order for the user to upload an avatar for the contact, he/she can use the Add command or Graphical
+
+In order for the user to upload an `Avatar` for the contact, he/she can use the Add/Edit `command` or Graphical
 User Interface (GUI) upload (`AvatarWindow`) to do so.
 
 ==== Java Implementation: `Avatar`
 
-The display and storage of a display picture can be seen in the following code snippets:
+The display and storage of `Avatar` can be seen in the following code snippets:
 
 [source,java]
 ----
 public Avatar() {
     AvatarUtil placeholder = new AvatarUtil();
     image = placeholder.getPlaceholderAvatar();
-    value = "";
+    value = DEFAULT_VALUE;
 }
 ----
-**Code Snippet 1 (`Avatar()`):** The default constructor for Avatar is used when no display
-picture is assigned to a newly added contact. The default placeholder avatar is generated
-with `AvatarUtil`.
+**Code Snippet 1 (`Avatar()`):** The default constructor for `Avatar` is used when no display
+picture is assigned to a newly added contact. The default placeholder `Avatar` is generated
+with the dependant class `AvatarUtil`.
 
 [source,java]
 ----
 public Avatar(String url) throws IllegalValueException {
     try {
-        if (url.isEmpty()) {
+        if (url.isEmpty() || DEFAULT_VALUE.equals(url)) {
             AvatarUtil placeholder = new AvatarUtil();
             image = placeholder.getPlaceholderAvatar();
-            value = "";
+            value = DEFAULT_VALUE;
         } else {
             File defaultAvatar = new File(url);
 
@@ -580,7 +598,7 @@ is valid (i.e. non-empty and existing), then it will parse the URL and read the 
 [source,java]
 ----
             if (!isSavedInData(url)) {
-                String outputName = "/data/" + this.url.hashCode() + ".png";
+                String outputName = "/data/" + this.image.hashCode() + ".png";
                 File outputImage = new File(System.getProperty("user.dir") + outputName);
 
                 File parentDirectory = outputImage.getParentFile();
@@ -601,6 +619,15 @@ is valid (i.e. non-empty and existing), then it will parse the URL and read the 
 **Code Snippet 2B (`Avatar(String url)`):** If the image given has not yet been stored in the data
 directory, it will generate a new file and save it.
 
+To better illustrate the code snippets, here is a sequence diagram when a user changes a person's avatar with a new
+image (_that is not currently stored in the data folder_):
+
+image::SequenceDiagramEditContactAvatar.png[width="760"]
+_Figure 5.3.1.1: Sequence Diagram for Changing Avatar_
+
+[NOTE]
+Changing the `Avatar` of a contact will result in an immediate display change to the user.
+
 ==== Dependant Class: `AvatarUtil`
 
 AvatarUtil generates a default placeholder image if the contact is not given a display picture. It relies
@@ -611,9 +638,13 @@ You can find the full implementation of `AvatarUtil` in the folder `java/seedu/a
 
 ==== Dependant Class: `AvatarWindow`
 
-AvatarWindow is a UI component and is triggered when the current avatar of a contact is clicked on. A window
-will appear for the user to load and save a picture from the computer. If a valid picture is loaded and saved,
-it will create an Edit command and raise a new event; this event is the same as typing an actual valid edit command,
+AvatarWindow is a UI component and is triggered when the current avatar of a contact is clicked on as such:
+
+image::UiPersonPanel.png[width="760"]
+_Figure 5.3.3.1: Avatar Window Pop-up_
+
+A window will appear for the user to load and save a picture from the computer. If a valid picture is loaded and saved,
+it will create an `Edit` command and raise a new event; this event is the same as typing an actual valid edit command,
 and can also be undone or redone as per normal.
 
 [NOTE]
@@ -646,6 +677,189 @@ replaced by the default placeholder.
 
 // end::avatar[]
 
+//tag::importexport[]
+=== Import & Export Mechanism
+The import and export mechanism is implemented using the `XmlAddressBookStorage` class. It allows for the manual saving and loading of the
+address book data, aside from the default initial loading and automatic saving, by using the `export` and `import` command.
+
+
+Import only changes the address book's data, and does not change the user preference. Notably, it does not change
+the default file which the application automatically saves to, which is `addressbook.xml`. Instead, it overwrites the current data with
+the data in the given filepath, provided it is a valid address book data.
+
+The following shows the dependencies of both `ImportCommand` and `ExportCommand`:
+
+image::ImportExportAssocDiagram.png[width="600"]
+_Figure 5.4.1: Import/Export Association Diagram_
+
+[NOTE]
+If the `XmlAddressBookStorage` fails to read or write to file, an `Exception` will be thrown.
+The same will happen if the file contains persons with illegal values. (e.g. empty name)
+
+Suppose the user has just initialized the application, and the `data` folder is empty.
+
+The user makes some changes to the data (e.g. using `clear` and `add` to clear away the sample and add their own contacts) which
+saves the data in the `data` folder as `addressbook.xml` automatically.
+
+Then, without altering the data any further, the user decides to save a manual backup using a `export backup.xml` command.
+This will create a `backup.xml` file in the `data` folder, which at this point is equivalent to the `addressbook.xml`.
+
+As the user continues to alter the data, the `addressbook.xml` file will keep changing, and will be different than the `backup.xml`
+file. +
+The user then decides that they want to return the addressbook to their backup version using a `import data/backup.xml` command. +
+This will overwrite the current data with the data in `backup.xml`, making it once again equivalent to `addressbook.xml`
+
+==== Sequence Diagram
+The sequence diagram for the command `export a.xml` is the following:
+
+image::ImportExportSequenceDiagram.png[width="800"]
+_Figure 5.4.1.1: Sequence Diagram for Export Command_
+
+An `import` command would be similar, except that it creates a `XmlAddressBookStorage` object first, calls the `readAddressBook` method, and then
+calls the `resetData` method from the `Model` object.
+
+==== Design Considerations
+*Aspect*: How import works +
+*Alternative 1(current choice):* Overwrite the current address book with the data from the given file. +
+*Pros:* Easier implementation, data in the given file is preserved. +
+*Cons:* Loses the current address book data, which cannot be recovered if the address book is closed. (Can still be recovered with undo if it has not been closed since the import yet) +
+*Alternative 2:* Switch the file that the address book uses to the given file, and save all changes to that file +
+*Pros:* Allows for easier use of multiple saved files. The data in the current (before import) file is preserved. +
+*Cons:* Harder implementation, does not provide an easy way to import backups, since all changes are saved to the given file. +
+
+---
+*Aspect*: Scope of data to export and import +
+*Alternative 1(current choice):* Exports and imports only the address book data, excluding pictures and user preferences. +
+*Pros:* Can use the current `XmlAddressBookStorage` class to read and write. Only read and write a single file. +
+*Cons:* Excluding pictures means user have to manually backup pictures, otherwise address book is incomplete (no avatar). +
+*Alternative 2:* Include pictures and/or user preferences +
+*Pros:* More complete data storage. +
+*Cons:* Higher probability of accidentally overwriting files if the user is not careful. +
+
+// end::importexport[]
+
+//tag::sort[]
+=== Sorting viewable list
+
+The `sort` command and auto-sorting of the `find` command is facilitated by a `SortedFilteredList` inside the `ModelManager` class. This list is created on top of
+the `FilteredList` that is used to filter the contact list. A Comparator called `defaultSortOrder` was also created to as a
+comparator to reset the sorted list to its default order. `ModelManager` was also modified to support updating the sorted list only,
+and to always reset to default order whenever the filtered list is updated.
+
+Commands that changes the viewable list without any sorting are implemented as:
+[source, java]
+----
+public class ListCommand extends Command {
+    @Override
+    public CommandResult execure() {
+        // ... some logic ...
+        model.updateFilteredList(some predicate);
+        // ... more logic ...
+    }
+----
+
+Whereas commands with sorting (e.g. `find`) is implemented as:
+[source, java]
+----
+public class FindCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... some logic ...
+        model.updateFilteredList(some predicate);
+        model.updateSortedFilteredList(some comparator);
+        // ... more logic ...
+    }
+----
+
+==== Auto-Sort of Find Command
+
+The `find` command, when matching by name, sorts its resulting list by the earliest position of a match with a given keyword. +
+This is implemented by creating a `earliestIndexOf` method in the `StringUtil` class, which takes in a sentence and a list of keywords, and returns the earliest starting index where a part of the sentence matches a keyword, or -1 if there are no match.
+
+As an example, suppose the address book contains three people:
+
+image::SortListUnsorted.png[width="200"]
+_Figure 5.5.1.1: 3 People Listed in the PersonList_
+
+When a `find n/ i` command is executed, it will match all three of them (since all their names contains i),
+and show them in this order:
+
+image::SortListSorted.png[width="200"]
+_Figure 5.5.1.1: 3 People Listed in the New Order_
+
+as M__**i**__chael has i in the 2nd position, Al__**i**__cia has an i in the 3rd position, and Dan__**i**__el has an i in
+the 4th position.
+
+==== Design Considerations
+*Aspect:* Implementation of sorting +
+*Alternative 1 (current choice):* Sort the viewable list only by creating a `SortedFilteredList` +
+*Pros:* Preserves the original order without additional changes, sort without worrying about changing the data. +
+*Cons:* Harder to implement a permanent sort functionality. +
+*Alternative 2:* Sort the data directly +
+*Pros:* Easier to make a permanent sort.
+*Cons:* Cannot go back to original order without additional changes. Harder to sort temporarily.
+
+---
+
+*Aspect:* Type of sorting in `find` +
+*Alternative 1 (current choice):* Sort the resulting list of `find` by the earliest matching index. +
+*Pros:* Make searching with short keywords more effective since the desired result is likely at the top. +
+*Cons:* Can be unintuitive, especially since it's only done when finding by name. +
+*Alternative 2:* Show the resulting list in the default sort order. +
+*Pros:* More intuitive. No need for extra code. +
+*Cons:* Harder to find desired person when the result list is long. +
+
+---
+
+*Aspect:* Mechanism to create comparators +
+*Alternative 1 (current choice):* `sort` and `find` uses separate method to create Comparator +
+*Pros:* More flexible since each command can do a different kind of sorting. +
+*Cons:* A lot of similar logic is copied to implement the methods individually. +
+*Alternative 2:* Create a class or method that returns Comparators. +
+*Pros:* Only implement once. Each sorting method now just need to call this method. +
+*Cons:* Take longer to code. Need to allow access to private variables in predicate classes. +
+
+// end::sort[]
+
+// tag::birthday[]
+
+=== Birthday
+The Birthday class enables users to store their contact's birthday details in K.N.S. Address Book. Birthday details
+should be inputted in dd/mm/yyyy form, and will be stored in the address book in the same form. If the user chooses not
+to enter their contact's birthday details, the address book will automatically store the default value for empty
+birthday, which is `-`, and the value that will appear in the Person Panel for birthday field would be the default
+value.
+
+==== Java Implementation
+The Birthday class is implemented in similar way like other fields, such as address, phone, and email.
+
+[source, java]
+----
+    public Birthday(String birthday) throws IllegalValueException {
+        requireNonNull(birthday);
+        String trimmedBirthday = birthday.trim();
+        if (!isValidBirthday(trimmedBirthday)) {
+            throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
+        }
+        this.value = trimmedBirthday;
+    }
+
+----
+
+==== Design Considerations
+
+**Aspect:** Birthday Input Format +
+**Alternative 1 (current choice):** Using dd/mm/yyyy as the input format  +
+**Pros:** It is easier for users to remember the format, as it is the format that is commonly used. +
+**Cons:** For some people who use mm/dd/yyyy format instead of dd/mm/yyyy format, they might need some time to adjust to
+K.N.S Address Book's date format. K.N.S. Address Book assumes that the date entered is in dd/mm/yyyy format and will
+not send an error message when the number is valid. These users might enter 03/05/2017 which they intend to be 5 March,
+but the address book will interpret it as 3 May. +
+**Alternative 2:** Using ddmmyyyy as the input format +
+**Pros:** Faster to type as it consists of only numbers and no other characters. +
+**Cons:** The format is not easy to read and is similar to phone number format.
+
+// end::birthday[]
 
 //tag::partialfind[]
 === Partial Find
@@ -658,7 +872,7 @@ It replaces the method for matching in all predicate classes that is used by the
 The Find command now only use partial matching and has lost the full matching functionality
 
 
-Previously, the method used for matching was implemented as such :
+Previously, the method used for matching was implemented as such:
 [source, java]
 ----
 public static boolean containsWordIgnoreCase(String sentence, String word) {
@@ -677,25 +891,20 @@ method to return `true`. +
 
 
 
-Now, we introduce a slightly modified version to allow for partial matching as such :
+A slightly modified version of the previous method is created to allow for partial matching as such:
 [source, java]
 ----
  public static boolean containsWordPartialIgnoreCase(String sentence, String word) {
         //..check and prepare arguments..
-        for (String wordInSentence: wordsInPreppedSentence) {
-            if (wordInSentence.toLowerCase().contains(preppedWord.toLowerCase())) {
-                return true;
-            }
-        }
-        return false;
+        return preppedSentence.contains(preppedWord);
     }
 ----
 
-By using the `contains` method, we now allow the query word to be a substring of the sentence word.
+By using the `contains` method, the query word can now be a substring of the sentence word.
+It also shortens the method, as there is no more need to check through word-by-word.
 
-
-We then replace the use of the previous method in the Predicate classes in model
-(_e.g.`NameContainsKeywordsPredicate`_) with the new method so that the Find command actually uses partial matching.
+Afterwards, the use of the previous method in the Predicate classes in model
+(_e.g._ `NameContainsKeywordsPredicate`) is replaced with the new method so that the Find command actually uses partial matching.
 
 
 ==== Design Considerations
@@ -771,8 +980,6 @@ public boolean test(ReadOnlyPerson person) {
                 .containsWordPartialIgnoreCase(person.getPhone().value, keyword));
     }
 ----
-
-
 
 ==== Design Considerations
 
@@ -891,6 +1098,102 @@ mistype existing tags or not typing a complete set of existing tags while using 
 
 // end::adddeletetagcommand[]
 
+// tag::themeswitcher[]
+=== Theme Switcher
+The Theme Switcher allows users to change the appearance of the application via the command `theme` or the drop-down
+selection in the `MenuBar`. There are 5 themes for users to choose from: Light, Dark, Red, Blue, and Green. Here is what
+the application looks like in each theme:
+
+image::UiAllThemes.gif[width="668"]
+_Figure 5.10.1: All 5 Themes of the Application_
+
+==== Java Implementation
+
+The Theme Switcher mainly spans over the `Logic` and `UI` components.
+
+[source,java]
+----
+@Override
+public CommandResult execute() throws CommandException {
+    if (!isValidTheme(this.theme)) {
+        throw new CommandException(Messages.MESSAGE_INVALID_THEME);
+    }
+    if ((MainWindow.getCurrentTheme()).contains(this.theme)) {
+        throw new CommandException("Theme is already set to " + this.theme + "!");
+    }
+    EventsCenter.getInstance().post(new ChangeThemeRequestEvent(this.theme));
+    return new CommandResult(String.format(MESSAGE_THEME_SUCCESS, this.theme));
+}
+----
+**Code Snippet 1A (`execute()`):** When the `theme` command is executed, it checks for two conditions:
+
+. **Theme Validity** -> It checks the input arguments for the 5 preset themes. If an invalid theme is given, then a
+`CommandException` is thrown to inform the user that their input theme does not exist.
+. **Current Theme Displayed** -> In order to prevent the user from setting the current theme to the same exact theme, it
+checks whether the valid argument is currently the displayed theme. If it is, then a `CommandException` is thrown to
+inform the user of their error.
+
+If the two conditions are fulfilled, then the `theme` command will generate a new `ChangeThemeRequestEvent` for
+`MainWindow` to accept, and return a successful `CommandResult`.
+
+[source,java]
+----
+@Subscribe
+public void handleChangeThemeRequestEvent(ChangeThemeRequestEvent event) throws CommandException, ParseException {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    mainWindow.getStylesheets().remove(currentTheme);
+    prefs.setAddressBookTheme(event.theme + "Theme.css");
+    currentTheme = "view/" + prefs.getAddressBookTheme();
+    mainWindow.getStylesheets().add(currentTheme);
+}
+----
+**Code Snippet 1B (`handleChangeThemeRequestEvent(ChangeThemeRequestEvent event)`):** The `event` generated by the
+`theme` command is received in `MainWindow`. It takes removes the CSS for the current theme, and replaces it with the
+input theme's CSS. The change in appearance is reflected immediately.
+
+To better illustrate code snippets 1A and 1B, the following sequence diagram demonstrates a user entering a valid `theme` command input:
+
+image::SequenceDiagramValidThemeCommand.png[width="668"]
+_Figure 5.10.1.1: Sequence Diagram for Valid Theme Command_
+
+[NOTE]
+`MainWindow` does not need to check for the theme validity or whether the same theme is being set, because the `theme`
+command has already accounted for these conditions.
+
+[source,java]
+----
+@FXML
+private void setToVALIDTheme() {
+    if (checkSameTheme("VALID")) {
+        return;
+    }
+    mainWindow.getStylesheets().remove(currentTheme);
+    prefs.setAddressBookTheme("VALIDTheme.css");
+    currentTheme = "view/" + prefs.getAddressBookTheme();
+    mainWindow.getStylesheets().add(currentTheme);
+    EventsCenter.getInstance().post(new ChangeThemeRequestEvent("VALID"));
+    raise(new NewResultAvailableEvent("Theme updated to: VALID", false));
+}
+----
+**Code Snippet 2 (`setToVALIDTheme()`):** Where "_VALID_" is Light, Dark, Red, Blue or Green. If the user uses the
+`MenuBar` to change the current theme, then it will call the appropriate method to change the current theme to it. Also,
+the method ensures that if the user selects the theme that is already being displayed, it will raise a
+`NewResultAvailableEvent` to inform the user of their error.
+
+[NOTE]
+`MainWindow` needs to check whether the same theme is being set since no `theme` command is being executed.
+
+==== Design Considerations
+
+**Aspect:** Providing a GUI option for switching themes +
+**Alternative 1 (current choice):** Provide a GUI option via the `MenuBar`. +
+**Pros:** Simple to implement and users can change themes seamlessly. +
+**Cons:** Users will not know what the colour scheme of the theme looks like unless they change to it. +
+**Alternative 2:** Provide a GUI option via coloured buttons. +
+**Pros:** Users will be able to see the colour scheme of the theme before changing to it. +
+**Cons:** Users may get confused as to what these buttons are for.
+
+// end::themeswitcher[]
 
 === Logging
 
@@ -905,10 +1208,10 @@ specified logging level.
 
 *Logging Levels*
 
-* `SEVERE` : Critical problem detected which may possibly cause the termination of the application.
-* `WARNING` : Can continue, but with caution.
-* `INFO` : Information showing the noteworthy actions by the application.
-* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of
+* `SEVERE`: Critical problem detected which may possibly cause the termination of the application.
+* `WARNING`: Can continue, but with caution.
+* `INFO`: Information showing the noteworthy actions by the application.
+* `FINE`: Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of
 just its size.
 
 === Configuration
@@ -950,7 +1253,7 @@ in the `docs/` directory to HTML format.
 use the settings indicated in the screenshot below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 5.3.1 : Saving documentation as PDF files in Chrome_
+_Figure 6.3.1: Saving documentation as PDF files in Chrome_
 
 == Testing
 
@@ -1106,6 +1409,8 @@ seeing them by accident
 |`* *` |user multiple devices |set multiple instances of app to be in sync |use address book across multiple devices
 seamlessly
 
+|`* *` |picky user |change the colour appearance |view my address book in my favourite colour scheme
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 
 |`*` |picky user |change font type |make my address book as fancy/simple as I like
@@ -1214,36 +1519,6 @@ Use case resumes at step 2.
 +
 Use case resumes at step 2.
 
-[discrete]
-=== Use case: Enable PIN/Password protection
-
-*MSS*
-
-1.  User requests to enable PIN/Password
-2.  AddressBook asks for value to be set as PIN/Password
-3.  User gives requested value
-4.  AddressBook asks user to confirm the value by retyping it
-5.  User retypes previous value
-6.  AddressBook sets PIN/Password and shows feedback message.
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 3a. The value given is invalid/does not fulfill requirements
-+
-[none]
-** 3a1. AddressBook shows an error message.
-+
-Use case resumes at step 2
-
-* 5a. The value given does not match previous value
-+
-[none]
-** 5a1. AddressBook shows an error message.
-+
-Use case resumes at step 2.
 
 {More to be added}
 

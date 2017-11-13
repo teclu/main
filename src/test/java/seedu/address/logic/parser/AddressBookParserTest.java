@@ -30,6 +30,7 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.ThemeCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
@@ -110,6 +111,19 @@ public class AddressBookParserTest {
                 FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
+
+    //@@teclu
+    @Test
+    public void parseCommand_theme() throws Exception {
+        String[] listThemes = { "light", "dark", "red", "blue", "green" };
+
+        for (int i = 0; i < 5; i++) {
+            ThemeCommand command = (ThemeCommand) parser.parseCommand(
+                    ThemeCommand.COMMAND_WORD + " " + listThemes[i]);
+            assertEquals(new ThemeCommand(listThemes[i]), command);
+        }
+    }
+    //@@author
 
     @Test
     public void parseCommand_help() throws Exception {

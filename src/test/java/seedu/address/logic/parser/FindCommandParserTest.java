@@ -25,6 +25,7 @@ public class FindCommandParserTest {
         assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
     }
 
+    //@@author k-l-a
     @Test
     public void parse_validNameArgs_returnsFindCommand() {
         // no leading and trailing whitespaces
@@ -46,7 +47,6 @@ public class FindCommandParserTest {
 
     }
 
-    //@@author k-l-a
     @Test
     public void parse_validTagsArgs_returnsFindCommand() {
         FindCommand expectedFindCommandForTags =
