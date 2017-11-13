@@ -668,7 +668,7 @@ The Birthday class is implemented in similar way like other fields, such as addr
         }
         this.value = trimmedBirthday;
     }
-    
+
 ----
 
 ==== Design Considerations
