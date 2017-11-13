@@ -44,6 +44,7 @@ public class ImportCommand extends UndoableCommand {
             } else {
                 throw new IOException();
             }
+            model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
         } catch (IOException io) {
             throw new CommandException(String.format(MESSAGE_FILE_NOT_FOUND, filePathToImport));
         } catch (DataConversionException dc) {
