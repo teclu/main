@@ -4,7 +4,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.commands.SortCommand.ARGUMENT_ASCENDING_WORD;
 import static seedu.address.logic.commands.SortCommand.ARGUMENT_DEFAULT_ORDER;
 import static seedu.address.logic.commands.SortCommand.ARGUMENT_DESCENDING_WORD;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_AVATAR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -27,13 +26,10 @@ public class SortCommandParserTest {
         //not a prefix
         assertParseFailure(parser, "notAPrefix", MESSAGE_INVALID_FORMAT);
 
-        //a prefix, but not a sortable one
-        assertParseFailure(parser, PREFIX_AVATAR.getPrefix(), MESSAGE_INVALID_FORMAT);
-
         //valid order but bad prefix
         assertParseFailure(parser, "notAPrefix " + ARGUMENT_ASCENDING_WORD, MESSAGE_INVALID_FORMAT);
 
-        //no space
+        //no space between prefix and order
         assertParseFailure(parser, "n/asc", MESSAGE_INVALID_FORMAT);
 
         //prefix and order are in the wrong order
