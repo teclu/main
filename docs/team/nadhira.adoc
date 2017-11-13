@@ -5,7 +5,9 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 == Project: K.N.S. Address Book
 K.N.S. Address Book is a desktop address book application written in Java, created by Team W11-B3 for
-CS2103T: Software Engineering module offered by School of Computing, National University of Singapore.
+CS2103T: Software Engineering module offered by School of Computing, National University of Singapore,
+in AY 2017/2018 Semester 1. This project portfolio page consists of contributions that I have made to
+K.N.S. Address Book during this semester.
 
 *Code contributed*:
  [https://github.com/CS2103AUG2017-W11-B3/main/blob/master/collated/main/nadhira15.md[Functional code]]
@@ -120,6 +122,18 @@ frequently contacted people. Favourite feature will enable users to set these fr
 favourite contacts, and these contacts will always appear at the top of the contact list and the search result. This
 feature will help users to find their frequently contacted contacts easily, without using the `find` command to search
 for these contacts.
+
+
+=== Enhancement Proposed: Login Page
+
+==== Justification
+
+Some users might use K.N.S. Address Book in a shared computer in their workplace. These users might want to keep
+their contact list in private, and not sharing the Address Book with other people who use the same computer. As such,
+a login page would be useful. When K.N.S Address Book is opened, a login page will appear, and the user can type in
+their login details such as username and password. This feature will enable users to keep their contact details in
+private while using a shared computer, as the address book requires password to be accessed.
+
 
 === Other contributions
 
