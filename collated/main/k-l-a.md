@@ -21,7 +21,8 @@
         checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
         checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
 
-        return sentence.toLowerCase().contains(preppedWord);
+        String preppedSentence = sentence.trim().toLowerCase();
+        return preppedSentence.contains(preppedWord);
     }
 
     /**
@@ -79,23 +80,27 @@ public class ExportCommand extends Command {
     public static final String MESSAGE_EXPORT_SUCCESS = "Export successful! Data exported to %1$s";
     public static final String MESSAGE_EXPORT_FAILURE = "Error writing to file at %1$s";
 
-    public static final String EXPORT_FILEPATH = "data/";
+    public static final String DEFAULT_EXPORT_FILEPATH = "data/";
 
     public final String filePathToExport;
 
+
     public ExportCommand(String fileName) {
-        this.filePathToExport = EXPORT_FILEPATH + fileName;
+        this(DEFAULT_EXPORT_FILEPATH, fileName);
+    }
+
+    public ExportCommand(String exportFilepath, String fileName) {
+        this.filePathToExport = exportFilepath + fileName;
     }
 
     @Override
     public CommandResult execute() throws CommandException {
         try {
-            XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(filePathToExport);
             ReadOnlyAddressBook addressBook = model.getAddressBook();
+            XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(filePathToExport);
             addressBookStorage.saveAddressBook(addressBook);
         } catch (Exception e) {
-            // TODO : Improve error messages
-            return new CommandResult(String.format(MESSAGE_EXPORT_FAILURE, filePathToExport));
+            throw new CommandException(String.format(MESSAGE_EXPORT_FAILURE, filePathToExport));
         }
 
         return new CommandResult(String.format(MESSAGE_EXPORT_SUCCESS, filePathToExport));
@@ -120,12 +125,15 @@ public class ImportCommand extends UndoableCommand {
     public static final String COMMAND_ALIAS = "i";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Imports the contents of the address book on the given filepath, overwriting current data.\n"
+            + ": Imports the contents of the address book data on the given filepath, overwriting current data.\n"
             + "Parameters: FILEPATH\n"
             + "Example: import data/addressbook-backup.xml";
 
     public static final String MESSAGE_IMPORT_SUCCESS = "Import successful! Data imported from %1$s";
-    public static final String MESSAGE_FILE_NOT_FOUND = "File not found at %1$s";
+    public static final String MESSAGE_FILE_NOT_FOUND = "File not found at %1$s, Import Failed!";
+    public static final String MESSAGE_FILE_UNKNOWN = "File is in unknown format or is corrupt. Import failed!";
+    public static final String MESSAGE_ILLEGAL_VALUE = "File contains illegal values. "
+            + "Please check integrity of data. Import failed!";
 
     public final String filePathToImport;
 
@@ -137,12 +145,19 @@ public class ImportCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
             XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(filePathToImport);
-            ReadOnlyAddressBook addressBook = addressBookStorage.readAddressBook().get();
-            model.resetData(addressBook);
+            Optional<ReadOnlyAddressBook> addressBook = addressBookStorage.readAddressBook();
+            if (addressBook.isPresent()) {
+                model.resetData(addressBook.get());
+            } else {
+                throw new IOException();
+            }
+            model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+        } catch (IOException io) {
+            throw new CommandException(String.format(MESSAGE_FILE_NOT_FOUND, filePathToImport));
+        } catch (DataConversionException dc) {
+            throw new CommandException(MESSAGE_FILE_UNKNOWN);
         } catch (Exception e) {
-            // TODO : Improve error messages
-            // currently any failure results in a FILE_NOT_FOUND message.
-            return new CommandResult(String.format(MESSAGE_FILE_NOT_FOUND, filePathToImport));
+            throw new CommandException(MESSAGE_ILLEGAL_VALUE);
         }
 
         return new CommandResult(String.format(MESSAGE_IMPORT_SUCCESS, filePathToImport));
@@ -247,6 +262,7 @@ public class SortCommand extends Command {
 public class ExportCommandParser implements Parser<ExportCommand> {
 
     public static final String EXPORT_FILE_EXTENSION = ".xml";
+    public static final String MESSAGE_INVALID_EXTENSION = "Please end your file name with %1$s";
 
     /**
      * Parses the given (@code String) in the context of a ExportCommand.
@@ -257,8 +273,10 @@ public class ExportCommandParser implements Parser<ExportCommand> {
         requireNonNull(args);
 
         String trimmedArgs = args.trim();
-        if (!trimmedArgs.endsWith(EXPORT_FILE_EXTENSION)) {
+        if (trimmedArgs.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+        } else if (!trimmedArgs.endsWith(EXPORT_FILE_EXTENSION)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_EXTENSION, EXPORT_FILE_EXTENSION));
         }
 
         return new ExportCommand(trimmedArgs);
@@ -371,14 +389,17 @@ public class SortCommandParser implements Parser<SortCommand> {
             return new SortCommand(ARGUMENT_DEFAULT_ORDER, ARGUMENT_ASCENDING_WORD);
         } else if (isSortArgument(trimmedArgs)) {
             return new SortCommand(ARGUMENT_DEFAULT_ORDER, trimmedArgs);
+        } else if (isSortablePrefix(trimmedArgs)) {
+            return new SortCommand(trimmedArgs, ARGUMENT_ASCENDING_WORD);
         }
 
         String[] splitArgs = trimmedArgs.split("\\s+");
-        String prefix = splitArgs[0];
-        String order = ARGUMENT_ASCENDING_WORD;
-        if (splitArgs.length > 1) {
-            order = splitArgs[1];
+        if (splitArgs.length != 2) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
+
+        String prefix = splitArgs[0];
+        String order = splitArgs[1];
         if (isSortablePrefix(prefix) && isSortArgument(order)) {
             return new SortCommand(prefix, order);
         } else {
