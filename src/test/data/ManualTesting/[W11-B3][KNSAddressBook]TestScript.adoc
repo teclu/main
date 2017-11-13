@@ -326,13 +326,31 @@ Please ensure that you have done the **Export to a valid filename ** test before
 .. You should see the message `Import successful! Data imported from data/backup.xml`
 .. You should also see the contact list re-populated with the previously exported data.
 
-=== List
-
-To be filled in.
-
 === Sort
 
-To be filled in.
+* **Sort with invalid parameters**
+.. Type `sort invalid param` in the command box and press kbd:[Enter].
+.. You should see a `Invalid command format!...` message, with instructions on how to use the command.
+
+* **Sort by name ascendingly, without specifying order parameter**
+.. Type `sort n/` in the command box and press kbd:[Enter].
+.. You should see a `Sorted current list by n/ in asc order.` message.
+.. You should also see the current list sorted by name in alphabetical order.
+
+* **Sort by phone ascendingly**
+.. Type `sort p/ asc` in the command box and press kbd:[Enter].
+.. You should see a `Sorted current list by p/ in asc order.` message.
+.. You should also see the current list sorted by phone ascendingly, with persons with the smallest leading number listed first.
+
+* **Sort by default descendingly**
+.. Type `sort des` in the command box and press kbd:[Enter].
+.. You should see a `Sorted current list by default in des order.` message.
+.. You should also see the current list sorted by the reverse default order. (i.e. Reverse of the order they would be in after a `list` command)
+
+* **Sort without any parameters**
+.. Type `sort` in the command box and press kbd:[Enter].
+.. You should see a `Sorted current list by default in asc order.` message.
+.. You should also see the current list sorted by the default order. (i.e. Exact reverse of previous test case)
 
 == Other Features
 
