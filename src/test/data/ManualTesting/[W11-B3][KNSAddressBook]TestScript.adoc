@@ -291,7 +291,7 @@ You can use the alias `u` in place of `undo`, and `r` in place of `redo`.
 
 * **Find a person by specifying a prefix, without space between keyword and prefix**
 .. Type `find t/musician` in the command box and press kbd:[Enter].
-.. You should see Charlie Lim appears in the contact list.
+.. You should see "_Charlie Lim_" appear in the contact list.
 
 === Import/Export
 
