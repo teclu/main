@@ -173,7 +173,7 @@ insteade also acceptable.
 === Viewing Help: `help`
 Launches a small window that displays the user guide for your reference.
 
-If you're ever in need of help, or just curious to learn more about K.N.S you can use : `help` +
+If you're ever in need of help, or just curious to learn more about K.N.S you can use: `help` +
 This command will open up a help window that contains the guide you're currently reading!
 
 === Adding a person: `add` or `a`
@@ -199,14 +199,14 @@ Examples:
 === Listing all persons: `list` or `l`
 Shows a list of all persons in the address book. +
 
-To show all persons in your address book, simply enter : +
+To show all persons in your address book, simply enter: +
 `list` or `l` +
 
 
 === Editing a person: `edit` or `e`
 Edits an existing person in the address book. +
 
-To edit an existing person in your address book, you can use the command : +
+To edit an existing person in your address book, you can use the command: +
 `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...` or `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [v/AVATAR] [t/TAG]...`
 
 ****
@@ -225,7 +225,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 Edits the name of the 2nd person to be `Betsy Crower`, change the avatar and clears all existing tags.
 
 // tag::adddeletetagcommand[]
-=== Adding a Tag : `addtag` or `at`
+=== Adding a Tag: `addtag` or `at`
 Adds tag(s) to an existing person in the address book. +
 
 Format: `addtag INDEX TAG [MORE_TAGS]...`
@@ -244,7 +244,7 @@ Adds a `owesMoney` tag for the 1st person on the list. If previously the 1st per
 * `addtag 3 friends highSchool` +
 Adds a `friends` tag and a `highSchool` tag for the 3rd person on the list.
 
-=== Deleting a Tag : `deletetag` or `dt`
+=== Deleting a Tag: `deletetag` or `dt`
 Deletes given tag from an existing person in the address book. +
 
 Format: `deletetag INDEX TAG [MORE_TAGS]...`
@@ -289,7 +289,7 @@ To find by name, you can either use the prefix `n/` or no prefix at all. +
 When finding by name, the result will auto sort according to the position of the match. e.g. `find Bo` will list `Bo Alex` before `Holbo` and `Holbo` before `Alexander Bo`
 
 // end::n[]
-Examples :
+Examples:
 
  * `find n/ John` +
  Returns `john` and `John Doe`
@@ -343,7 +343,7 @@ Keywords *will match* entries if they are contained within those entries.
 However, vice-versa does not apply!
 i.e. Entries *will not match* keywords if the entries are contained within the keywords.
 
-Examples :
+Examples:
 
 * `find mel` +
 Matches `Melissa` and `Amelia`
@@ -407,7 +407,7 @@ Selects the 1st person in the results of the `find` command.
 If you want to view your current list in a better way, you can use the `sort` command to
 sort the current list lexicographically by the given prefix, in the given order. +
 
-To sort the current list, you can use : `sort [PREFIX] [ORDER]` +
+To sort the current list, you can use: `sort [PREFIX] [ORDER]` +
 
 ****
 * Only the current list is sorted, there is currently no lasting sort on the whole address book. +
@@ -430,7 +430,7 @@ Sorts the resulting list from the `find` command by name, in ascending order. +
 // end::sort[]
 
 // tag::themecommand[]
-=== Changing Themes : `theme`
+=== Changing Themes: `theme`
 You can choose from 5 preset themes to change into: Light, Dark, Red, Blue, and Green.
 
 [NOTE]
@@ -481,7 +481,7 @@ The `u` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo` or `r`
+=== Redoing the previously undone command: `redo` or `r`
 Reverses the most recent `undo` command. +
 Format: `redo` or `r`
 
