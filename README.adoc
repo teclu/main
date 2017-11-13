@@ -1,4 +1,4 @@
-= K.N.S. AddressBook v1.5.0rc
+= K.N.S. AddressBook v1.5.0
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
