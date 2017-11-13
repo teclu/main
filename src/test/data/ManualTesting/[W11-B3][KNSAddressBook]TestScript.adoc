@@ -256,7 +256,7 @@ You can use the alias `u` in place of `undo`, and `r` in place of `redo`.
 
 * **Find a person by specifying phone prefix:**
 .. Type `find p/ 89991234` in the command box and press kbd:[Enter].
-.. You should see "_Fong Wei Zheng appear in the contact list.
+.. You should see "_Fong Wei Zheng_" appear in the contact list.
 
 * **Find a person by specifying phone prefix, with partial phone query:**
 .. Type `find p/ 8999` in the command box and press kbd:[Enter].
