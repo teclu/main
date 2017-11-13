@@ -646,6 +646,45 @@ replaced by the default placeholder.
 
 // end::avatar[]
 
+// tag::birthday[]
+
+=== Birthday
+The Birthday class enables users to store their contact's birthday details in K.N.S. Address Book. Birthday details
+should be inputted in dd/mm/yyyy form, and will be stored in the address book in the same form. If the user chooses not
+to enter their contact's birthday details, the address book will automatically store the default value for empty
+birthday, which is `-`, and the value that will appear in the Person Panel for birthday field would be the default
+value.
+
+==== Java Implementation
+The Birthday class is implemented in similar way like other fields, such as address, phone, and email.
+
+[source, java]
+----
+    public Birthday(String birthday) throws IllegalValueException {
+        requireNonNull(birthday);
+        String trimmedBirthday = birthday.trim();
+        if (!isValidBirthday(trimmedBirthday)) {
+            throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
+        }
+        this.value = trimmedBirthday;
+    }
+    
+----
+
+==== Design Considerations
+
+**Aspect:** Birthday Input Format +
+**Alternative 1 (current choice):** Using dd/mm/yyyy as the input format  +
+**Pros:** It is easier for users to remember the format, as it is the format that is commonly used. +
+**Cons:** For some people who use mm/dd/yyyy format instead of dd/mm/yyyy format, they might need some time to adjust to
+K.N.S Address Book's date format. K.N.S. Address Book assumes that the date entered is in dd/mm/yyyy format and will
+not send an error message when the number is valid. These users might enter 03/05/2017 which they intend to be 5 March,
+but the address book will interpret it as 3 May. +
+**Alternative 2:** Using ddmmyyyy as the input format +
+**Pros:** Faster to type as it consists of only numbers and no other characters. +
+**Cons:** The format is not easy to read and is similar to phone number format.
+
+// end::birthday[]
 
 //tag::partialfind[]
 === Partial Find
