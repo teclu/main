@@ -269,7 +269,7 @@ Deletes the `friends` tag and `highSchool` tag from the 3rd person on the list.
 === Locating persons: `find` or `f`
 
 To locate a person within your address book, you can use: +
-`find [PREFIX] KEYWORD [MORE_KEYWORDS]` or `f [PREFIX] KEYWORD [MORE_KEYWORDS]` +
+`find [PREFIX] KEYWORD [MORE_KEYWORDS]...` or `f [PREFIX] KEYWORD [MORE_KEYWORDS]...` +
 where prefix indicates the field to search (e.g. name) and keyword is the keyword to match with.
 
 ****
