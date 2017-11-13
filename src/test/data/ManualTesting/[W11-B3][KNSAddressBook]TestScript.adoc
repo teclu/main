@@ -1,0 +1,154 @@
+= K.N.S. AddressBook v1.5.0 - Test Script
+:toc:
+:toc-title:
+:toc-placement!: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+:repoURL: https://github.com/CS2103AUG2017-W11-B3/main/
+
+By: `Team W11-B3`      Since: `Sep 2017`      Licence: `MIT`
+
+== Introduction
+This document will help you get started on manually testing K.N.S. AddressBook.
+
+== Table of Contents
+toc::[]
+
+== Setting Up
+. Ensure that you have downloaded the following files from IVLE:
+* **Jar Executable**: `[W11-B3][KNSAddressBook].jar`
+* **Sample Data**: `[W11-B3][KNSAddressBook]SampleData.xml`
+* **User Guide**: `[W11-B3][KNSAddressBook]UserGuide.pdf`
+* **Developer Guide**: `[W11-B3][KNSAddressBook]UserGuide.pdf`
+* **3 Portfolios**: `[W11-B3][Kevin Leonardo Anantha]Portfolio.pdf`, `[W11-B3][Nadhira Salsabila]Portfolio.pdf` and `[W11-B3][Tay Wan Feng Stanley]Portfolio.pdf`
+. Create a new folder called "_KNS_" and place the `.jar` file inside.
+. Inside "_KNS_", create a new folder called "_data_" and place the `.xml` file inside.
+. Inside "_KNS_", create a new folder called "_documentation_" and place all of the `.pdf` files inside.
+. Rename the `.xml` file to `addressbook.xml`.
+. Execute the `.jar` file to launch K.N.S. AddressBook.
+
+== Basic Commands
+
+=== Add
+
+* **Adding without any parameters:**
+.. Type `add` in the command box.
+.. You should see `Invalid command format! ...`, with instructions on how to use the command.
+
+* **Adding with only the name parameter:**
+.. Type `add n/Damith Rajapakse` in the command box.
+.. You should see `New person added: Name: Damith C Rajapakse ...`; the fields for phone, email, address and birthday should have a "_-_", the field for avatar should be "_No Avatar_", and the field for tags should be empty.
+
+* **Adding with the name parameter and only some parameters:**
+.. Type `add n/Aaron Tan p/91234567 b/01/01/1995` in the command box.
+[TIP]
+You may try this out with other valid parameters.
+..  You should see `New person added: Name: Aaron Tan ...`; the fields for email and address should have a "_-_", the field for avatar should be "_No Avatar_", and the field for tags should be empty.
+
+* **Adding with the name parameter and the avatar parameter:**
+[NOTE]
+You will need internet connectivity for this!
+
+.. Type `add n/Terence Chok v/https://i.imgur.com/jNNT4LE.jpg` into the command box.
+[TIP]
+Alternatively, you can use a valid `.JPG` or `.PNG` image filepath found in your computer for the avatar field. This does not require internet connectivity.
+.. You should see `New person added: Name: Terence Chok ...`; the fields for phone, email, address and birthday should have a "_-_", the field for avatar should have the file path for the image (_which is stored in the data folder_), and the field for tags should be empty.
+
+* **Adding with all parameters**
+.. Type `add n/Stanley Tay p/91234567 e/stanley@example.com a/1 Computing Drive b/28/03/1995 v/https://i.imgur.com/jNNT4LE.jpg t/TestSubject` into the command box.
+.. You should see `New person added: Name: Stanley Tay ...`; all of the fields should not be empty.
+
+=== Edit
+
+To be filled in.
+
+=== Delete
+
+. Select the first contact in the `PersonList`.
+. Type `delete 1` in the command box.
+. You should see the contact removed, and his details should no longer appear in the `PersonPanel`.
+. You should also see the message `Deleted Person: Name: Alex Zheng...`.
+
+=== Select
+
+. Type `select 1` in the command box.
+. You should see the selection for the first contact in the `PersonList`, and his details should show in the `PersonPanel`.
+. You should also see the message `Selected Person: 1`.
+
+=== Clear
+
+. Type `clear` in the command box.
+. You should see all the contacts in the `PersonList` disappear, and the message `Address book has been cleared!`.
+[TIP]
+Type `undo` to bring back all the cleared contacts.
+
+=== Help
+
+. Type `help` in the command box.
+. A Help Window should open up immediately.
+
+=== Theme
+
+. Upon loading the application on the first time, the default theme is `Light`.
+. Type `theme Dark` or `t Dark` in the command box. You should see the theme immediately change to the `Dark` theme, with the message `Theme updated to: Dark`.
+[NOTE]
+The input arguments are case-insensitive, so `theme DARK` and `theme GrEeN` will work.
+. Repeat step 2 with the themes `Red`, `Blue`, and `Green`.
+[NOTE]
+You can also use the theme switcher found in the menu bar to verify these changes.
+. Type `theme Light` twice (_you may use any other theme_). You should see the error message `Theme is already set to Light!`
+
+=== Undo/Redo
+
+* The following commands are undoable: `add`, `edit`, `delete`, `select`, `clear`, `addtag`, `deletetag`, `import` and `export`.
+* You may verify these checks when doing the other tests found in this test script.
+
+=== Exit
+
+. Type `exit` in the command box.
+. You should see the application close immediately.
+
+== Advanced Commands
+
+=== Add/Delete Tag
+
+To be filled in.
+
+=== Find
+
+To be filled in.
+
+=== Import/Export
+
+To be filled in.
+
+=== List
+
+To be filled in.
+
+=== Sort
+
+To be filled in.
+
+== Other Features
+
+=== Avatar GUI Upload
+
+[NOTE]
+You will need any existing `.JPG` or `.PNG` image in your computer to perform this test.
+
+. Click any contact found in the `PersonList`.
+. In the `PersonPanel`, click on the currently displayed avatar of the contact. You should see a new window called "_Avatar Options_".
+. Clicking on `Save` will give you the error message `Avatar should be a valid online URL or local path`, as you have not loaded any image.
+. Click `Load`. You should see a new window prompting you to open a new image.
+. Select the image you intend to use and press `Open`.
+[NOTE]
+There should be an option in the window to choose between `.JPG` or `.PNG` formats.
+. You should now see the new image displayed in the "_Avatar Options_" window.
+. Click `Save`. You should see the reflected changes in the command box and `PersonPanel`.

@@ -42,6 +42,28 @@ public class AddTagCommandTest {
     }
 
     @Test
+    public void execute_duplicateTagUnfilteredList_failure() {
+        Person firstPerson = new Person(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
+        Set<Tag> tag = firstPerson.getTags();
+
+        AddTagCommand addTagCommand = prepareCommand(INDEX_FIRST_PERSON, tag);
+
+        assertCommandFailure(addTagCommand, model, AddTagCommand.MESSAGE_DUPLICATE_TAG);
+    }
+
+    @Test
+    public void execute_duplicateTagFilteredList_failure() {
+        showFirstPersonOnly(model);
+
+        ReadOnlyPerson personInList = model.getAddressBook().getPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+        Set<Tag> tag = personInList.getTags();
+        
+        AddTagCommand addTagCommand = prepareCommand(INDEX_FIRST_PERSON, tag);
+
+        assertCommandFailure(addTagCommand, model, AddTagCommand.MESSAGE_DUPLICATE_TAG);
+    }
+    
+    @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() throws Exception {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         Set<Tag> tag = ParserUtil.parseTags(Arrays.asList(VALID_TAG));
@@ -114,6 +136,7 @@ public class AddTagCommandTest {
 public class DeleteTagCommandTest {
 
     public static final String VALID_TAG = "friends";
+    public static final String VALID_TAG_2 = "neighbours";
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -149,6 +172,24 @@ public class DeleteTagCommandTest {
         showFirstPersonOnly(expectedModel);
 
         assertCommandSuccess(deleteTagCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_invalidTagUnfilteredList_failure() throws Exception {
+        Index indexFirstPerson = INDEX_FIRST_PERSON;
+        Set<Tag> tag = ParserUtil.parseTags(Arrays.asList(VALID_TAG_2));
+        DeleteTagCommand deleteTagCommand = prepareCommand(indexFirstPerson, tag);
+
+        assertCommandFailure(deleteTagCommand, model, DeleteTagCommand.MESSAGE_NOT_EXIST_TAG);
+    }
+
+    @Test
+    public void execute_invalidTagFilteredList_failure() throws Exception {
+        showFirstPersonOnly(model);
+        Set<Tag> tag = ParserUtil.parseTags(Arrays.asList(VALID_TAG_2));
+        DeleteTagCommand deleteTagCommand = prepareCommand(INDEX_FIRST_PERSON, tag);
+
+        assertCommandFailure(deleteTagCommand, model, DeleteTagCommand.MESSAGE_NOT_EXIST_TAG);
     }
 
     @Test
@@ -401,7 +442,7 @@ public class AddTagCommandParserTest {
         Set<Tag> tagToAdd = ParserUtil.parseTags(Arrays.asList(VALID_TAG));
         AddTagCommand expectedCommand = new AddTagCommand(index, tagToAdd);
         assertParseSuccess(parser, "1 " + VALID_TAG, expectedCommand);
-        
+
         Set<Tag> twoTagsToAdd = ParserUtil.parseTags(Arrays.asList(VALID_TAG, VALID_TAG_2));
         AddTagCommand secondExpectedCommand = new AddTagCommand(index, twoTagsToAdd);
         assertParseSuccess(parser, "1 " + VALID_TAG + " " + VALID_TAG_2, secondExpectedCommand);
@@ -545,4 +586,44 @@ public class BirthdayTest {
         }
         return this;
     }
+```
+###### \java\systemtests\FindCommandSystemTest.java
+``` java
+
+        /* Case: find person with phone query -> 1 person found */
+        command = FindCommand.COMMAND_WORD + " p/ " + CARL.getPhone().value;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find person with partial phone query -> 1 person found */
+        command = FindCommand.COMMAND_WORD + " p/ 3525";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find person with partial address query -> 1 person found */
+        command = FindCommand.COMMAND_WORD + " a/ wall";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find person with email query -> 1 person found */
+        command = FindCommand.COMMAND_WORD + " e/ " + CARL.getEmail().value;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find person with partial email query -> 1 person found */
+        command = FindCommand.COMMAND_WORD + " e/ hein";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find person with birthday query -> 1 person found */
+        command = FindCommand.COMMAND_WORD + " b/ " + CARL.getBirthday().value;
+        ModelHelper.setFilteredList(expectedModel, ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+        
+        /* Case: find person with partial birthday query -> 1 person found */
+        command = FindCommand.COMMAND_WORD + " b/ 01/01";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
 ```
