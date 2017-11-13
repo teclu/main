@@ -76,15 +76,15 @@ public class PersonPanelHandle extends NodeHandle<Node> {
 ```
 ###### \java\seedu\address\logic\commands\ThemeCommandTest.java
 ``` java
-public class ThemeCommandTest {
+public class ThemeCommandTest extends AddressBookGuiTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
-    private String[] listThemes = { "light", "dark", "red", "blue", "green" };
+    private String[] listThemes = { "Light", "Dark", "Red", "Blue", "Green" };
 
     @Test
     public void execute_validTheme_success() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 4; i >= 0; i--) {
             assertExecutionSuccess(listThemes[i]);
         }
     }
