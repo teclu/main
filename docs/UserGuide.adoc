@@ -82,8 +82,7 @@ Find by all field supports find by name, phone number, email, address, birthday,
 // end::findbyallfield1[]
 
 === Saving the data
-The Address Book's data is saved in the hard disk automatically after any executable command that changes the data. +
-There is no need for you to save manually.
+The Address Book's data is saved in the hard disk automatically after any executable command that changes the data. There is no need for you to save manually.
 
 == Getting Started
 

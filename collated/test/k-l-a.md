@@ -1,558 +1,538 @@
 # k-l-a
-###### \java\seedu\address\commons\util\StringUtilTest.java
+###### \java\seedu\address\commons\util\StringUtil.java
 ``` java
-    //---------------- Tests for containsWordPartialIgnoreCase --------------------------------------
-    @Test
-    public void containsWordPartialIgnoreCase_nullWord_throwsNullPointerException() {
-        assertOtherExceptionThrown(NullPointerException.class, "typical sentence", null,
-                Optional.empty());
-    }
-
-    private void assertOtherExceptionThrown(Class<? extends Throwable> exceptionClass, String sentence,
-            String word, Optional<String> errorMessage) {
-        thrown.expect(exceptionClass);
-        errorMessage.ifPresent(message -> thrown.expectMessage(message));
-        StringUtil.containsWordPartialIgnoreCase(sentence, word);
-    }
-
-    @Test
-    public void containsWordPartialIgnoreCase_emptyWord_throwsIllegalArgumentException() {
-        assertOtherExceptionThrown(IllegalArgumentException.class, "typical sentence", "  ",
-                Optional.of("Word parameter cannot be empty"));
-    }
-
-    @Test
-    public void containsWordPartialIgnoreCase_multipleWords_throwsIllegalArgumentException() {
-        assertOtherExceptionThrown(IllegalArgumentException.class, "typical sentence", "aaa BBB",
-                Optional.of("Word parameter should be a single word"));
-    }
-
-    @Test
-    public void containsWordPartialIgnoreCase_nullSentence_throwsNullPointerException() {
-        assertOtherExceptionThrown(NullPointerException.class, null, "abc", Optional.empty());
-    }
-
-    /*
-     * Valid equivalence partitions for word:
-     *   - any word
-     *   - word containing symbols/numbers
-     *   - word with leading/trailing spaces
-     *
-     * Valid equivalence partitions for sentence:
-     *   - empty string
-     *   - one word
-     *   - multiple words
-     *   - sentence with extra spaces
-     *
-     * Possible scenarios returning true:
-     *   - matches first word in sentence
-     *   - last word in sentence
-     *   - middle word in sentence
-     *   - matches multiple words
-     *   - a query word matches part of a sentence word
-     *   - a query word matches part of multiple sentence word
-     *
-     * Possible scenarios returning false:
-     *   - sentence word matches part of the query word
-     *
-     * The test method below tries to verify all above with a reasonably low number of test cases.
+    /**
+     * Returns true if the sentence contains the word
+     *  Ignores case, and a full word match is not required
+     *   <br>examples:<pre>
+     *       containsWordPartialIgnoreCase("ABc def", "abc") == true
+     *       containsWordPartialIgnoreCase("ABc def", "DEF") == true
+     *       containsWordPartialIgnoreCase("ABc def", "AB") == true //  query partially match sentence
+     *       containsWordPartialIgnoreCase("ABc def", "AbCD") == false // sentence only partially match query
+     *       </pre>
+     * @param sentence cannot be null
+     * @param word cannot be null, cannot be empty, must be a single word
      */
+    public static boolean containsWordPartialIgnoreCase(String sentence, String word) {
+        requireNonNull(sentence);
+        requireNonNull(word);
 
-    @Test
-    public void containsWordPartialIgnoreCase_validInputs_correctResult() {
+        String preppedWord = word.trim().toLowerCase();
+        checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
+        checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
 
-        // Empty sentence
-        assertFalse(StringUtil.containsWordPartialIgnoreCase("", "abc")); // Boundary case
-        assertFalse(StringUtil.containsWordPartialIgnoreCase("    ", "123"));
+        String preppedSentence = sentence.trim().toLowerCase();
+        return preppedSentence.contains(preppedWord);
+    }
 
-        // Sentence partially matches query
-        assertFalse(StringUtil.containsWordPartialIgnoreCase("aaa abb ccc", "bbbb"));
+    /**
+     * Returns the earliest (starting) position in the sentence that matches with at least one of the keywords in words,
+     * or -1 if there are no matches.
+     * Ignores case, and a full word match is not required
+     * example : Say listOfWords is a List that contains the strings "Mat" and "Sen"
+     *      earliestIndexOf("tomatch", listOfWords) --> returns 2, matching "Mat"
+     *      earliestIndexOf("sentenceMatch", listOfWords) --> returns 0, matches both but "Sen" is matched at the start
+     *      earliestIndexOf("notCorrect", listOfWords) --> returns -1, no match
+     * @param sentence
+     * @param words
+     * @return
+     */
+    public static int earliestIndexOf(String sentence, List<String> words) {
+        requireNonNull(sentence);
+        requireNonNull(words);
 
-        // No Match
-        assertFalse(StringUtil.containsWordPartialIgnoreCase("aaa abb ccc", "ddd"));
+        String[] preppedWords = new String[words.size()];
+        for (int i = 0; i < words.size(); i++) {
+            String preppedWord = words.get(i).trim();
+            checkArgument(!preppedWord.isEmpty(), "Word parameter cannot contain an empty string");
+            checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
+            preppedWords[i] = preppedWord;
+        }
 
-        // Matches word in the sentence, different upper/lower case letters
-        assertTrue(StringUtil.containsWordPartialIgnoreCase("aaa bBb ccc", "Bbb"));
-        assertTrue(StringUtil.containsWordPartialIgnoreCase("aaa bBb ccc@1", "CCc@1"));
-        assertTrue(StringUtil.containsWordPartialIgnoreCase("  AAA   bBb   ccc  ", "aaa"));
-        assertTrue(StringUtil.containsWordPartialIgnoreCase("Aaa", "aaa"));
-        assertTrue(StringUtil.containsWordPartialIgnoreCase("aaa bbb ccc", "  ccc  "));
+        int earliestIndex = -1;
+        for (String keyword: preppedWords) {
+            int index = sentence.toLowerCase().indexOf(keyword);
+            if (index == 0) {
+                return index;
+            } else if (earliestIndex < 0 || (index >= 0 && index < earliestIndex)) {
+                earliestIndex = index;
+            }
+        }
 
-        // Matches multiple words in sentence
-        assertTrue(StringUtil.containsWordPartialIgnoreCase("AAA bBb ccc  bbb", "bbB"));
-
-        // Query partially matches sentence
-        assertTrue(StringUtil.containsWordPartialIgnoreCase("AAa bbb cCc abc", "ab"));
-        assertTrue(StringUtil.containsWordPartialIgnoreCase("AAa bcb cbc abc", "bc")); //multiple partial matches
+        return earliestIndex;
     }
 ```
-###### \java\seedu\address\logic\commands\ExportCommandTest.java
+###### \java\seedu\address\logic\commands\ExportCommand.java
 ``` java
-public class ExportCommandTest {
-    private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/ImportExportCommandTest/");
-    private static final String VALID_ADDRESSBOOK_PATH = TEST_DATA_FOLDER + "validAddressBook.xml";
-    private static final String TEMP_ADDRESSBOOK_NAME = "tempAddressBook.xml";
-    private static final File TEMP_FILE = new File(TEST_DATA_FOLDER + TEMP_ADDRESSBOOK_NAME);
+/**
+ * Exports the contents of the address book to the data folder with the given filename.
+ */
+public class ExportCommand extends Command {
 
-    private Model model;
+    public static final String COMMAND_WORD = "export";
+    public static final String COMMAND_ALIAS = "ex";
 
-    @Before
-    public void setUp() {
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Exports the contents of the address book to the data folder with the given filename.\n"
+            + "Parameters: FILENAME.xml\n"
+            + "Example: export backup.xml";
+
+    public static final String MESSAGE_EXPORT_SUCCESS = "Export successful! Data exported to %1$s";
+    public static final String MESSAGE_EXPORT_FAILURE = "Error writing to file at %1$s";
+
+    public static final String DEFAULT_EXPORT_FILEPATH = "data/";
+
+    public final String filePathToExport;
+
+
+    public ExportCommand(String fileName) {
+        this(DEFAULT_EXPORT_FILEPATH, fileName);
+    }
+
+    public ExportCommand(String exportFilepath, String fileName) {
+        this.filePathToExport = exportFilepath + fileName;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
         try {
-            model = new ModelManager(new XmlAddressBookStorage(VALID_ADDRESSBOOK_PATH)
-                    .readAddressBook().get(), new UserPrefs());
+            ReadOnlyAddressBook addressBook = model.getAddressBook();
+            XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(filePathToExport);
+            addressBookStorage.saveAddressBook(addressBook);
         } catch (Exception e) {
-            fail("Failed to set up test, unable to read data");
+            throw new CommandException(String.format(MESSAGE_EXPORT_FAILURE, filePathToExport));
+        }
+
+        return new CommandResult(String.format(MESSAGE_EXPORT_SUCCESS, filePathToExport));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this
+                || (other instanceof ExportCommand
+                && this.filePathToExport.equals(((ExportCommand) other).filePathToExport));
+    }
+}
+```
+###### \java\seedu\address\logic\commands\ImportCommand.java
+``` java
+/**
+ * Imports the contents of the address book file on the given filepath
+ */
+public class ImportCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "import";
+    public static final String COMMAND_ALIAS = "i";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Imports the contents of the address book data on the given filepath, overwriting current data.\n"
+            + "Parameters: FILEPATH\n"
+            + "Example: import data/addressbook-backup.xml";
+
+    public static final String MESSAGE_IMPORT_SUCCESS = "Import successful! Data imported from %1$s";
+    public static final String MESSAGE_FILE_NOT_FOUND = "File not found at %1$s, Import Failed!";
+    public static final String MESSAGE_FILE_UNKNOWN = "File is in unknown format or is corrupt. Import failed!";
+    public static final String MESSAGE_ILLEGAL_VALUE = "File contains illegal values. "
+            + "Please check integrity of data. Import failed!";
+
+    public final String filePathToImport;
+
+    public ImportCommand(String filePath) {
+        this.filePathToImport = filePath;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        try {
+            XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(filePathToImport);
+            Optional<ReadOnlyAddressBook> addressBook = addressBookStorage.readAddressBook();
+            if (addressBook.isPresent()) {
+                model.resetData(addressBook.get());
+            } else {
+                throw new IOException();
+            }
+            model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+        } catch (IOException io) {
+            throw new CommandException(String.format(MESSAGE_FILE_NOT_FOUND, filePathToImport));
+        } catch (DataConversionException dc) {
+            throw new CommandException(MESSAGE_FILE_UNKNOWN);
+        } catch (Exception e) {
+            throw new CommandException(MESSAGE_ILLEGAL_VALUE);
+        }
+
+        return new CommandResult(String.format(MESSAGE_IMPORT_SUCCESS, filePathToImport));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this
+                || (other instanceof ImportCommand
+                && this.filePathToImport.equals(((ImportCommand) other).filePathToImport));
+    }
+}
+```
+###### \java\seedu\address\logic\commands\SortCommand.java
+``` java
+/**
+ * Sorts the current list according to the given arguments.
+ */
+public class SortCommand extends Command {
+
+    public static final String COMMAND_WORD = "sort";
+
+    public static final String ARGUMENT_ASCENDING_WORD = "asc";
+    public static final String ARGUMENT_DESCENDING_WORD = "des";
+    public static final String ARGUMENT_DEFAULT_ORDER = "default";
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Sorts the current list according to given prefix in the given order. "
+            + "No prefix results in default order.\n"
+            + "Parameters: [PREFIX] [ORDER]\n"
+            + "Example : sort n/ asc";
+    public static final String MESSAGE_SORT_SUCCESS = "Sorted current list by %1$s in %2$s order.";
+
+    public final String prefix;
+    public final String order;
+
+    public SortCommand(String prefix, String order) {
+        this.prefix = prefix;
+        this.order = order;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        Comparator<ReadOnlyPerson> sortOrder = createAscComparator(prefix, order);
+        model.updateSortedFilteredPersonList(null); //reset any order first
+        model.updateSortedFilteredPersonList(sortOrder);
+        return new CommandResult(String.format(MESSAGE_SORT_SUCCESS, prefix, order));
+    }
+
+    /**
+     *  Creates a ReadOnlyPerson Comparator from the given prefix and ordering.
+     */
+    public Comparator<ReadOnlyPerson> createAscComparator(String prefix, String order) {
+        if (prefix.equals(ARGUMENT_DEFAULT_ORDER)) {
+            if (ARGUMENT_DESCENDING_WORD.equals(order)) {
+                return (person1, person2) -> (1); //reverse order
+            } else if (ARGUMENT_ASCENDING_WORD.equals(order)) {
+                return (person1, person2) -> (-1); //default order
+            }
+        }
+
+        Comparator<ReadOnlyPerson> sortOrderComp = null;
+        if (prefix.equals(PREFIX_NAME.getPrefix())) {
+            sortOrderComp = (person1, person2) -> (person1.getName()
+                    .fullName.compareToIgnoreCase(person2.getName().fullName));
+        } else if (prefix.equals(PREFIX_PHONE.getPrefix())) {
+            sortOrderComp = (person1, person2) -> (person1.getPhone()
+                    .value.compareToIgnoreCase(person2.getPhone().value));
+        } else if (prefix.equals(PREFIX_EMAIL.getPrefix())) {
+            sortOrderComp = (person1, person2) -> (person1.getEmail()
+                    .value.compareToIgnoreCase(person2.getEmail().value));
+        } else if (prefix.equals(PREFIX_ADDRESS.getPrefix())) {
+            sortOrderComp = (person1, person2) -> (person1.getAddress()
+                    .value.compareToIgnoreCase(person2.getAddress().value));
+        } else if (prefix.equals(PREFIX_BIRTHDAY.getPrefix())) {
+            sortOrderComp = (person1, person2) -> (person1.getBirthday()
+                    .value.compareToIgnoreCase(person2.getBirthday().value));
+        }
+
+        if (ARGUMENT_DESCENDING_WORD.equals(order)) {
+            requireNonNull(sortOrderComp);
+            sortOrderComp = sortOrderComp.reversed();
+        }
+        return sortOrderComp;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this
+                || (other instanceof SortCommand
+                && this.prefix.equals(((SortCommand) other).prefix)
+                && this.order.equals(((SortCommand) other).order));
+
+
+    }
+}
+```
+###### \java\seedu\address\logic\parser\ExportCommandParser.java
+``` java
+/**
+ * Parses input arguments and create a ExportCommand Object
+ */
+public class ExportCommandParser implements Parser<ExportCommand> {
+
+    public static final String EXPORT_FILE_EXTENSION = ".xml";
+    public static final String MESSAGE_INVALID_EXTENSION = "Please end your file name with %1$s";
+
+    /**
+     * Parses the given (@code String) in the context of a ExportCommand.
+     * @return ExportCommand Object for execution
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ExportCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+        } else if (!trimmedArgs.endsWith(EXPORT_FILE_EXTENSION)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_EXTENSION, EXPORT_FILE_EXTENSION));
+        }
+
+        return new ExportCommand(trimmedArgs);
+    }
+}
+```
+###### \java\seedu\address\logic\parser\FindCommandParser.java
+``` java
+    /**
+     * Parses the given {@code String} of arguments in the context of the FindCommand
+     * @return FindCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public FindCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty() || isSearchablePrefix(trimmedArgs)) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+
+        String[] keywords = trimmedArgs.split("\\s+");
+        String toSearch = keywords[0];
+        if (startsWithSearchablePrefix(toSearch)) {
+            String extractedKeyword = toSearch.substring(2, toSearch.length());
+            toSearch = toSearch.substring(0, 2);
+            if (!extractedKeyword.isEmpty()) {
+                keywords[0] = extractedKeyword;
+            } else {
+                keywords = Arrays.copyOfRange(keywords, 1, keywords.length);
+            }
+        }
+
+        if (toSearch.equals(PREFIX_TAG.getPrefix())) {
+            return new FindCommand(new TagListContainsKeywordsPredicate(Arrays.asList(keywords)));
+        } else if (toSearch.equals(PREFIX_PHONE.getPrefix())) {
+            return new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList(keywords)));
+        } else if (toSearch.equals(PREFIX_EMAIL.getPrefix())) {
+            return new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList(keywords)));
+        } else if (toSearch.equals(PREFIX_ADDRESS.getPrefix())) {
+            return new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList(keywords)));
+        } else if (toSearch.equals(PREFIX_BIRTHDAY.getPrefix())) {
+            return new FindCommand(new BirthdayContainsKeywordsPredicate(Arrays.asList(keywords)));
+        } else {
+            return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
         }
     }
 
-    @Test
-    public void equals() {
-        String validFileName = "backup.xml";
-        final ExportCommand typicalCommand = new ExportCommand(validFileName);
-
-        //same object -> true
-        assertTrue(typicalCommand.equals(typicalCommand));
-
-        //same values-> true
-        assertTrue(typicalCommand.equals(new ExportCommand(ExportCommand.DEFAULT_EXPORT_FILEPATH, validFileName)));
-
-        //null -> false
-        assertFalse(typicalCommand.equals(null));
-
-        //different type -> false
-        assertFalse(typicalCommand.equals(new ClearCommand()));
-
-        //different filename -> false
-        assertFalse(typicalCommand.equals(new ExportCommand("differentName")));
-
-        //different export path -> false
-        assertFalse(typicalCommand.equals(new ExportCommand("different/path/", validFileName)));
-
-    }
-
-
-    @Test
-    public void execute_validName_success() throws Exception {
-        TEMP_FILE.createNewFile();
-        String exportFilePath = TEST_DATA_FOLDER + TEMP_ADDRESSBOOK_NAME;
-        ExportCommand command = prepareCommand(TEMP_ADDRESSBOOK_NAME);
-        String expectedMessage = String.format(MESSAGE_EXPORT_SUCCESS, exportFilePath);
-        assertCommandSuccess(command, model, expectedMessage, model);
-
-        //check if exported file is equal to current model
-        Model expectedExportedModel = new ModelManager(new XmlAddressBookStorage(exportFilePath)
-                .readAddressBook().get(), new UserPrefs());
-        assertTrue(model.equals(expectedExportedModel));
+    /**
+     * Checks if the given string prefix is a searchable prefix (n/, t/, p/, e/, a/, or b/).
+     */
+    public boolean isSearchablePrefix(String prefixString) {
+        return prefixString.equals(PREFIX_NAME.getPrefix()) || prefixString.equals(PREFIX_TAG.getPrefix())
+                || prefixString.equals(PREFIX_PHONE.getPrefix()) || prefixString.equals(PREFIX_EMAIL.getPrefix())
+                || prefixString.equals(PREFIX_ADDRESS.getPrefix()) || prefixString.equals(PREFIX_BIRTHDAY.getPrefix());
     }
 
     /**
-     * Prepares an ExportCommand for testing based on given filename.
+     * Checks if the given string prefix stars with a searchable prefix (n/, t/, p/, e/, a/, or b/).
      */
-    public ExportCommand prepareCommand(String filename) {
-        ExportCommand exportCommand = new ExportCommand(TEST_DATA_FOLDER, filename);
-        exportCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return exportCommand;
+    public boolean startsWithSearchablePrefix(String prefixString) {
+        if (prefixString.length() < 2) {
+            return false;
+        }
+        String prefix = prefixString.substring(0, 2);
+        return isSearchablePrefix(prefix);
     }
 }
 ```
-###### \java\seedu\address\logic\commands\FindCommandTest.java
-``` java
-    @Test
-    public void execute_findByTag() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 6);
-        FindCommand command = prepareCommandForTags("friends");
-        assertCommandSuccess(command,
-                expectedMessage,
-                Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA));
-    }
-
-```
-###### \java\seedu\address\logic\commands\FindCommandTest.java
-``` java
-    /**
-     * Parses {@code userInput} into a {@code FindCommand} for tag prefix.
-     */
-    private FindCommand prepareCommandForTags(String userInput) {
-        FindCommand command =
-                new FindCommand(new TagListContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
-        return command;
-    }
-```
-###### \java\seedu\address\logic\commands\ImportCommandTest.java
-``` java
-public class ImportCommandTest {
-
-    private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/ImportExportCommandTest/");
-    private static final String EMPTY_FILE_PATH = TEST_DATA_FOLDER + "empty.xml";
-    private static final String MISSING_FILE_PATH = TEST_DATA_FOLDER + "missing.xml";
-    private static final String ILLEGAL_ADDRESSBOOK_PATH = TEST_DATA_FOLDER + "illegalAddressBook.xml";
-    private static final String VALID_ADDRESSBOOK_PATH = TEST_DATA_FOLDER + "validAddressBook.xml";
-
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-    @Test
-    public void equals() {
-        String validFilePath = "data/backup.xml";
-        final ImportCommand typicalCommand = new ImportCommand(validFilePath);
-
-        //same object -> true
-        assertTrue(typicalCommand.equals(typicalCommand));
-
-        //same value -> true
-        assertTrue(typicalCommand.equals(new ImportCommand(validFilePath)));
-
-        //null -> false
-        assertFalse(typicalCommand.equals(null));
-
-        //different type -> false
-        assertFalse(typicalCommand.equals(new ClearCommand()));
-
-        //different value -> false
-        assertFalse(typicalCommand.equals(new ImportCommand("InvalidPath")));
-
-    }
-
-    @Test
-    public void execute_missingFilePath_failure() throws Exception {
-        ImportCommand command = prepareCommand(MISSING_FILE_PATH);
-        String expectedMessage = String.format(ImportCommand.MESSAGE_FILE_NOT_FOUND, MISSING_FILE_PATH);
-        assertCommandFailure(command, model, expectedMessage);
-    }
-
-    @Test
-    public void execute_emptyFilePath_failure() throws Exception {
-        ImportCommand command = prepareCommand(EMPTY_FILE_PATH);
-        String expectedMessage = ImportCommand.MESSAGE_FILE_UNKNOWN;
-        assertCommandFailure(command, model, expectedMessage);
-    }
-
-    @Test
-    public void execute_illegalFilePath_failure() {
-        ImportCommand command = prepareCommand(ILLEGAL_ADDRESSBOOK_PATH);
-        String expectedMessage = ImportCommand.MESSAGE_ILLEGAL_VALUE;
-        assertCommandFailure(command, model, expectedMessage);
-    }
-
-    @Test
-    public void execute_validFilePath_success() throws Exception {
-        ImportCommand command = prepareCommand(VALID_ADDRESSBOOK_PATH);
-        String expectedMessage = String.format(MESSAGE_IMPORT_SUCCESS, VALID_ADDRESSBOOK_PATH);
-        Model expectedModel = new ModelManager(new XmlAddressBookStorage(VALID_ADDRESSBOOK_PATH)
-                .readAddressBook().get(), new UserPrefs());
-        assertCommandSuccess(command, model, expectedMessage, expectedModel);
-
-    }
-
-    /**
-     * Prepares an ImportCommand for testing based on the given filepath.
-     */
-    public ImportCommand prepareCommand(String filepath) {
-        ImportCommand importCommand = new ImportCommand(filepath);
-        importCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return importCommand;
-    }
-}
-```
-###### \java\seedu\address\logic\commands\SortCommandTest.java
+###### \java\seedu\address\logic\parser\ImportCommandParser.java
 ``` java
 /**
- * Contains integration tests (interaction with Model) and unit tests for SortCommand
+ * Parses input arguments and create a new ImportCommand Object.
  */
-public class SortCommandTest {
+public class ImportCommandParser implements Parser<ImportCommand> {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    /**
+     * Parses the given (@code String) in the context of a ImportCommand.
+     * @return ImportCommand Object for execution
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ImportCommand parse(String args) throws ParseException {
+        requireNonNull(args);
 
-    @Test
-    public void equals() {
-        String validPrefix = PREFIX_NAME.getPrefix();
-        String validOrder = ARGUMENT_ASCENDING_WORD;
-        final SortCommand typicalCommand = new SortCommand(validPrefix, validOrder);
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+        }
 
-        //same object -> returns true
-        assertTrue(typicalCommand.equals(typicalCommand));
-
-        //same values -> returns true
-        SortCommand commandWithSameValues = new SortCommand(PREFIX_NAME.getPrefix(), ARGUMENT_ASCENDING_WORD);
-        assertTrue(typicalCommand.equals(commandWithSameValues));
-
-        //null -> returns false
-        assertFalse(typicalCommand.equals(null));
-
-        //different type -> returns false
-        assertFalse(typicalCommand.equals(new ClearCommand()));
-
-        //different prefix -> returns false
-        assertFalse(typicalCommand.equals(new SortCommand(PREFIX_EMAIL.getPrefix(), validOrder)));
-
-        //different order -> returns false
-        assertFalse(typicalCommand.equals(new SortCommand(validPrefix, ARGUMENT_DESCENDING_WORD)));
+        return new ImportCommand(trimmedArgs);
     }
+}
+```
+###### \java\seedu\address\logic\parser\SortCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new SortCommand object.
+ */
+public class SortCommandParser implements Parser<SortCommand> {
 
-    @Test
-    public void execute_defaultOrder_success() {
-        String expectedMessageA = String.format(MESSAGE_SORT_SUCCESS, ARGUMENT_DEFAULT_ORDER, ARGUMENT_ASCENDING_WORD);
-        String expectedMessageD = String.format(MESSAGE_SORT_SUCCESS, ARGUMENT_DEFAULT_ORDER, ARGUMENT_DESCENDING_WORD);
+    /**
+     * Parses the given {@code String} of arguments in the context of the SortCommand
+     * @return SortCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public SortCommand parse(String args) throws ParseException {
+        requireNonNull(args);
 
-        SortCommand commandA = prepareCommand(ARGUMENT_DEFAULT_ORDER, ARGUMENT_ASCENDING_WORD);
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.updateSortedFilteredPersonList((person1, person2) -> (-1));
-        assertCommandSuccess(commandA, model, expectedMessageA, expectedModel);
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            return new SortCommand(ARGUMENT_DEFAULT_ORDER, ARGUMENT_ASCENDING_WORD);
+        } else if (isSortArgument(trimmedArgs)) {
+            return new SortCommand(ARGUMENT_DEFAULT_ORDER, trimmedArgs);
+        } else if (isSortablePrefix(trimmedArgs)) {
+            return new SortCommand(trimmedArgs, ARGUMENT_ASCENDING_WORD);
+        }
 
-        SortCommand commandD = prepareCommand(ARGUMENT_DEFAULT_ORDER, ARGUMENT_DESCENDING_WORD);
-        expectedModel.updateSortedFilteredPersonList(null); //reset
-        expectedModel.updateSortedFilteredPersonList((person1, person2) -> (1));
-        assertCommandSuccess(commandD, model, expectedMessageD, expectedModel);
-    }
+        String[] splitArgs = trimmedArgs.split("\\s+");
+        if (splitArgs.length != 2) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        }
 
-    @Test
-    public void execute_validPrefix_success() {
-        String expectedMessageA = String
-                .format(MESSAGE_SORT_SUCCESS, PREFIX_NAME.getPrefix(), ARGUMENT_ASCENDING_WORD);
-        String expectedMessageD = String
-                .format(MESSAGE_SORT_SUCCESS, PREFIX_PHONE.getPrefix(), ARGUMENT_DESCENDING_WORD);
-
-        //ascending name (alphanumeric)
-        String testedPrefix = PREFIX_NAME.getPrefix();
-        SortCommand commandA = prepareCommand(testedPrefix, ARGUMENT_ASCENDING_WORD);
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.updateSortedFilteredPersonList((person1, person2) -> (person1.getName()
-                .fullName.compareToIgnoreCase(person2.getName().fullName)));
-        assertCommandSuccess(commandA, model, expectedMessageA, expectedModel);
-
-        //descending phone (digits)
-        testedPrefix = PREFIX_PHONE.getPrefix();
-        SortCommand commandD = prepareCommand(testedPrefix, ARGUMENT_DESCENDING_WORD);
-        expectedModel.updateSortedFilteredPersonList((person1, person2) -> (person2.getPhone()
-                .value.compareToIgnoreCase(person1.getPhone().value)));
-        assertCommandSuccess(commandD, model, expectedMessageD, expectedModel);
-
-        //ascending address
-        testedPrefix = PREFIX_ADDRESS.getPrefix();
-        expectedMessageA = String.format(MESSAGE_SORT_SUCCESS, testedPrefix, ARGUMENT_ASCENDING_WORD);
-        commandA = prepareCommand(testedPrefix, ARGUMENT_ASCENDING_WORD);
-        expectedModel.updateSortedFilteredPersonList((person1, person2) -> (person1.getAddress()
-                .value.compareToIgnoreCase(person2.getAddress().value)));
-        assertCommandSuccess(commandA, model, expectedMessageA, expectedModel);
+        String prefix = splitArgs[0];
+        String order = splitArgs[1];
+        if (isSortablePrefix(prefix) && isSortArgument(order)) {
+            return new SortCommand(prefix, order);
+        } else {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        }
     }
 
     /**
-     * Parses the prefix and order string and returns a SortCommand.
+     * Checks if the given string prefix is a sortable prefix (n/, p/, e/, a/, b/).
      */
-    public SortCommand prepareCommand(String prefix, String order) {
-        SortCommand sortCommand = new SortCommand(prefix, order);
-        sortCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return sortCommand;
+    public boolean isSortablePrefix(String prefixString) {
+        return prefixString.equals(PREFIX_NAME.getPrefix()) || prefixString.equals(PREFIX_PHONE.getPrefix())
+                || prefixString.equals(PREFIX_ADDRESS.getPrefix()) || prefixString.equals(PREFIX_EMAIL.getPrefix())
+                || prefixString.equals(PREFIX_BIRTHDAY.getPrefix());
+    }
+
+    /**
+     * Checks if the given string is a sort order argument (asc, des)
+     */
+    public boolean isSortArgument(String sortOrder) {
+        return sortOrder.equals(ARGUMENT_ASCENDING_WORD)
+                || sortOrder.equals(ARGUMENT_DESCENDING_WORD);
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ExportCommandParserTest.java
+###### \java\seedu\address\model\Model.java
 ``` java
-public class ExportCommandParserTest {
-    private static final String MESSAGE_INVALID_FORMAT = String
-            .format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE);
-    private static final String MESSAGE_BAD_EXTENSION = String.format(MESSAGE_INVALID_EXTENSION, EXPORT_FILE_EXTENSION);
+    /**
+     * Updates the comparator of the sorted filtered person list to sort by the given comparator.
+     * @param comparator
+     */
+    void updateSortedFilteredPersonList(Comparator<ReadOnlyPerson> comparator);
 
-    private ExportCommandParser parser = new ExportCommandParser();
+}
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Override
+    public void updateSortedFilteredPersonList(Comparator<ReadOnlyPerson> comparator) {
+        sortedFilteredPersons.setComparator(comparator);
+    }
+```
+###### \java\seedu\address\model\person\FieldContainsKeywordsPredicate.java
+``` java
+/**
+ *  Represents a predicate for a field of a ReadOnlyPerson with the ability to test an instance of a ReadOnlyPerson.
+ */
+public abstract class FieldContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+    protected static Comparator<ReadOnlyPerson> defaultSortOrder = null;
+    protected List<String> keywords;
+    protected String fieldToSearch;
 
-    @Test
-    public void parse_emptyArgs_failure() {
-        assertParseFailure(parser, "  ", MESSAGE_INVALID_FORMAT);
+
+    /**
+     * Returns an immutable List of keywords that is used to evaluate a ReadOnlyPerson.
+     */
+    public List<String> getKeywords() {
+        return Collections.unmodifiableList(keywords);
     }
 
-    @Test
-    public void parse_invalidArgs_failure() {
-        assertParseFailure(parser, "backup", MESSAGE_BAD_EXTENSION);
-        assertParseFailure(parser, "backup.wrongextension", MESSAGE_BAD_EXTENSION);
+    /**
+     * Returns the string prefix of the field evaluated by this predicate.
+     */
+    public String getFieldToSearch() {
+        return fieldToSearch;
     }
 
-    @Test
-    public void parse_validArgs_success() {
-        assertParseSuccess(parser, "test.xml", new ExportCommand("test.xml"));
+    /**
+     * Creates and returns a comparator based on the keywords and field searched of this predicate.
+     */
+    public abstract Comparator<ReadOnlyPerson> sortOrderComparator();
+
+}
+```
+###### \java\seedu\address\model\person\NameContainsKeywordsPredicate.java
+``` java
+    @Override
+    public Comparator<ReadOnlyPerson> sortOrderComparator() {
+        return Comparator.comparingInt(person -> StringUtil
+                .earliestIndexOf(person.getName().fullName, keywords));
+    }
+
+}
+```
+###### \java\seedu\address\model\person\TagListContainsKeywordsPredicate.java
+``` java
+/**
+ * Tests that a Person's Tag List contains at least one tag whose string matches any of the keywords given.
+ */
+public class TagListContainsKeywordsPredicate extends FieldContainsKeywordsPredicate {
+    private final List<String> keywords;
+
+    public TagListContainsKeywordsPredicate(List<String> keywords) {
+        this.keywords = keywords;
+        this.fieldToSearch = PREFIX_TAG.getPrefix();
+    }
+
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        return person.getTags().stream().anyMatch(tag -> testTag(tag));
+    }
+
+    /**
+     * Returns true if a particular tag's string matches any of the keywords. For use of the test method above
+     */
+    private boolean testTag(Tag tag) {
+        return keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordPartialIgnoreCase(tag.tagName, keyword));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof TagListContainsKeywordsPredicate // instanceof handles nulls
+                && this.keywords.equals(((TagListContainsKeywordsPredicate) other).keywords)); // state check
+    }
+
+    @Override
+    public Comparator<ReadOnlyPerson> sortOrderComparator() {
+        return defaultSortOrder; //no sorting for tag
     }
 }
 ```
-###### \java\seedu\address\logic\parser\FindCommandParserTest.java
+###### \java\seedu\address\storage\StorageManager.java
 ``` java
-    @Test
-    public void parse_validNameArgs_returnsFindCommand() {
-        // no leading and trailing whitespaces
-        FindCommand expectedFindCommand =
-                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
-        assertParseSuccess(parser, "Alice Bob", expectedFindCommand);
-
-        // multiple whitespaces between keywords
-        assertParseSuccess(parser, " \n Alice \n \t Bob  \t", expectedFindCommand);
-
-        // use of prefix to indicate the property to match (name)
-        assertParseSuccess(parser, "n/ Alice Bob", expectedFindCommand);
-        assertParseSuccess(parser, "n/Alice Bob", expectedFindCommand); //no space between prefix & keyword
-
-        expectedFindCommand = new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList("a")));
-
-        // a one-character keyword is correctly parsed as searching the name field
-        assertParseSuccess(parser, "a", expectedFindCommand);
-
-    }
-
-    @Test
-    public void parse_validTagsArgs_returnsFindCommand() {
-        FindCommand expectedFindCommandForTags =
-                new FindCommand(new TagListContainsKeywordsPredicate(Arrays.asList("Friends", "Family")));
-        assertParseSuccess(parser, "t/ Friends Family", expectedFindCommandForTags);
-        assertParseSuccess(parser, "t/Friends Family", expectedFindCommandForTags); //no space between prefix & keyword
-    }
-
-```
-###### \java\seedu\address\logic\parser\ImportCommandParserTest.java
-``` java
-public class ImportCommandParserTest {
-    private static final String MESSAGE_INVALID_FORMAT = String
-            .format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE);
-
-    private ImportCommandParser parser = new ImportCommandParser();
-
-    @Test
-    public void parse_emptyArg_failure() {
-        assertParseFailure(parser, "     ", MESSAGE_INVALID_FORMAT);
-    }
-
-    @Test
-    public void parse_validArgs_success() {
-        assertParseSuccess(parser, "test/backup.xml",  new ImportCommand("test/backup.xml"));
-    }
-}
-```
-###### \java\seedu\address\logic\parser\SortCommandParserTest.java
-``` java
-public class SortCommandParserTest {
-    private static final String MESSAGE_INVALID_FORMAT = String
-            .format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE);
-
-    private SortCommandParser parser = new SortCommandParser();
-
-    @Test
-    public void parse_invalidPrefix_failure() {
-        //not a prefix
-        assertParseFailure(parser, "notAPrefix", MESSAGE_INVALID_FORMAT);
-
-        //valid order but bad prefix
-        assertParseFailure(parser, "notAPrefix " + ARGUMENT_ASCENDING_WORD, MESSAGE_INVALID_FORMAT);
-
-        //no space between prefix and order
-        assertParseFailure(parser, "n/asc", MESSAGE_INVALID_FORMAT);
-
-        //prefix and order are in the wrong order
-        assertParseFailure(parser, "asc n/", MESSAGE_INVALID_FORMAT);
-    }
-
-    @Test
-    public void parse_invalidOrder_failure() {
-        //not an order
-        assertParseFailure(parser, "n/ notOrder", MESSAGE_INVALID_FORMAT);
-
-        //two valid prefixes
-        assertParseFailure(parser, PREFIX_NAME.getPrefix()
-                + " " + PREFIX_PHONE.getPrefix(), MESSAGE_INVALID_FORMAT);
-    }
-
-    @Test
-    public void parse_invalidArgs_failure() {
-        //more than 2 arguments
-        assertParseFailure(parser, PREFIX_PHONE.getPrefix() + " " + ARGUMENT_DESCENDING_WORD
-                + " some other uselessarguments", MESSAGE_INVALID_FORMAT);
-    }
-
-    @Test
-    public void parse_validArgs_success() {
-        //no arguments
-        assertParseSuccess(parser, "", new SortCommand(ARGUMENT_DEFAULT_ORDER, ARGUMENT_ASCENDING_WORD));
-
-        //just order
-        assertParseSuccess(parser, ARGUMENT_DESCENDING_WORD,
-                new SortCommand(ARGUMENT_DEFAULT_ORDER, ARGUMENT_DESCENDING_WORD));
-
-        //just prefix
-        assertParseSuccess(parser, PREFIX_EMAIL.getPrefix(),
-                new SortCommand(PREFIX_EMAIL.getPrefix(), ARGUMENT_ASCENDING_WORD));
-
-        //valid prefix and order
-        assertParseSuccess(parser, PREFIX_NAME.getPrefix() + " " + ARGUMENT_ASCENDING_WORD,
-                new SortCommand(PREFIX_NAME.getPrefix(), ARGUMENT_ASCENDING_WORD));
-    }
-}
-```
-###### \java\seedu\address\model\person\TagListContainsKeywordsPredicateTest.java
-``` java
-public class TagListContainsKeywordsPredicateTest {
-
-    @Test
-    public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("first");
-        List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
-
-        TagListContainsKeywordsPredicate firstPredicate =
-                new TagListContainsKeywordsPredicate(firstPredicateKeywordList);
-        TagListContainsKeywordsPredicate  secondPredicate =
-                new TagListContainsKeywordsPredicate(secondPredicateKeywordList);
-
-        // same object -> returns true
-        assertTrue(firstPredicate.equals(firstPredicate));
-
-        // same values -> returns true
-        TagListContainsKeywordsPredicate firstPredicateCopy =
-                new TagListContainsKeywordsPredicate(firstPredicateKeywordList);
-        assertTrue(firstPredicate.equals(firstPredicateCopy));
-
-        // different types -> returns false
-        assertFalse(firstPredicate.equals(1));
-
-        // null -> returns false
-        assertFalse(firstPredicate.equals(null));
-
-        // different person -> returns false
-        assertFalse(firstPredicate.equals(secondPredicate));
-    }
-
-    @Test
-    public void test_tagListContainsKeywords_returnsTrue() {
-        // One keyword
-        TagListContainsKeywordsPredicate predicate =
-                new TagListContainsKeywordsPredicate(Collections.singletonList("Friend"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("Friend", "Family").build()));
-
-        // Multiple keywords
-        predicate = new TagListContainsKeywordsPredicate(Arrays.asList("Friend", "Family"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("Friend", "Family").build()));
-
-        // Only one matching keyword
-        predicate = new TagListContainsKeywordsPredicate(Arrays.asList("Family", "Wife"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("Family", "Uncle").build()));
-
-        // Mixed-case keywords
-        predicate = new TagListContainsKeywordsPredicate(Arrays.asList("faMIly", "FAmiLy"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("Family").build()));
-
-        // Partial Match (one of the words starts with one of the keywords)
-        predicate = new TagListContainsKeywordsPredicate(Arrays.asList("Frien", "Fam"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("Friend", "Family").build()));
-    }
-
-    @Test
-    public void test_tagListDoesNotContainKeywords_returnsFalse() {
-        // Zero keywords
-        TagListContainsKeywordsPredicate predicate = new TagListContainsKeywordsPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withTags("Friends").build()));
-
-        // Non-matching keyword
-        predicate = new TagListContainsKeywordsPredicate(Arrays.asList("Family"));
-        assertFalse(predicate.test(new PersonBuilder().withTags("Friends", "Teammates").build()));
-
-        // Keywords match name, phone, email and address, but does not match tags
-        predicate = new TagListContainsKeywordsPredicate(Arrays.asList("Ben", "123", "al@mail.com", "Main", "Street"));
-        assertFalse(predicate.test(new PersonBuilder().withName("Ben").withPhone("123")
-                .withEmail("al@mail.com").withAddress("Main Street").withTags("Friends").build()));
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        String filePath = addressBookStorage.getAddressBookFilePath() + "-backup.xml";
+        try {
+            saveAddressBook(addressBook, filePath);
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
     }
 }
 ```

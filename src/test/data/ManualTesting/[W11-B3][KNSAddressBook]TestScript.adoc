@@ -129,6 +129,10 @@ You can use the alias `s` in place of `select`.
 . Type `select 1` in the command box and press kbd:[Enter].
 . You should see the selection for the first contact in the `PersonList`, and his details should show in the `PersonPanel`.
 . You should also see the message `Selected Person: 1`.
+. Type `select -5` in the command box and press kbd:[Enter].
+. You should see `Invalid command format! ...`, with instructions on how to use the command.
+. Type `select 100` in the command box and press kbd:[Enter].
+. You should see `The person index provided is invalid`.
 
 === Clear
 
@@ -157,7 +161,8 @@ The input arguments are **case-insensitive**, so `theme DARK` and `theme GrEeN` 
 . Repeat step 2 with the themes `Red`, `Blue`, and `Green`.
 [NOTE]
 You can also use the theme switcher found in the menu bar to verify these changes.
-. Type `theme Light` and press kbd:[Enter] twice (_you may use any other theme_). You should see the error message `Theme is already set to Light!`
+. Type `theme Light` in the command box and press kbd:[Enter]; do this twice (_you may use any other theme_). You should see the error message `Theme is already set to Light!`
+. Type `theme FakeTheme` in the command box and press kbd:[Enter]. You should see `The theme entered does not exist`.
 
 === List
 
@@ -340,7 +345,7 @@ Please ensure that you have done the **Export to a valid filename ** test before
 * **Sort by phone ascendingly:**
 .. Type `sort p/ asc` in the command box and press kbd:[Enter].
 .. You should see a `Sorted current list by p/ in asc order.` message.
-.. You should also see the current list sorted by phone ascendingly, with persons with the smallest leading number listed first.
+.. You should also see the current list sorted by phone ascendingly, with persons without phone numbers listed first.
 
 * **Sort by default descendingly:**
 .. Type `sort des` in the command box and press kbd:[Enter].
